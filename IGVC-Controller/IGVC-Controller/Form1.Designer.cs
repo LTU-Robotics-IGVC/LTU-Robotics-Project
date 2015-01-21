@@ -35,18 +35,20 @@
             // 
             // imageBox1
             // 
-            this.imageBox1.Location = new System.Drawing.Point(67, 35);
+            this.imageBox1.Location = new System.Drawing.Point(60, 28);
+            this.imageBox1.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.imageBox1.Name = "imageBox1";
-            this.imageBox1.Size = new System.Drawing.Size(399, 279);
+            this.imageBox1.Size = new System.Drawing.Size(640, 480);
             this.imageBox1.TabIndex = 2;
             this.imageBox1.TabStop = false;
             // 
             // Form1
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(558, 438);
+            this.ClientSize = new System.Drawing.Size(726, 527);
             this.Controls.Add(this.imageBox1);
+            this.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.Name = "Form1";
             this.Text = "Form1";
             this.Load += new System.EventHandler(this.Form1_Load);
