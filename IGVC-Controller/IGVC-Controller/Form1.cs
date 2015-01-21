@@ -8,6 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using Emgu.CV;
+using Emgu.CV.Structure;
 
 namespace IGVC_Controller
 {
@@ -33,7 +34,8 @@ namespace IGVC_Controller
 
         void capture_ImageGrabbed(object sender, EventArgs e)
         {
-            this.imageBox1.Image = capture.RetrieveBgrFrame().Resize(640, 480, Emgu.CV.CvEnum.INTER.CV_INTER_LINEAR);
+            this.imageBox1.Image = capture.RetrieveBgrFrame().Resize(640, 480, Emgu.CV.CvEnum.INTER.CV_INTER_LINEAR).Convert<Gray, byte>();
+            
         }
 
         private void Form1_Load(object sender, EventArgs e)
