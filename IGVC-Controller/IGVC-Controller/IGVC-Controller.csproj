@@ -104,9 +104,6 @@
     <Content Include="npp64_42_9.dll">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="nvcuda.dll">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
     <Content Include="opencv_calib3d242.dll">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
