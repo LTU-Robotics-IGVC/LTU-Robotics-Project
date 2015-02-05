@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using Emgu.CV;
 using Emgu.CV.Structure;
+using IGVC_Controller.RobotInterface.Simulator;
 
 namespace IGVC_Controller
 {
@@ -22,11 +23,14 @@ namespace IGVC_Controller
         public Form1()
         {
             InitializeComponent();
-            capture = new Capture();
-            capture.ImageGrabbed += capture_ImageGrabbed;
-            capture.ImageGrabbed += process_FPS;
-            capture.Start();
+            //capture = new Capture();
+            //capture.ImageGrabbed += capture_ImageGrabbed;
+            //capture.ImageGrabbed += process_FPS;
+            //capture.Start();
             this.FormClosing += Form1_FormClosing;
+            Form form = new RobotSimulator();
+            form.Visible = true;
+            form.Focus();
         }
 
         void Form1_FormClosing(object sender, FormClosingEventArgs e)

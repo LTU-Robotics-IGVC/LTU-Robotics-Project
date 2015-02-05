@@ -41,7 +41,18 @@ namespace IGVC_Controller.DataIO
                         System.IO.File.Create(filename);
                     }
                     xml = new XmlDocument();
-                    xml.Load(filename);
+                    try
+                    {
+                        xml.Load(filename);
+                    }catch(Exception)
+                    {
+                        StreamWriter sw = new StreamWriter(filename);
+                        sw.WriteLine("<?xml version=\"1.0\" encoding=\"utf-8\" ?>");
+                        sw.WriteLine("<RootNode>");
+                        sw.WriteLine("</RootNode>");
+                        sw.Close();
+                        xml.Load(filename);
+                    }
                     state = 1;
                 }
                 //catch (Exception) { }

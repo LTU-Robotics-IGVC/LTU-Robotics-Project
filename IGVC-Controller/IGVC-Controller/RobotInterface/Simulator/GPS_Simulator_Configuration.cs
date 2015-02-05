@@ -21,9 +21,8 @@ namespace IGVC_Controller.RobotInterface.Simulator
         public GPS_Simulator_Configuration()
         {
             InitializeComponent();
-            config = new SaveFile("Simulator/GPS_Config");
+            config = new SaveFile("Simulator_GPS_Config");
             this.FormClosing += GPS_Simulator_Configuration_FormClosing;
-
             config.BeginRead();
             GPS_Offset_X = config.Read<double>("Offset_X", 0);
             GPS_Offset_Y = config.Read<double>("Offset_Y", 0);
