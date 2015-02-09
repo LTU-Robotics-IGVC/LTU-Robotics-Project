@@ -9,28 +9,21 @@ namespace IGVC_Controller.Code.Registries
 {
     class Registry
     {
-        private List<IModule> interfaceModules;
-        private List<IModule> navigationModules;
-        private List<IModule> mappingModules;
-        private List<IModule> positioningModules;
-        private List<IModule> visionModules;
+        private List<IModule> modules;
 
         private object dataLogger;
 
         public Registry()
         {
             //dataLogger = new DataLogger();
+            modules = new List<IModule>();
         }
 
         public void register(IModule module)
         {
-            //Maybe we can use types so there only needs to be on register function
-            Type type = module.GetType();
-
-            if(type == typeof(IModule))
-            {
-                
-            }
+            if (!modules.Contains(module))
+                modules.Add(module);
+            modules.Add(module);
 
             //give access to this registry to the module
             module.bindRegistry(this);
@@ -38,7 +31,8 @@ namespace IGVC_Controller.Code.Registries
 
         public void unbindModule(IModule module)
         {
-            //remove module from correct list
+            if (modules.Contains(module))
+                modules.Remove(module);
 
             //remove access to this registry from the module
             module.unbindRegistry();
@@ -46,19 +40,7 @@ namespace IGVC_Controller.Code.Registries
 
         public void sendData(string tag, object data)
         {
-            foreach (IModule module in interfaceModules)
-                module.recieveDataFromRegistry(tag, data);
-
-            foreach (IModule module in navigationModules)
-                module.recieveDataFromRegistry(tag, data);
-
-            foreach (IModule module in mappingModules)
-                module.recieveDataFromRegistry(tag, data);
-
-            foreach (IModule module in positioningModules)
-                module.recieveDataFromRegistry(tag, data);
-
-            foreach (IModule module in visionModules)
+            foreach (IModule module in modules)
                 module.recieveDataFromRegistry(tag, data);
         }
 
