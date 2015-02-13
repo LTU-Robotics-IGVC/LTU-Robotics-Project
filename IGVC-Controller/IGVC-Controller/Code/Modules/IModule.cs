@@ -12,6 +12,26 @@ namespace IGVC_Controller.Code.Modules
     /// </summary>
     class IModule
     {
+        public struct MODULE_TYPES {
+            public static string VISION_TYPE = "vision";
+            public static string NAVIGATION_TYPE = "navigation";
+            public static string LOGGER_TYPE = "logger";
+            public static string ROBOT_INTERFACE_TYPE = "robot";
+            public static string ALL_TYPE = "all";
+        }
+
+        public struct LOG_TYPES
+        {
+            public static string SEVERITY_INFO = "info";
+            public static string SEVERITY_WARNING = "warning";
+            public static string SEVERITY_ERROR = "error";
+            public static string SEVERITY_CRITITCAL = "critical";
+        }
+
+        private string tag = "undefined";
+
+        private List<string> subscriptionList = new List<string>(1);
+
         static private int nextModuleID = 0;
         protected Registry registry { get; private set; }
 
@@ -20,24 +40,34 @@ namespace IGVC_Controller.Code.Modules
         public IModule()
         {
             moduleID = nextModuleID;
+            nextModuleID++;
+        }
+
+        public void addSubscription(string type) {
+            this.subscriptionList.Add(type); 
+        }
+        public List<string> getSubscriptionList() { return subscriptionList; }
+
+        protected void setLogTag(string tag) {
+            this.tag = tag;
         }
 
         public void bindRegistry(Registry registry) { this.registry = registry; }
         public void unbindRegistry() { this.registry = null; }
         public bool isBoundToRegistry() { return this.registry != null; }
 
-        public void recieveDataFromRegistry(string tag, object data);
+        virtual public void recieveDataFromRegistry(string tag, object data) {}
 
-        public void sendDataToRegistry(string tag, object data)
+        private void sendDataToRegistry(string tag, object data)
         {
             if(isBoundToRegistry())
                 this.registry.sendData(tag, data);
         }
 
-        public void sendLogMessageToRegistry(string tag, string message)
+        protected void log(string severity, string message)
         {
             if (isBoundToRegistry())
-                this.registry.sendMessageToLogger(tag, message);
+                this.registry.sendMessageToLogger(tag, severity, message);
         }
     }
 }

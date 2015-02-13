@@ -62,6 +62,8 @@
     </Compile>
     <Compile Include="Code\MathX\Vector2.cs" />
     <Compile Include="Code\Modules\IModule.cs" />
+    <Compile Include="Code\Modules\Logger\Logger.cs" />
+    <Compile Include="Code\Modules\Vision\Vision.cs" />
     <Compile Include="Code\Registries\Registry.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

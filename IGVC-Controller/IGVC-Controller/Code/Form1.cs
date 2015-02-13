@@ -10,6 +10,9 @@ using System.Windows.Forms;
 using Emgu.CV;
 using Emgu.CV.Structure;
 using IGVC_Controller.RobotInterface.Simulator;
+using IGVC_Controller.Code.Registries;
+using IGVC_Controller.Code.Modules.Logger;
+using IGVC_Controller.Code.Modules.Vision;
 
 namespace IGVC_Controller
 {
@@ -19,6 +22,7 @@ namespace IGVC_Controller
         Capture capture;
         int lastGrabbedTicks = -1;
         int frames;
+        Registry registry = new Registry();
 
         public Form1()
         {
@@ -28,6 +32,13 @@ namespace IGVC_Controller
             //capture.ImageGrabbed += process_FPS;
             //capture.Start();
             this.FormClosing += Form1_FormClosing;
+
+            Logger logger = new Logger();
+            registry.register(logger);
+
+            Vision vision = new Vision();
+            registry.register(vision);
+
             Form form = new RobotSimulator();
             form.Visible = true;
             form.Focus();

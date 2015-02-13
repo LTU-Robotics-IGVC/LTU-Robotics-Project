@@ -11,8 +11,6 @@ namespace IGVC_Controller.Code.Registries
     {
         private List<IModule> modules;
 
-        private object dataLogger;
-
         public Registry()
         {
             //dataLogger = new DataLogger();
@@ -23,7 +21,6 @@ namespace IGVC_Controller.Code.Registries
         {
             if (!modules.Contains(module))
                 modules.Add(module);
-            modules.Add(module);
 
             //give access to this registry to the module
             module.bindRegistry(this);
@@ -41,12 +38,17 @@ namespace IGVC_Controller.Code.Registries
         public void sendData(string tag, object data)
         {
             foreach (IModule module in modules)
-                module.recieveDataFromRegistry(tag, data);
+            {
+                if (module.getSubscriptionList().Contains(tag))
+                {
+                    module.recieveDataFromRegistry(tag, data);
+                }
+            }
         }
 
-        public void sendMessageToLogger(string tag, string message)
+        public void sendMessageToLogger(string tag, string severity, string message)
         {
-            //this.dataLogger.sendMessage(string tag, string message);
+            sendData(IModule.MODULE_TYPES.LOGGER_TYPE, new KeyValuePair<string, KeyValuePair<string, string>>(tag, new KeyValuePair<string, string>(severity, message)));
         }
     }
 }
