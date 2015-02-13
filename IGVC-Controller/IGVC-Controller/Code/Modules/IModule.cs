@@ -58,7 +58,7 @@ namespace IGVC_Controller.Code.Modules
 
         virtual public void recieveDataFromRegistry(string tag, object data) {}
 
-        private void sendDataToRegistry(string tag, object data)
+        protected void sendDataToRegistry(string tag, object data)
         {
             if(isBoundToRegistry())
                 this.registry.sendData(tag, data);
