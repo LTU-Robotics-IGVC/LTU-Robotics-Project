@@ -12,7 +12,8 @@ namespace IGVC_Controller.Code.Modules.Vision
         public Vision() : base()
         {
             setLogTag("Vision");
-            addSubscription(MODULE_TYPES.VISION_TYPE);
+            addSubscription(INTERMODULE_VARIABLE.VISION_LEFT);
+            addSubscription(INTERMODULE_VARIABLE.VISION_RIGHT);
         }
     }
 }

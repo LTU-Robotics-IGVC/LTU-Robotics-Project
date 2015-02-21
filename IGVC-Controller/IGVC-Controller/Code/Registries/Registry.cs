@@ -17,6 +17,11 @@ namespace IGVC_Controller.Code.Registries
             modules = new List<IModule>();
         }
 
+        /// <summary>
+        /// Called to bind a module to this registry
+        /// <para>This will bind this registry to the module as well</para>
+        /// </summary>
+        /// <param name="module"></param>
         public void register(IModule module)
         {
             if (!modules.Contains(module))
@@ -26,6 +31,11 @@ namespace IGVC_Controller.Code.Registries
             module.bindRegistry(this);
         }
 
+        /// <summary>
+        /// Called to unbind a module from this registry
+        /// <para>This will unbind this registry from the module as well</para>
+        /// </summary>
+        /// <param name="module"></param>
         public void unbindModule(IModule module)
         {
             if (modules.Contains(module))
@@ -35,7 +45,7 @@ namespace IGVC_Controller.Code.Registries
             module.unbindRegistry();
         }
 
-        public void sendData(string tag, object data)
+        public void sendData(IModule.INTERMODULE_VARIABLE tag, object data)
         {
             foreach (IModule module in modules)
             {
@@ -46,9 +56,9 @@ namespace IGVC_Controller.Code.Registries
             }
         }
 
-        public void sendMessageToLogger(string tag, string severity, string message)
+        public void sendMessageToLogger(string logTag, string severity, string message)
         {
-            sendData(IModule.MODULE_TYPES.LOGGER_TYPE, new KeyValuePair<string, KeyValuePair<string, string>>(tag, new KeyValuePair<string, string>(severity, message)));
+            sendData(IModule.INTERMODULE_VARIABLE.LOG, new KeyValuePair<string, KeyValuePair<string, string>>(logTag, new KeyValuePair<string, string>(severity, message)));
         }
     }
 }

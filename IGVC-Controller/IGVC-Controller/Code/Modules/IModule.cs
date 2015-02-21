@@ -12,12 +12,43 @@ namespace IGVC_Controller.Code.Modules
     /// </summary>
     class IModule
     {
-        public struct MODULE_TYPES {
-            public static string VISION_TYPE = "vision";
-            public static string NAVIGATION_TYPE = "navigation";
-            public static string LOGGER_TYPE = "logger";
-            public static string ROBOT_INTERFACE_TYPE = "robot";
-            public static string ALL_TYPE = "all";
+        //public struct module_types {
+        //    public static string vision_type = "vision";
+        //    public static string navigation_type = "navigation";
+        //    public static string logger_type = "logger";
+        //    public static string robot_interface_type = "robot";
+        //    public static string all_type = "all";
+        //}
+
+        public enum INTERMODULE_VARIABLE
+        {
+            /// <summary>
+            /// Represents the raw image feed from the LEFT stereo camera
+            /// <para>Source : Robot Interface</para>
+            /// <para>Format : Image(Bgr, Byte)</para>
+            /// </summary>
+            VISION_LEFT,
+
+            /// <summary>
+            /// Represents the raw image feed from the RIGHT stereo camera
+            /// <para>Source : Robot Interface</para>
+            /// <para>Format : Image(Bgr, Byte)</para>
+            /// </summary>
+            VISION_RIGHT,
+
+            /// <summary>
+            /// Represents the GPS coordinates in a format to be determined
+            /// <para>Source : Robot Interface</para>
+            /// <para>Format : unkown</para>
+            /// </summary>
+            GPS_COORDS,
+
+            /// <summary>
+            /// Variable is intended to be stored by a data logger
+            /// <para>Source : Any Module</para>
+            /// <para>Format : string</para>
+            /// </summary>
+            LOG
         }
 
         public struct LOG_TYPES
@@ -28,12 +59,12 @@ namespace IGVC_Controller.Code.Modules
             public static string SEVERITY_CRITITCAL = "critical";
         }
 
-        private string tag = "undefined";
-
-        private List<string> subscriptionList = new List<string>(1);
+        private List<INTERMODULE_VARIABLE> subscriptionList = new List<INTERMODULE_VARIABLE>(1);
 
         static private int nextModuleID = 0;
         protected Registry registry { get; private set; }
+
+        string logTag = "unkown";
 
         public int moduleID { get; private set; }
 
@@ -43,22 +74,37 @@ namespace IGVC_Controller.Code.Modules
             nextModuleID++;
         }
 
-        public void addSubscription(string type) {
-            this.subscriptionList.Add(type); 
+        public void addSubscription(INTERMODULE_VARIABLE tag) {
+            this.subscriptionList.Add(tag); 
         }
-        public List<string> getSubscriptionList() { return subscriptionList; }
+        public List<INTERMODULE_VARIABLE> getSubscriptionList() { return subscriptionList; }
 
-        protected void setLogTag(string tag) {
-            this.tag = tag;
+        protected void setLogTag(string logTag) {
+            this.logTag = logTag;
         }
 
+        /// <summary>
+        /// This will set the registry that the module will send its data to
+        /// <para>This should never have to be called outside of a registry</para>
+        /// </summary>
+        /// <param name="registry"></param>
         public void bindRegistry(Registry registry) { this.registry = registry; }
+
+        /// <summary>
+        /// This will remove the registry that the module will send its data to
+        /// <para>This should never have to be called outside of a registry</para>
+        /// </summary>
         public void unbindRegistry() { this.registry = null; }
+
+        /// <summary>
+        /// Checks if the module actually is registered to a registry
+        /// </summary>
+        /// <returns></returns>
         public bool isBoundToRegistry() { return this.registry != null; }
 
-        virtual public void recieveDataFromRegistry(string tag, object data) {}
+        virtual public void recieveDataFromRegistry(INTERMODULE_VARIABLE tag, object data) {}
 
-        protected void sendDataToRegistry(string tag, object data)
+        protected void sendDataToRegistry(INTERMODULE_VARIABLE tag, object data)
         {
             if(isBoundToRegistry())
                 this.registry.sendData(tag, data);
@@ -67,7 +113,7 @@ namespace IGVC_Controller.Code.Modules
         protected void log(string severity, string message)
         {
             if (isBoundToRegistry())
-                this.registry.sendMessageToLogger(tag, severity, message);
+                this.registry.sendMessageToLogger(this.logTag, severity, message);
         }
     }
 }

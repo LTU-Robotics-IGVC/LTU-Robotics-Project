@@ -12,7 +12,7 @@ namespace IGVC_Controller.Code.Modules.Logger
         public Logger() : base()
         {
             setLogTag("Logger");
-            addSubscription(MODULE_TYPES.LOGGER_TYPE);
+            addSubscription(IModule.INTERMODULE_VARIABLE.LOG);
         }
 
         override public void recieveDataFromRegistry(string tag, object data)
