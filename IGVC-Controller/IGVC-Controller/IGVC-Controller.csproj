@@ -54,11 +54,11 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Code\DataIO\Keyboard.cs" />
-    <Compile Include="Code\Form1.cs">
+    <Compile Include="Code\MainWindow.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Code\Form1.Designer.cs">
-      <DependentUpon>Form1.cs</DependentUpon>
+    <Compile Include="Code\MainWindow.Designer.cs">
+      <DependentUpon>MainWindow.cs</DependentUpon>
     </Compile>
     <Compile Include="Code\MathX\Vector2.cs" />
     <Compile Include="Code\Modules\IModule.cs" />
@@ -81,8 +81,8 @@
     <Compile Include="Code\Modules\RobotInterface\Simulator\RobotSimulator.Designer.cs">
       <DependentUpon>RobotSimulator.cs</DependentUpon>
     </Compile>
-    <EmbeddedResource Include="Code\Form1.resx">
-      <DependentUpon>Form1.cs</DependentUpon>
+    <EmbeddedResource Include="Code\MainWindow.resx">
+      <DependentUpon>MainWindow.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
