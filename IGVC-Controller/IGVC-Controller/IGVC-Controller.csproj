@@ -61,6 +61,12 @@
       <DependentUpon>MainWindow.cs</DependentUpon>
     </Compile>
     <Compile Include="Code\MathX\Vector2.cs" />
+    <Compile Include="Code\ModuleSelectionWindow.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Code\ModuleSelectionWindow.Designer.cs">
+      <DependentUpon>ModuleSelectionWindow.cs</DependentUpon>
+    </Compile>
     <Compile Include="Code\Modules\IModule.cs" />
     <Compile Include="Code\Modules\Logger\Logger.cs" />
     <Compile Include="Code\Modules\Vision\Vision.cs" />
@@ -83,6 +89,9 @@
     </Compile>
     <EmbeddedResource Include="Code\MainWindow.resx">
       <DependentUpon>MainWindow.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Code\ModuleSelectionWindow.resx">
+      <DependentUpon>ModuleSelectionWindow.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
