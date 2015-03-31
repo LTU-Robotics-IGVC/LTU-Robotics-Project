@@ -21,6 +21,7 @@ namespace IGVC_Controller.Code.Modules
 
         private void OKButton_Click(object sender, EventArgs e)
         {
+            ((IModuleEditor)this).setDataToModule();
             this.Close();
         }
 
@@ -29,16 +30,17 @@ namespace IGVC_Controller.Code.Modules
             this.module = module;
             this.label1.Text = "The module (" + MainWindow.instance.moduleNameDictionary[module] +
                 ") \n does not have any \n changeable properties!";
+            ((IModuleEditor)this).loadDataFromModule();
         }
 
         void IModuleEditor.loadDataFromModule()
         {
-
+            this.PriorityBox.Value = module.modulePriority;
         }
 
         void IModuleEditor.setDataToModule()
         {
-
+            module.modulePriority = (int)PriorityBox.Value;
         }
     }
 }

@@ -82,7 +82,7 @@ namespace IGVC_Controller.DataIO
             if (state == 1)
             {
                 foreach (XmlNode node in xml.FirstChild.ChildNodes)
-                    if (node.Name == itemName)
+                    if (node.Name == itemPath + itemName)
                     {
                         XmlSerializer serializer = new XmlSerializer(typeof(T));
                         return (T)serializer.Deserialize(new StringReader(node.InnerXml));
@@ -117,11 +117,13 @@ namespace IGVC_Controller.DataIO
                 throw new Exception("SaveFile is currently being used");
         }
 
+        public string itemPath = "";
+
         public void Write<T>(string itemName, T data)
         {
             if (state == 2)
             {
-                XmlNode newNode = xml.CreateElement(itemName);
+                XmlNode newNode = xml.CreateElement(itemPath + itemName);
                 MemoryStream mem = new MemoryStream();
                 XmlSerializer serializer = new XmlSerializer(typeof(T));
                 serializer.Serialize(mem, data);

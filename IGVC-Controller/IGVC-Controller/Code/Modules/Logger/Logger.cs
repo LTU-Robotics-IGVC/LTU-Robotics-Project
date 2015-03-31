@@ -13,6 +13,7 @@ namespace IGVC_Controller.Code.Modules.Logger
         {
             setLogTag("Logger");
             addSubscription(IModule.INTERMODULE_VARIABLE.LOG);
+            this.modulePriority = 1000;
         }
 
         override public void recieveDataFromRegistry(INTERMODULE_VARIABLE tag, object data)

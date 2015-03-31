@@ -76,7 +76,7 @@ namespace IGVC_Controller.Code.Modules
 
         public int moduleID { get; private set; }
 
-        public int modulePriority { get; private set; }
+        public int modulePriority;
 
         public IModule()
         {
@@ -127,9 +127,9 @@ namespace IGVC_Controller.Code.Modules
                 this.registry.sendMessageToLogger(this.logTag, severity, message);
         }
 
-        virtual public void loadFromConfig(SaveFile config) { }
+        virtual public void loadFromConfig(SaveFile config) { this.modulePriority = config.Read<int>("priority", 100); }
 
-        virtual public void writeToConfig(SaveFile config) { }
+        virtual public void writeToConfig(SaveFile config) { config.Write<int>("priority", this.modulePriority); }
 
         virtual public void process() { }
     }

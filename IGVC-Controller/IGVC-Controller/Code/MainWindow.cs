@@ -54,6 +54,7 @@ namespace IGVC_Controller
 
             this.setupModule("StereoVision", new StereoVision());
             this.setupModule("Logger", new Logger());
+            this.setupModule("ConsoleLogger", new ConsoleLogger());
 
             activeModules = config.Read<List<string>>("Active_Modules", new List<string>());
             foreach(string moduleName in moduleNames)
@@ -73,7 +74,10 @@ namespace IGVC_Controller
 
         private void setupModule(string moduleName, IModule module)
         {
+            config.itemPath = moduleName + "_";
             module.loadFromConfig(config);
+            config.itemPath = "";
+
             moduleDictionary.Add(moduleName, module);
             moduleNameDictionary.Add(module, moduleName);
             moduleNames.Add(moduleName);
@@ -91,9 +95,11 @@ namespace IGVC_Controller
 
             foreach (IModule module in moduleDictionary.Values)
             {
+                config.itemPath = moduleNameDictionary[module] + "_";
                 module.writeToConfig(config);
             }
 
+            config.itemPath = "";
             config.EndWrite();
         }
 
