@@ -7,9 +7,9 @@ using IGVC_Controller.Code.Registries;
 
 namespace IGVC_Controller.Code.Modules.Vision
 {
-    class Vision : IModule
+    class StereoVision : IModule
     {
-        public Vision() : base()
+        public StereoVision() : base()
         {
             setLogTag("Vision");
             addSubscription(INTERMODULE_VARIABLE.VISION_LEFT);

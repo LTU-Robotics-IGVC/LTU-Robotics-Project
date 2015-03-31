@@ -15,7 +15,7 @@ namespace IGVC_Controller.Code.Modules.Logger
             addSubscription(IModule.INTERMODULE_VARIABLE.LOG);
         }
 
-        override public void recieveDataFromRegistry(string tag, object data)
+        override public void recieveDataFromRegistry(INTERMODULE_VARIABLE tag, object data)
         {
             KeyValuePair<string, KeyValuePair<string, string>> values = (KeyValuePair<string, KeyValuePair<string, string>>)data;
             string thetag = values.Key;
@@ -25,6 +25,11 @@ namespace IGVC_Controller.Code.Modules.Logger
             {
                 w.WriteLine("{0,-20} | {1,-10} | {2,-10}", thetag.ToUpper(), severity.ToUpper(), message);
             }
+        }
+
+        public override void writeToConfig(DataIO.SaveFile config)
+        {
+            base.writeToConfig(config);
         }
     }
 }

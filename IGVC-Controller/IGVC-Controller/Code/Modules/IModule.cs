@@ -4,13 +4,14 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using IGVC_Controller.Code.Registries;
+using IGVC_Controller.DataIO;
 
 namespace IGVC_Controller.Code.Modules
 {
     /// <summary>
     /// Module base class that all module types will inherit from
     /// </summary>
-    class IModule
+    public class IModule
     {
         //public struct module_types {
         //    public static string vision_type = "vision";
@@ -48,7 +49,14 @@ namespace IGVC_Controller.Code.Modules
             /// <para>Source : Any Module</para>
             /// <para>Format : string</para>
             /// </summary>
-            LOG
+            LOG,
+
+            /// <summary>
+            /// Variable that should be indicated to the user but is not necessarily critical
+            /// <para>Source : Any Module</para>
+            /// <para>Format : string</para>
+            /// </summary>
+            STATUS
         }
 
         public struct LOG_TYPES
@@ -68,10 +76,13 @@ namespace IGVC_Controller.Code.Modules
 
         public int moduleID { get; private set; }
 
+        public int modulePriority { get; private set; }
+
         public IModule()
         {
             moduleID = nextModuleID;
             nextModuleID++;
+            this.modulePriority = 100;
         }
 
         public void addSubscription(INTERMODULE_VARIABLE tag) {
@@ -115,5 +126,11 @@ namespace IGVC_Controller.Code.Modules
             if (isBoundToRegistry())
                 this.registry.sendMessageToLogger(this.logTag, severity, message);
         }
+
+        virtual public void loadFromConfig(SaveFile config) { }
+
+        virtual public void writeToConfig(SaveFile config) { }
+
+        virtual public void process() { }
     }
 }
