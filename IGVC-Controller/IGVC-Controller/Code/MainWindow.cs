@@ -16,6 +16,8 @@ using IGVC_Controller.Code.Modules.Vision;
 using IGVC_Controller.DataIO;
 using IGVC_Controller.Code.Modules;
 using IGVC_Controller.Code;
+using IGVC_Controller.Code.Modules.SystemInputs;
+using IGVC_Controller.Code.Modules.Example;
 
 namespace IGVC_Controller
 {
@@ -46,6 +48,16 @@ namespace IGVC_Controller
             this.FormClosing += Form1_FormClosing;
 
             this.setupModules();
+
+            //Console.SetWindowPosition(0, 0);
+            //Console.WindowLeft = 0;
+            //Console.WindowTop = 0;
+            //Console.SetWindowSize(50, 40);
+
+            //this.SetDesktopBounds(3, 0, 500, 800);
+            //this.SetDesktopLocation(0, 0);
+            this.StartPosition = FormStartPosition.Manual;
+            this.DesktopLocation = new Point(0, 0); 
         }
 
         private void setupModules()
@@ -55,6 +67,9 @@ namespace IGVC_Controller
             this.setupModule("StereoVision", new StereoVision());
             this.setupModule("Logger", new Logger());
             this.setupModule("ConsoleLogger", new ConsoleLogger());
+            this.setupModule("RandomDataGenerator", new RandomDataGenerator());
+            this.setupModule("RandomDataListener", new RandomDataListener());
+            this.setupModule("ForcedDelay", new ForcedDelay());
 
             activeModules = config.Read<List<string>>("Active_Modules", new List<string>());
             foreach(string moduleName in moduleNames)
@@ -117,6 +132,20 @@ namespace IGVC_Controller
 
             moduleSelectionWindow.Show();
             moduleSelectionWindow.Focus();
+        }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            if(button2.Text == "start")
+            {
+                registry.start();
+                button2.Text = "stop";
+            }
+            else
+            {
+                registry.stop();
+                button2.Text = "start";
+            }
         }
     }
 }

@@ -23,6 +23,7 @@ namespace IGVC_Controller.Code.Registries
             modules = new List<IModule>();
 
             worker.DoWork += this.runProcessModules;
+            worker.WorkerSupportsCancellation = true;
         }
 
         /// <summary>

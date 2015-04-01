@@ -5,7 +5,7 @@
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProjectGuid>{7B1E8661-A038-4DE7-974F-8DE53E37AA65}</ProjectGuid>
-    <OutputType>WinExe</OutputType>
+    <OutputType>Exe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>IGVC_Controller</RootNamespace>
     <AssemblyName>IGVC-Controller</AssemblyName>
@@ -31,6 +31,9 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
+  <PropertyGroup>
+    <StartupObject />
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="Emgu.CV">
       <HintPath>c:\Emgu\emgucv-windows-x64-gpu 2.4.2.1777\bin\Emgu.CV.dll</HintPath>
@@ -53,6 +56,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Code\DataIO\GatedVariable.cs" />
     <Compile Include="Code\DataIO\Keyboard.cs" />
     <Compile Include="Code\MainWindow.cs">
       <SubType>Form</SubType>
@@ -67,6 +71,8 @@
     <Compile Include="Code\ModuleSelectionWindow.Designer.cs">
       <DependentUpon>ModuleSelectionWindow.cs</DependentUpon>
     </Compile>
+    <Compile Include="Code\Modules\Example\ForcedDelay.cs" />
+    <Compile Include="Code\Modules\Example\RandomDataListener.cs" />
     <Compile Include="Code\Modules\IModule.cs" />
     <Compile Include="Code\Modules\IModuleEditor.cs" />
     <Compile Include="Code\Modules\Logger\ConsoleLogger.cs" />
@@ -77,6 +83,7 @@
     <Compile Include="Code\Modules\NoModulePropertiesWindow.Designer.cs">
       <DependentUpon>NoModulePropertiesWindow.cs</DependentUpon>
     </Compile>
+    <Compile Include="Code\Modules\Example\RandomDataGenerator.cs" />
     <Compile Include="Code\Modules\Vision\StereoVision.cs" />
     <Compile Include="Code\Registries\Registry.cs" />
     <Compile Include="Program.cs" />
@@ -204,6 +211,7 @@
     <Folder Include="Code\Modules\Mapping\" />
     <Folder Include="Code\Modules\Navigation\" />
     <Folder Include="Code\Modules\Positioning\" />
+    <Folder Include="Code\Modules\SystemInputs\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

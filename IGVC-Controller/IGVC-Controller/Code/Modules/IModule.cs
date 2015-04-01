@@ -56,7 +56,12 @@ namespace IGVC_Controller.Code.Modules
             /// <para>Source : Any Module</para>
             /// <para>Format : string</para>
             /// </summary>
-            STATUS
+            STATUS,
+
+            /// <summary>
+            /// This is just to be used for module example
+            /// </summary>
+            EXAMPLE
         }
 
         public struct LOG_TYPES

@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using IGVC_Controller.DataIO;
 
 namespace IGVC_Controller.Code.Modules.Logger
 {
@@ -28,7 +29,7 @@ namespace IGVC_Controller.Code.Modules.Logger
             }
         }
 
-        public override void writeToConfig(DataIO.SaveFile config)
+        public override void writeToConfig(SaveFile config)
         {
             base.writeToConfig(config);
         }
