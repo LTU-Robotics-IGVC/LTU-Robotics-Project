@@ -22,7 +22,7 @@ namespace IGVC_Controller.Code.Modules.SystemInputs
         public override void loadFromConfig(SaveFile config)
         {
             maxVal = config.Read<double>("maxVal", 1);
-            minVal = config.Read<double>("minVal", 1);
+            minVal = config.Read<double>("minVal", 0);
 
             base.loadFromConfig(config);
         }
