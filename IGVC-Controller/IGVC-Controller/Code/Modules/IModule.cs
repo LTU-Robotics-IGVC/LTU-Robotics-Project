@@ -137,5 +137,16 @@ namespace IGVC_Controller.Code.Modules
         virtual public void writeToConfig(SaveFile config) { config.Write<int>("priority", this.modulePriority); }
 
         virtual public void process() { }
+       
+        /// <summary>
+        /// Called when the registry starts up before it begins to process the modules
+        /// </summary>
+        /// <returns>Returns true if startup is successful</returns>
+        virtual public bool startup() { return true; }
+
+        /// <summary>
+        /// Called when the registry stops processing the modules
+        /// </summary>
+        virtual public void shutdown() { }
     }
 }

@@ -88,22 +88,39 @@ namespace IGVC_Controller.Code.Registries
                     }
                 }
             }
+
+            this.sendData(IModule.INTERMODULE_VARIABLE.STATUS, "REGISTRY is begining to SHUTDOWN");
+
+            for(int i = 0; i < modules.Count; i++)
+            {
+                modules[i].shutdown();
+            }
+
+            this.sendData(IModule.INTERMODULE_VARIABLE.STATUS, "REGISTRY has SUCCESSFULLY SHUTDOWN");
         }
 
-        public void start()
+        /// <summary>
+        /// Starts the registry running
+        /// </summary>
+        /// <returns>Returns false if registry failes to start</returns>
+        public bool start()
         {
+            bool isStarted = false;
             if(!shouldBeRunning)
             {
                 this.shouldBeRunning = true;
                 this.sortModulesByPriority();
-                worker.RunWorkerAsync();
+                if(isStarted = this.startupModules())
+                    worker.RunWorkerAsync();
             }
+
+            return isStarted;
         }
 
         public void stop()
         {
             this.shouldBeRunning = false;
-            worker.CancelAsync();
+            this.sendData(IModule.INTERMODULE_VARIABLE.STATUS, "REGISTRY has been notified to SHUTDOWN");
         }
 
         public void sortModulesByPriority()
@@ -115,6 +132,38 @@ namespace IGVC_Controller.Code.Registries
             }
 
             modules = sortedList.Values.ToList<IModule>();
+        }
+
+        /// <summary>
+        /// Runs the startup of each module and will return true if all startup successfully
+        /// </summary>
+        /// <returns></returns>
+        private bool startupModules()
+        {
+            for(int i = 0; i < modules.Count; i++)
+            {
+                this.sendData(IModule.INTERMODULE_VARIABLE.STATUS, "Module " + modules[i].moduleID + ":"
+                               + MainWindow.instance.moduleNameDictionary[modules[i]] + " with priority "
+                               + modules[i].modulePriority + " is being INITIALIZED");
+                if(modules[i].startup())
+                {
+                    this.sendData(IModule.INTERMODULE_VARIABLE.STATUS, "Module " + modules[i].moduleID + ":"
+                            + MainWindow.instance.moduleNameDictionary[modules[i]] + " with priority "
+                            + modules[i].modulePriority + " has SUCCESSFULLY INITIALIZED");
+                }
+                else
+                {
+                    this.sendData(IModule.INTERMODULE_VARIABLE.STATUS, "Module " + modules[i].moduleID + ":"
+                            + MainWindow.instance.moduleNameDictionary[modules[i]] + " with priority "
+                            + modules[i].modulePriority + " has FAILED to INITIALIZE");
+                    
+                    this.sendData(IModule.INTERMODULE_VARIABLE.STATUS, "SYSTEM is being ABORTED");
+
+                    return false;
+                }
+            }
+
+            return true;
         }
     }
 }

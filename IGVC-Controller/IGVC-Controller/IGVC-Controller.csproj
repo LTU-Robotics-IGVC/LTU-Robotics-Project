@@ -75,6 +75,7 @@
     <Compile Include="Code\Modules\Example\RandomDataListener.cs" />
     <Compile Include="Code\Modules\IModule.cs" />
     <Compile Include="Code\Modules\IModuleEditor.cs" />
+    <Compile Include="Code\Modules\LIDAR\LIDAR_Interface.cs" />
     <Compile Include="Code\Modules\Logger\ConsoleLogger.cs" />
     <Compile Include="Code\Modules\Logger\Logger.cs" />
     <Compile Include="Code\Modules\NoModulePropertiesWindow.cs">
