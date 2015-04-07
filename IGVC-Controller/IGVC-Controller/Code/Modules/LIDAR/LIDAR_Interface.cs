@@ -95,6 +95,7 @@ namespace IGVC_Controller.Code.Modules.LIDAR
                 
                 //Need to project distances[angle] to a list of points
                 this.sendDataToRegistry(INTERMODULE_VARIABLE.LIDAR_RAW, distances);
+                this.sendDataToRegistry(INTERMODULE_VARIABLE.STATUS, distances[540].ToString());
             }
             catch(Exception e)
             {
