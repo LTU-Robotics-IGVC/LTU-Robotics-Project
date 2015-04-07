@@ -59,6 +59,13 @@ namespace IGVC_Controller.Code.Modules
             STATUS,
 
             /// <summary>
+            /// Variable that contains distance information (mm) per angle (in system units)
+            /// <para>Source : LIDAR Interfaces</para>
+            /// <para>Format : List(long) : distances[angles]</para>
+            /// </summary>
+            LIDAR_RAW,
+
+            /// <summary>
             /// This is just to be used for module example
             /// </summary>
             EXAMPLE

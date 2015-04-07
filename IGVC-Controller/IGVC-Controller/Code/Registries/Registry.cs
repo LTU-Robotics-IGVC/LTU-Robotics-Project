@@ -157,7 +157,7 @@ namespace IGVC_Controller.Code.Registries
                             + MainWindow.instance.moduleNameDictionary[modules[i]] + " with priority "
                             + modules[i].modulePriority + " has FAILED to INITIALIZE");
                     
-                    this.sendData(IModule.INTERMODULE_VARIABLE.STATUS, "SYSTEM is being ABORTED");
+                    this.sendData(IModule.INTERMODULE_VARIABLE.STATUS, "REGISTRY is being ABORTED");
 
                     return false;
                 }
