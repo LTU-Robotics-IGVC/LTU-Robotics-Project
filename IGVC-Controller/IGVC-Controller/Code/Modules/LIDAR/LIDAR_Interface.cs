@@ -10,10 +10,10 @@ namespace IGVC_Controller.Code.Modules.LIDAR
 {
     class LIDAR_Interface : IModule
     {
-        string port_name = "COM3";
-        int baudrate = 115200;
-        int start_step = 0;
-        int end_step = 1080;
+        public string port_name = "COM3";
+        public int baudrate = 115200;
+        public int start_step = 0;
+        public int end_step = 1080;
 
         SerialPort urg;
 
@@ -24,11 +24,21 @@ namespace IGVC_Controller.Code.Modules.LIDAR
 
         public override void loadFromConfig(IGVC_Controller.DataIO.SaveFile config)
         {
+            this.port_name = config.Read<string>("port_name", "COM3");
+            this.baudrate = config.Read<int>("baudrate", 115200);
+            this.start_step = config.Read<int>("start_step", 0);
+            this.end_step = config.Read<int>("end_step", 1080);
+            
             base.loadFromConfig(config);
         }
 
         public override void writeToConfig(IGVC_Controller.DataIO.SaveFile config)
         {
+            config.Write<string>("port_name", this.port_name);
+            config.Write<int>("baudrate", this.baudrate);
+            config.Write<int>("start_step", this.start_step);
+            config.Write<int>("end_step", this.end_step);
+
             base.writeToConfig(config);
         }
 
@@ -106,6 +116,11 @@ namespace IGVC_Controller.Code.Modules.LIDAR
                 return;
             }
             base.process();
+        }
+
+        public override System.Windows.Forms.Form getEditorForm()
+        {
+            return new LIDAR_InterfaceEditor();
         }
     }
 }

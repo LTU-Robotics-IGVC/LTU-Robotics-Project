@@ -67,6 +67,7 @@
             this.PriorityBox.Name = "PriorityBox";
             this.PriorityBox.Size = new System.Drawing.Size(120, 26);
             this.PriorityBox.TabIndex = 2;
+            this.PriorityBox.ValueChanged += new System.EventHandler(this.PriorityBox_ValueChanged);
             // 
             // label2
             // 
@@ -76,6 +77,7 @@
             this.label2.Size = new System.Drawing.Size(56, 20);
             this.label2.TabIndex = 3;
             this.label2.Text = "Priority";
+            this.label2.Click += new System.EventHandler(this.label2_Click);
             // 
             // NoModulePropertiesWindow
             // 

@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using IGVC_Controller.Code.Registries;
 using IGVC_Controller.DataIO;
+using System.Windows.Forms;
 
 namespace IGVC_Controller.Code.Modules
 {
@@ -155,5 +156,10 @@ namespace IGVC_Controller.Code.Modules
         /// Called when the registry stops processing the modules
         /// </summary>
         virtual public void shutdown() { }
+
+        virtual public Form getEditorForm()
+        {
+            return new NoModulePropertiesWindow();
+        }
     }
 }

@@ -69,13 +69,35 @@ namespace IGVC_Controller.Code
 
         private void EditModuleProperties_Click(object sender, EventArgs e)
         {
-            NoModulePropertiesWindow form = new NoModulePropertiesWindow();
+            Form form = new NoModulePropertiesWindow();
+            bool formCreated = false;
+
             if (!wasActiveListLastChanged)
-                ((IModuleEditor)form).setModule(MainWindow.instance.moduleDictionary[(string)inactiveModuleList.SelectedItem]);
+            {
+                if (inactiveModuleList.SelectedItem != null)
+                {
+                    IModule module = MainWindow.instance.moduleDictionary[(string)inactiveModuleList.SelectedItem];
+                    form = module.getEditorForm();
+                    ((IModuleEditor)form).setModule(module);
+                    formCreated = true;
+                }
+            }
 
             if (wasActiveListLastChanged)
-                ((IModuleEditor)form).setModule(MainWindow.instance.moduleDictionary[(string)activeModuleList.SelectedItem]);
-            form.Show();
+            {
+                if (activeModuleList.SelectedItem != null)
+                {
+                    IModule module = MainWindow.instance.moduleDictionary[(string)activeModuleList.SelectedItem];
+                    form = module.getEditorForm();
+                    ((IModuleEditor)form).setModule(module);
+                    formCreated = true;
+                }
+            }
+
+            if (formCreated)
+            {
+                form.Show();
+            }
         }
 
         private void activeModuleList_SelectedIndexChanged(object sender, EventArgs e)

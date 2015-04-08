@@ -77,6 +77,12 @@
     <Compile Include="Code\Modules\IModuleEditor.cs" />
     <Compile Include="Code\Modules\LIDAR\LIDAR_Interface.cs" />
     <Compile Include="Code\DataIO\SCIP_library.cs" />
+    <Compile Include="Code\Modules\LIDAR\LIDAR_InterfaceEditor.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Code\Modules\LIDAR\LIDAR_InterfaceEditor.Designer.cs">
+      <DependentUpon>LIDAR_InterfaceEditor.cs</DependentUpon>
+    </Compile>
     <Compile Include="Code\Modules\Logger\ConsoleLogger.cs" />
     <Compile Include="Code\Modules\Logger\Logger.cs" />
     <Compile Include="Code\Modules\NoModulePropertiesWindow.cs">
@@ -109,6 +115,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Code\ModuleSelectionWindow.resx">
       <DependentUpon>ModuleSelectionWindow.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Code\Modules\LIDAR\LIDAR_InterfaceEditor.resx">
+      <DependentUpon>LIDAR_InterfaceEditor.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Code\Modules\NoModulePropertiesWindow.resx">
       <DependentUpon>NoModulePropertiesWindow.cs</DependentUpon>
