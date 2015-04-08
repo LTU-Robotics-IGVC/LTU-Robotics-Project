@@ -1,4 +1,7 @@
-﻿using System;
+﻿using Emgu.CV;
+using Emgu.CV.GPU;
+using Emgu.CV.Structure;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -19,7 +22,51 @@ namespace IGVC_Controller.Code.Modules.Visualizer.LIDAR
 
         public void setLIDARData(List<long> data)
         {
+            this.ForwardDistanceLabel.Text = "Forward Distance: " + data[540].ToString();
 
+            Image<Bgr, byte> img = new Image<Bgr, byte>(601, 601);
+            for(int i = 5; i <= 30; i+=5)
+            {
+                img.Draw(new CircleF(new PointF(300, 300), i*10), new Bgr(Color.Gray), 1);
+            }
+
+            img.Draw(new LineSegment2D(new Point(0, 300), new Point(600, 300)), new Bgr(Color.LightGray), 1);
+            img.Draw(new LineSegment2D(new Point(300, 0), new Point(300, 600)), new Bgr(Color.LightGray), 1);
+
+            int c = data.Count;
+            for(int i = 0; i < c; i++)
+            {
+                double valInMeters = (double)data[i]/1000.0;
+                if(valInMeters == 0 || valInMeters >= 30.0)
+                    continue;
+
+                double angle = /*angle ratio*/ ((double)i / (double)c) * /*angle range*/ (135.0 * 2) 
+                    - /*angle offset*/ 135.0;
+
+                //to radians
+                angle = (angle / 180.0) * Math.PI;
+                //angle 0degrees = up
+
+                //y in meters
+                double yMeters = (Math.Sin(angle) * valInMeters);
+                //y in pixels (300 pixels = 30 meters | 10 pixels = 1 meter
+                int y = (int)(yMeters * 10.0);
+
+                //adjust y for screen coords (+300y is 0y | 0y is 300y | -300y is 600y
+                y = -y + 300;
+
+                //x in meters
+                double xMeters = (Math.Cos(angle) * valInMeters);
+                //x in pixels (10 pixels = 1 meter)
+                int x = (int)(xMeters * 10.0);
+
+                //adjust x for screen coords (-300x is 0x | 0x is 300x | 300x is 600x)
+                x = x + 300;
+
+                img.Data[y, x, 0] = 255;
+            }
+
+            this.LIDAR_Image.Image = img;
         }
     }
 }

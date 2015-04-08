@@ -38,6 +38,9 @@
     <Reference Include="Emgu.CV">
       <HintPath>c:\Emgu\emgucv-windows-x64-gpu 2.4.2.1777\bin\Emgu.CV.dll</HintPath>
     </Reference>
+    <Reference Include="Emgu.CV.GPU">
+      <HintPath>..\..\..\..\..\..\..\Emgu\emgucv-windows-x64-gpu 2.4.2.1777\bin\Emgu.CV.GPU.dll</HintPath>
+    </Reference>
     <Reference Include="Emgu.CV.UI">
       <HintPath>c:\Emgu\emgucv-windows-x64-gpu 2.4.2.1777\bin\Emgu.CV.UI.dll</HintPath>
     </Reference>
