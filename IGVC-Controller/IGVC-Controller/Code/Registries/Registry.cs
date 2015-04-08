@@ -95,7 +95,7 @@ namespace IGVC_Controller.Code.Registries
             {
                 modules[i].shutdown();
             }
-
+            
             this.sendData(IModule.INTERMODULE_VARIABLE.STATUS, "REGISTRY has SUCCESSFULLY SHUTDOWN");
         }
 
@@ -140,7 +140,9 @@ namespace IGVC_Controller.Code.Registries
         /// <returns></returns>
         private bool startupModules()
         {
-            for(int i = 0; i < modules.Count; i++)
+            bool canStart = true;
+            int i;
+            for(i = 0; i < modules.Count; i++)
             {
                 this.sendData(IModule.INTERMODULE_VARIABLE.STATUS, "Module " + modules[i].moduleID + ":"
                                + MainWindow.instance.moduleNameDictionary[modules[i]] + " with priority "
@@ -159,11 +161,26 @@ namespace IGVC_Controller.Code.Registries
                     
                     this.sendData(IModule.INTERMODULE_VARIABLE.STATUS, "REGISTRY is being ABORTED");
 
-                    return false;
+                    canStart = false;
+
+                    break;
                 }
             }
 
-            return true;
+            if(!canStart)
+            {
+                this.sendData(IModule.INTERMODULE_VARIABLE.STATUS, "REGISTRY is begining to SHUTDOWN");
+
+                while(i >= 0)
+                {
+                    modules[i].shutdown();
+                    i--;
+                }
+
+                this.sendData(IModule.INTERMODULE_VARIABLE.STATUS, "REGISTRY has SUCCESSFULLY SHUTDOWN");
+            }
+
+            return canStart;
         }
     }
 }
