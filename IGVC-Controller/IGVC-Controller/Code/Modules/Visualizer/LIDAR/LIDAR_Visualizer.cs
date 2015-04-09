@@ -11,12 +11,18 @@ namespace IGVC_Controller.Code.Modules.Visualizer
     class LIDAR_Visualizer : IModule
     {
         GatedVariable LIDARdata = new GatedVariable();
-        LIDAR_Visualizer_Form form;// = new LIDAR_Visualizer_Form();
+        LIDAR_Visualizer_Form form;// = new LIDAR_Visualizer_Form();\
+
+        delegate void delegateCloseForm();
+
+        delegate void delegateSetFormData(object data);
+        private delegateSetFormData setFormDataDelegate;
 
         public LIDAR_Visualizer()
         {
             this.addSubscription(INTERMODULE_VARIABLE.LIDAR_RAW);
             this.modulePriority = 100;
+            this.setFormDataDelegate = this.setFormData;
         }
 
         public override void recieveDataFromRegistry(INTERMODULE_VARIABLE tag, object data)
@@ -28,7 +34,11 @@ namespace IGVC_Controller.Code.Modules.Visualizer
         public override void process()
         {
             LIDARdata.shiftObject();
-            this.form.setLIDARData((List<long>)LIDARdata.getObject());
+            if (form.InvokeRequired)
+            {
+                form.Invoke(this.setFormDataDelegate, new object[] { LIDARdata.getObject() });
+            }
+
             base.process();
         }
 
@@ -42,9 +52,28 @@ namespace IGVC_Controller.Code.Modules.Visualizer
 
         public override void shutdown()
         {
-            form.Close();
+            if (form.InvokeRequired)
+            {
+                delegateCloseForm del = this.closeForm;
+                form.Invoke(del, null);
+            }
+            else
+            {
+                form.Close();
+            }
 
             base.shutdown();
+        }
+
+        
+        private void closeForm()
+        {
+            form.Close();
+        }
+
+        private void setFormData(object data)
+        {
+            form.setLIDARData((List<long>)data);
         }
     }
 }

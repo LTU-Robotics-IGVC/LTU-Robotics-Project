@@ -37,15 +37,16 @@
             // ForwardDistanceLabel
             // 
             this.ForwardDistanceLabel.AutoSize = true;
-            this.ForwardDistanceLabel.Location = new System.Drawing.Point(13, 13);
+            this.ForwardDistanceLabel.Location = new System.Drawing.Point(12, 10);
             this.ForwardDistanceLabel.Name = "ForwardDistanceLabel";
-            this.ForwardDistanceLabel.Size = new System.Drawing.Size(142, 20);
+            this.ForwardDistanceLabel.Size = new System.Drawing.Size(126, 17);
             this.ForwardDistanceLabel.TabIndex = 0;
             this.ForwardDistanceLabel.Text = "Forward Distance: ";
             // 
             // LIDAR_Image
             // 
-            this.LIDAR_Image.Location = new System.Drawing.Point(12, 48);
+            this.LIDAR_Image.Location = new System.Drawing.Point(11, 38);
+            this.LIDAR_Image.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.LIDAR_Image.Name = "LIDAR_Image";
             this.LIDAR_Image.Size = new System.Drawing.Size(601, 601);
             this.LIDAR_Image.TabIndex = 2;
@@ -53,12 +54,13 @@
             // 
             // LIDAR_Visualizer_Form
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(635, 670);
+            this.ClientSize = new System.Drawing.Size(626, 646);
             this.ControlBox = false;
             this.Controls.Add(this.LIDAR_Image);
             this.Controls.Add(this.ForwardDistanceLabel);
+            this.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.Name = "LIDAR_Visualizer_Form";
             this.Text = "LIDAR_Visualizer_Form";
             ((System.ComponentModel.ISupportInitialize)(this.LIDAR_Image)).EndInit();

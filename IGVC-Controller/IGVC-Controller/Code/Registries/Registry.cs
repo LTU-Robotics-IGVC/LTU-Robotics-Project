@@ -128,7 +128,14 @@ namespace IGVC_Controller.Code.Registries
             SortedList<int, IModule> sortedList = new SortedList<int, IModule>();
             foreach (IModule module in modules)
             {
-                sortedList.Add(module.modulePriority, module);
+                int index = module.modulePriority;
+
+                while(sortedList.Keys.Contains(index))
+                {
+                    index++;
+                }
+
+                sortedList.Add(index, module);
             }
 
             modules = sortedList.Values.ToList<IModule>();
