@@ -76,6 +76,13 @@
     </Compile>
     <Compile Include="Code\Modules\Example\ForcedDelay.cs" />
     <Compile Include="Code\Modules\Example\RandomDataListener.cs" />
+    <Compile Include="Code\Modules\GPS\GPS_Interface.cs" />
+    <Compile Include="Code\Modules\GPS\GPS_InterfaceEditor.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Code\Modules\GPS\GPS_InterfaceEditor.Designer.cs">
+      <DependentUpon>GPS_InterfaceEditor.cs</DependentUpon>
+    </Compile>
     <Compile Include="Code\Modules\IModule.cs" />
     <Compile Include="Code\Modules\IModuleEditor.cs" />
     <Compile Include="Code\Modules\LIDAR\LIDAR_Interface.cs" />
@@ -125,6 +132,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Code\ModuleSelectionWindow.resx">
       <DependentUpon>ModuleSelectionWindow.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Code\Modules\GPS\GPS_InterfaceEditor.resx">
+      <DependentUpon>GPS_InterfaceEditor.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Code\Modules\LIDAR\LIDAR_InterfaceEditor.resx">
       <DependentUpon>LIDAR_InterfaceEditor.cs</DependentUpon>
