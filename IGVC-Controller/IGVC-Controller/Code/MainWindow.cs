@@ -76,6 +76,17 @@ namespace IGVC_Controller
             this.setupModule("LIDAR_Visualizer", new LIDAR_Visualizer());
 
             activeModules = config.Read<List<string>>("Active_Modules", new List<string>());
+
+            //Check if the name still corresponds to a module
+            for(int i = 0; i < activeModules.Count; i++)
+            {
+                if (!moduleNames.Contains(activeModules[i]))
+                {
+                    activeModules.RemoveAt(i);
+                    i--;
+                }
+            }
+
             foreach(string moduleName in moduleNames)
             {
                 if(activeModules.Contains(moduleName))
