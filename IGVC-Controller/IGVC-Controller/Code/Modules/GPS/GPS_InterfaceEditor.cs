@@ -10,7 +10,7 @@ using System.Windows.Forms;
 
 namespace IGVC_Controller.Code.Modules.GPS
 {
-    public partial class GPS_InterfaceEditor : Form
+    public partial class GPS_InterfaceEditor : Form, IModuleEditor
     {
         GPS_Interface module;
 
