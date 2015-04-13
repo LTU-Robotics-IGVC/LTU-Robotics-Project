@@ -20,6 +20,7 @@ using IGVC_Controller.Code.Modules.SystemInputs;
 using IGVC_Controller.Code.Modules.Example;
 using IGVC_Controller.Code.Modules.LIDAR;
 using IGVC_Controller.Code.Modules.Visualizer;
+using IGVC_Controller.Code.Modules.GPS;
 
 namespace IGVC_Controller
 {
@@ -74,6 +75,7 @@ namespace IGVC_Controller
             this.setupModule("ForcedDelay", new ForcedDelay());
             this.setupModule("LIDAR_Interface", new LIDAR_Interface());
             this.setupModule("LIDAR_Visualizer", new LIDAR_Visualizer());
+            this.setupModule("GPS_Interface", new GPS_Interface());
 
             activeModules = config.Read<List<string>>("Active_Modules", new List<string>());
 
