@@ -11,7 +11,7 @@ namespace IGVC_Controller.Code.Modules.GPS
 {
     class GPS_Interface : IModule
     {
-        SerialPort urg;
+        SerialPort phoneGPS;
 
         public string port_name = "COM1";
         public int baudrate = 115200;
@@ -46,10 +46,12 @@ namespace IGVC_Controller.Code.Modules.GPS
 
             try //opening the serail port
             {
-                urg = new SerialPort(port_name, baudrate);
-                urg.NewLine = "\n\n";
+                phoneGPS = new SerialPort(port_name, baudrate);
+                //As far as I am aware you do not need to change the NewLine indicator
+                //The NewLine character "\n\n" was specific for the LIDAR
+                //phoneGPS.NewLine = "\n\n";
 
-                urg.Open();
+                phoneGPS.Open();
                 this.sendDataToRegistry(INTERMODULE_VARIABLE.STATUS, "\t\tGPS has successfully connected");
             }
             catch(Exception e)
@@ -65,7 +67,7 @@ namespace IGVC_Controller.Code.Modules.GPS
         public override void shutdown()
         {
             this.sendDataToRegistry(INTERMODULE_VARIABLE.STATUS, "\tGPS is turning off");
-            urg.Close();
+            phoneGPS.Close();
 
             base.shutdown();
         }
@@ -74,8 +76,11 @@ namespace IGVC_Controller.Code.Modules.GPS
         {
             try
             {
-                string coord = urg.ReadLine();//Raw data scan
+                string coord = phoneGPS.ReadLine();//Raw data scan
 
+                //Note that status information is for somewhat major events (not periodic)
+                //This is okay when you are specifically testing if it works but make sure
+                //to remove (or comment out) the "Coordinates were Parsed Successfully" case
                 if(Parse(coord))//Still need to test logic of this Funciton
                     this.sendDataToRegistry(INTERMODULE_VARIABLE.STATUS, "Coordinates were Parsed Successfully");
                 else
