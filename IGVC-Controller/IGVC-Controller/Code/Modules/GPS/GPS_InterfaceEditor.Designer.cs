@@ -113,6 +113,7 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(605, 352);
+            this.ControlBox = false;
             this.Controls.Add(this.label2);
             this.Controls.Add(this.PriorityBox);
             this.Controls.Add(this.OKButton);
