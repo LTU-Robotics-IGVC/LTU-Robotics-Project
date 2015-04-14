@@ -74,24 +74,26 @@ namespace IGVC_Controller.Code.Modules.GPS
 
         public override void process()
         {
-            try
+            if(phoneGPS.IsOpen)
             {
-                string coord = phoneGPS.ReadLine();//Raw data scan
+                try
+                {
+                    string coord = phoneGPS.ReadLine();//Raw data scan
 
-                //Note that status information is for somewhat major events (not periodic)
-                //This is okay when you are specifically testing if it works but make sure
-                //to remove (or comment out) the "Coordinates were Parsed Successfully" case
-                if(Parse(coord))//Still need to test logic of this Funciton
-                    this.sendDataToRegistry(INTERMODULE_VARIABLE.STATUS, "Coordinates were Parsed Successfully");
-                else
-                    this.sendDataToRegistry(INTERMODULE_VARIABLE.STATUS, "NEMA data was not recognized");
+                    //Note that status information is for somewhat major events (not periodic)
+                    //This is okay when you are specifically testing if it works but make sure
+                    //to remove (or comment out) the "Coordinates were Parsed Successfully" case
+                    if (Parse(coord))//Still need to test logic of this Funciton
+                        this.sendDataToRegistry(INTERMODULE_VARIABLE.STATUS, "Latitude = " + Lat + ", Longitude = " + Long);
+                    else
+                    { /*this.sendDataToRegistry(INTERMODULE_VARIABLE.STATUS, "NEMA data was not recognized");*/}
+                }
+                catch { /*Program ran to fast to read phoneGPS*/}
 
             }
-            catch(Exception e)
+            else
             {
-                this.sendDataToRegistry(INTERMODULE_VARIABLE.STATUS, "Error in process for Module "
-                    + MainWindow.instance.moduleNameDictionary[this] + " with priority "
-                    + this.modulePriority + " with excepetion : " + e.ToString());
+                this.sendDataToRegistry(INTERMODULE_VARIABLE.STATUS, "Serial Port is not Open, GPS could not be read");
             }
             base.process();
         }
@@ -107,23 +109,23 @@ namespace IGVC_Controller.Code.Modules.GPS
 
         private bool Parse(string sentence)
         {
-            switch(sentence)
+            string[] Words = GetWords(sentence);
+            switch(Words[0])
             {
-                case "$GPGLL":
-                    return ParseGPGLL(sentence);
+                case "$GPGGA":
+                    return ParseGPGLL(Words);
                 default:
                     return false;//Indicate that the sentence was not recognized
             }
         }
 
-        private bool ParseGPGLL(string sentence)
+        private bool ParseGPGLL(string[] Words)
         {
             //Divide the senetnce into words
-            string[] Words = GetWords(sentence);
-            if (sentence != "")
+            if (Words != null)
             {
-                Lat = Words[1] + " " + Words[2]; //Ex. "2916.26 N"
-                Long = Words[3] + " " + Words[4];//Ex. "2345.45 W"
+                Lat = Words[2] + " " + Words[3]; //Ex. "2916.26 N"
+                Long = Words[4] + " " + Words[5];//Ex. "2345.45 W"
                 return true;
             }
             else { return false; }
