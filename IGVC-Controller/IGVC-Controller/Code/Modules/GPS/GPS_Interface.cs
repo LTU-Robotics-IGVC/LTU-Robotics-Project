@@ -84,7 +84,9 @@ namespace IGVC_Controller.Code.Modules.GPS
                     //This is okay when you are specifically testing if it works but make sure
                     //to remove (or comment out) the "Coordinates were Parsed Successfully" case
                     if (Parse(coord))//Still need to test logic of this Funciton
-                        this.sendDataToRegistry(INTERMODULE_VARIABLE.STATUS, "Latitude = " + Lat + ", Longitude = " + Long);
+                    {
+                        this.sendDataToRegistry(INTERMODULE_VARIABLE.GPS_COORDS, Lat + "-" + Long);//'-' is used to distinguish Lat and Long
+                    }
                     else
                     { /*this.sendDataToRegistry(INTERMODULE_VARIABLE.STATUS, "NEMA data was not recognized");*/}
                 }
@@ -93,7 +95,7 @@ namespace IGVC_Controller.Code.Modules.GPS
             }
             else
             {
-                this.sendDataToRegistry(INTERMODULE_VARIABLE.STATUS, "Serial Port is not Open, GPS could not be read");
+                this.sendDataToRegistry(INTERMODULE_VARIABLE.STATUS, "Serial Port is not Open, GPS could not be read data");
             }
             base.process();
         }
@@ -124,8 +126,9 @@ namespace IGVC_Controller.Code.Modules.GPS
             //Divide the senetnce into words
             if (Words != null)
             {
-                Lat = Words[2] + " " + Words[3]; //Ex. "2916.26 N"
-                Long = Words[4] + " " + Words[5];//Ex. "2345.45 W"
+                //comma is used for ease of Split numerica and directional value
+                Lat = Words[2] + "," + Words[3]; //Ex. "2916.26,N"
+                Long = Words[4] + "," + Words[5];//Ex. "2345.45,W"
                 return true;
             }
             else { return false; }
