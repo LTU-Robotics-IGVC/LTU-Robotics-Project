@@ -80,7 +80,25 @@ namespace IGVC_Controller.Code.Modules.Visualizer.LIDAR
                 if (i == 540 + (540 / 2))
                     this.ForwardDistanceLabel.Text = xMeters.ToString() + " : " + yMeters.ToString();
 
-                img.Data[y, x, 0] = 255;
+                img.Data[y, x, 0] = 0;//Blue
+                img.Data[y, x, 1] = 255;//Green
+                img.Data[y, x, 2] = 255;//Red
+
+                y++;
+                img.Data[y, x, 0] = 0;//Blue
+                img.Data[y, x, 1] = 255;//Green
+                img.Data[y, x, 2] = 255;//Red
+
+                y--;
+                x++;
+                img.Data[y, x, 0] = 0;//Blue
+                img.Data[y, x, 1] = 255;//Green
+                img.Data[y, x, 2] = 255;//Red
+
+                y++;
+                img.Data[y, x, 0] = 0;//Blue
+                img.Data[y, x, 1] = 255;//Green
+                img.Data[y, x, 2] = 255;//Red
             }
 
             this.LIDAR_Image.Image = img;
