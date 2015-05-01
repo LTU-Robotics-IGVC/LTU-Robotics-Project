@@ -21,16 +21,18 @@ namespace IGVC_Controller.Code.Modules.Visualizer.Vision
 
         public void setImage(int index, Image<Bgr, byte> image)
         {
+            image = image.Resize(0.7, Emgu.CV.CvEnum.INTER.CV_INTER_LINEAR);
             switch(index)
             {
                 case 0:
-                    this.imageBox1.Image = image;
+                    this.pictureBox1.Image = image.ToBitmap();
                     break;
                 case 1:
-                    this.imageBox2.Image = image;
+                    this.pictureBox2.Image = image.ToBitmap();
                     break;
                 case 2:
-                    this.imageBox3.Image = image;
+                    if(image != null && image.Width > 1 && image.Height > 1)
+                        this.pictureBox3.Image = image.ToBitmap();
                     break;
             }
         }

@@ -15,8 +15,8 @@ namespace IGVC_Controller.Code.Modules.Cameras
         bool leftGoesToCapture1 = true;
         int cap1Index = 1;
         int cap2Index = 2;
-        int imageWidth = 640;
-        int imageHeight = 480;
+        int imageWidth = 320;
+        int imageHeight = 240;
 
         public DualWebcam() : base()
         {
@@ -37,9 +37,9 @@ namespace IGVC_Controller.Code.Modules.Cameras
 
         public override bool startup()
         {
-            capture1 = new Capture(2);
+            capture1 = new Capture(0);
             capture1.Start();
-            capture2 = new Capture(1);
+            capture2 = new Capture(2);
             return base.startup();
         }
 
@@ -57,8 +57,8 @@ namespace IGVC_Controller.Code.Modules.Cameras
 
             if(leftGoesToCapture1)
             {
-                left = capture1.QueryFrame().Resize(imageWidth, imageHeight, Emgu.CV.CvEnum.INTER.CV_INTER_LINEAR);
-                right = capture2.QueryFrame().Resize(imageWidth, imageHeight, Emgu.CV.CvEnum.INTER.CV_INTER_LINEAR);
+                left = new Image<Bgr, byte>(capture1.QueryFrame().Resize(imageWidth, imageHeight, Emgu.CV.CvEnum.INTER.CV_INTER_LINEAR).ToBitmap());
+                right = new Image<Bgr, byte>(capture2.QueryFrame().Resize(imageWidth, imageHeight, Emgu.CV.CvEnum.INTER.CV_INTER_LINEAR).ToBitmap());
             }
             else
             {
@@ -66,7 +66,9 @@ namespace IGVC_Controller.Code.Modules.Cameras
                 left = capture2.QueryFrame().Resize(imageWidth, imageHeight, Emgu.CV.CvEnum.INTER.CV_INTER_LINEAR);
                 right = capture1.QueryFrame().Resize(imageWidth, imageHeight, Emgu.CV.CvEnum.INTER.CV_INTER_LINEAR);
             }
-
+            IntrinsicCameraParameters icp = new IntrinsicCameraParameters();
+            //icp.DistortionCoeffs = new Matrix<double>(new double[] { 1, 1, 0, 0 });
+            //left = icp.Undistort<Bgr, byte>(left);
             this.sendDataToRegistry(INTERMODULE_VARIABLE.VISION_LEFT, left);
             this.sendDataToRegistry(INTERMODULE_VARIABLE.VISION_RIGHT, right);
         }

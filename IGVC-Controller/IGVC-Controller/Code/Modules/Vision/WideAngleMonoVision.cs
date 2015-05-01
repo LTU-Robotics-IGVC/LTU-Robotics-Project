@@ -25,18 +25,28 @@ namespace IGVC_Controller.Code.Modules.Vision
 
         public override void process()
         {
-            using(Stitcher stitcher = new Stitcher(false))
+            /*using(Stitcher stitcher = new Stitcher(false))
             {
                 leftCamFeed.shiftObject();
                 rightCamFeed.shiftObject();
 
                 Image<Bgr, byte> img1 = (Image<Bgr, byte>)leftCamFeed.getObject();
+                img1.Resize(320, 240, Emgu.CV.CvEnum.INTER.CV_INTER_LINEAR);
                 Image<Bgr, byte> img2 = (Image<Bgr, byte>)rightCamFeed.getObject();
+                img2.Resize(320, 240, Emgu.CV.CvEnum.INTER.CV_INTER_LINEAR);
 
                 Image<Bgr, byte> stitchedImage = stitcher.Stitch(new Image<Bgr, byte>[] { img1, img2 });
 
                 this.sendDataToRegistry(INTERMODULE_VARIABLE.STITCHED_IMAGE, stitchedImage);
-            }
+            }*/
+            leftCamFeed.shiftObject();
+            rightCamFeed.shiftObject();
+            Image<Bgr, byte> img1 = (Image<Bgr, byte>)leftCamFeed.getObject();
+            Image<Bgr, byte> img2 = (Image<Bgr, byte>)rightCamFeed.getObject();
+            Image<Bgr, byte> combindedImage = new Image<Bgr, byte>(img1.Width + img2.Width, img1.Height);
+            combindedImage = img1.ConcateHorizontal(img2);
+
+            this.sendDataToRegistry(INTERMODULE_VARIABLE.STITCHED_IMAGE, combindedImage);
             base.process();
         }
 
