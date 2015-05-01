@@ -85,5 +85,10 @@ namespace IGVC_Controller.Code.Modules.Visualizer.LIDAR
 
             this.LIDAR_Image.Image = img;
         }
+
+        private void LIDAR_Visualizer_Form_Load(object sender, EventArgs e)
+        {
+
+        }
     }
 }

@@ -19,8 +19,8 @@ namespace IGVC_Controller.Code.Modules.GPS
 
         public GPS_Interface() : base()
         {
-            this.addSubscription(INTERMODULE_VARIABLE.GPS_COORDS);
-            this.modulePriority = 75;
+            //this.addSubscription(INTERMODULE_VARIABLE.GPS_COORDS);
+            this.modulePriority = 1;
         }
 
         public override void loadFromConfig(IGVC_Controller.DataIO.SaveFile config)

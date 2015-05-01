@@ -39,6 +39,13 @@ namespace IGVC_Controller.Code.Modules
             VISION_RIGHT,
 
             /// <summary>
+            /// Represents the stitched image from the left and right camera
+            /// <para>Source : WideAngleMonoVision</para>
+            /// <para>Format : Image(Bgr, Byte)</para>
+            /// </summary>
+            STITCHED_IMAGE,
+
+            /// <summary>
             /// Represents the GPS coordinates in a format to be determined
             /// <para>Source : Robot Interface</para>
             /// <para>Format : unkown</para>
@@ -65,6 +72,13 @@ namespace IGVC_Controller.Code.Modules
             /// <para>Format : List(long) : distances[angles]</para>
             /// </summary>
             LIDAR_RAW,
+
+            /// <summary>
+            /// Variable that indicates if the robot is allowed to drive
+            /// <para>Source : Any module that wishes to activate the motors</para>
+            /// <para>Format : bool</para>
+            /// </summary>
+            DRIVING_ENABLED,
 
             /// <summary>
             /// This is just to be used for module example

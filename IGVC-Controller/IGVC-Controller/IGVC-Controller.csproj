@@ -41,6 +41,9 @@
     <Reference Include="Emgu.CV.GPU">
       <HintPath>..\..\..\..\..\..\..\Emgu\emgucv-windows-x64-gpu 2.4.2.1777\bin\Emgu.CV.GPU.dll</HintPath>
     </Reference>
+    <Reference Include="Emgu.CV.Stitching">
+      <HintPath>..\..\..\..\..\..\..\Emgu\emgucv-windows-x64-gpu 2.4.2.1777\bin\Emgu.CV.Stitching.dll</HintPath>
+    </Reference>
     <Reference Include="Emgu.CV.UI">
       <HintPath>c:\Emgu\emgucv-windows-x64-gpu 2.4.2.1777\bin\Emgu.CV.UI.dll</HintPath>
     </Reference>
@@ -74,6 +77,7 @@
     <Compile Include="Code\ModuleSelectionWindow.Designer.cs">
       <DependentUpon>ModuleSelectionWindow.cs</DependentUpon>
     </Compile>
+    <Compile Include="Code\Modules\Cameras\DualWebcam.cs" />
     <Compile Include="Code\Modules\Example\ForcedDelay.cs" />
     <Compile Include="Code\Modules\Example\RandomDataListener.cs" />
     <Compile Include="Code\Modules\GPS\GPS_Interface.cs" />
@@ -103,6 +107,7 @@
     </Compile>
     <Compile Include="Code\Modules\Example\RandomDataGenerator.cs" />
     <Compile Include="Code\Modules\Vision\StereoVision.cs" />
+    <Compile Include="Code\Modules\Vision\WideAngleMonoVision.cs" />
     <Compile Include="Code\Modules\Visualizer\GPS\GPS_Visualizer.cs" />
     <Compile Include="Code\Modules\Visualizer\GPS\GPS_Visualizer_Form.cs">
       <SubType>Form</SubType>
@@ -116,6 +121,13 @@
     </Compile>
     <Compile Include="Code\Modules\Visualizer\LIDAR\LIDAR_Visualizer_Form.Designer.cs">
       <DependentUpon>LIDAR_Visualizer_Form.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Code\Modules\Visualizer\Vision\Vision_Visualizer.cs" />
+    <Compile Include="Code\Modules\Visualizer\Vision\Vision_Visualizer_Form.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Code\Modules\Visualizer\Vision\Vision_Visualizer_Form.Designer.cs">
+      <DependentUpon>Vision_Visualizer_Form.cs</DependentUpon>
     </Compile>
     <Compile Include="Code\Registries\Registry.cs" />
     <Compile Include="Program.cs" />
@@ -154,6 +166,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Code\Modules\Visualizer\LIDAR\LIDAR_Visualizer_Form.resx">
       <DependentUpon>LIDAR_Visualizer_Form.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Code\Modules\Visualizer\Vision\Vision_Visualizer_Form.resx">
+      <DependentUpon>Vision_Visualizer_Form.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
