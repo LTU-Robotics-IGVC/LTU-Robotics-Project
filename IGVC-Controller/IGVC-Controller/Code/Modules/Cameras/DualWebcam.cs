@@ -13,8 +13,8 @@ namespace IGVC_Controller.Code.Modules.Cameras
         Capture capture1;
         Capture capture2;
         bool leftGoesToCapture1 = true;
-        int cap1Index = 0;
-        int cap2Index = 1;
+        int cap1Index = 1;
+        int cap2Index = 2;
         int imageWidth = 640;
         int imageHeight = 480;
 
@@ -37,9 +37,17 @@ namespace IGVC_Controller.Code.Modules.Cameras
 
         public override bool startup()
         {
-            capture1 = new Capture(cap1Index);
-            capture2 = new Capture(cap2Index);
+            capture1 = new Capture(2);
+            capture1.Start();
+            capture2 = new Capture(1);
             return base.startup();
+        }
+
+        public override void shutdown()
+        {
+            capture1.Stop();
+            capture2.Stop();
+            base.shutdown();
         }
 
         public override void process()

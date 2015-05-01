@@ -27,7 +27,7 @@ namespace IGVC_Controller.Code.Modules.Visualizer.Vision
             this.addSubscription(INTERMODULE_VARIABLE.VISION_RIGHT);
             this.addSubscription(INTERMODULE_VARIABLE.VISION_LEFT);
             this.addSubscription(INTERMODULE_VARIABLE.STITCHED_IMAGE);
-
+            this.setImageDelegate = this.setImage;
             this.modulePriority = 90;
         }
 
@@ -36,6 +36,8 @@ namespace IGVC_Controller.Code.Modules.Visualizer.Vision
             visionLeft = new GatedVariable();
             visionRight = new GatedVariable();
             stitchedImage = new GatedVariable();
+            form = new Vision_Visualizer_Form();
+            form.Show();
             return base.startup();
         }
 

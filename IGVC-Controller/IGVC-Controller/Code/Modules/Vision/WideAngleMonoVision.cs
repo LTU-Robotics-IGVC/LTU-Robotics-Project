@@ -25,7 +25,7 @@ namespace IGVC_Controller.Code.Modules.Vision
 
         public override void process()
         {
-            using(Stitcher stitcher = new Stitcher(true))
+            using(Stitcher stitcher = new Stitcher(false))
             {
                 leftCamFeed.shiftObject();
                 rightCamFeed.shiftObject();
