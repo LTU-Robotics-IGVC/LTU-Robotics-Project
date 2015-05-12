@@ -13,10 +13,12 @@ namespace IGVC_Controller.Code.Modules.Cameras
         Capture capture1;
         Capture capture2;
         bool leftGoesToCapture1 = true;
-        int cap1Index = 1;
-        int cap2Index = 2;
+        public int cap1Index = 1;
+        public int cap2Index = 2;
         int imageWidth = 320;
         int imageHeight = 240;
+        public IntrinsicCameraParameters intrinsic1;
+        public IntrinsicCameraParameters intrinsic2;
 
         public DualWebcam() : base()
         {
@@ -26,12 +28,27 @@ namespace IGVC_Controller.Code.Modules.Cameras
         public override void loadFromConfig(IGVC_Controller.DataIO.SaveFile config)
         {
             this.leftGoesToCapture1 = config.Read<bool>("leftGoesToCapture1", true);
+
+            this.cap1Index = config.Read<int>("leftCamIndex", 1);
+            this.cap2Index = config.Read<int>("rightCamIndex", -1);
+
+            this.intrinsic1 = config.Read<IntrinsicCameraParameters>("intrinsic1", null);
+            this.intrinsic2 = config.Read<IntrinsicCameraParameters>("intrinsic2", null);
             base.loadFromConfig(config);
         }
 
         public override void writeToConfig(IGVC_Controller.DataIO.SaveFile config)
         {
             config.Write<bool>("leftGoesToCapture1", this.leftGoesToCapture1);
+            //config.Write<Matrix<double>>("intrinsic1_Distortion", this.intrinsic1.DistortionCoeffs);
+            //config.Write<Matrix<double>>("intrinsic1_Intrinsic", this.intrinsic1.IntrinsicMatrix);
+            //config.Write<Matrix<double>>("intrinsic2_Distortion", this.intrinsic2.DistortionCoeffs);
+            //config.Write<Matrix<double>>("intrinsic2_Intrinsic", this.intrinsic2.IntrinsicMatrix);
+            config.Write<IntrinsicCameraParameters>("intrinsic1", this.intrinsic1);
+            config.Write<IntrinsicCameraParameters>("intrinsic2", this.intrinsic2);
+            config.Write<int>("leftCamIndex", cap1Index);
+            config.Write<int>("rightCamIndex", cap2Index);
+
             base.writeToConfig(config);
         }
 
@@ -71,6 +88,11 @@ namespace IGVC_Controller.Code.Modules.Cameras
             //left = icp.Undistort<Bgr, byte>(left);
             this.sendDataToRegistry(INTERMODULE_VARIABLE.VISION_LEFT, left);
             this.sendDataToRegistry(INTERMODULE_VARIABLE.VISION_RIGHT, right);
+        }
+
+        public override System.Windows.Forms.Form getEditorForm()
+        {
+            return new CameraSetup();
         }
     }
 }

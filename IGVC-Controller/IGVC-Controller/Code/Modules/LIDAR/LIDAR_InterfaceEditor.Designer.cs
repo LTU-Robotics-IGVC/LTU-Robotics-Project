@@ -48,30 +48,32 @@
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(81, 280);
+            this.label2.Location = new System.Drawing.Point(72, 224);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(56, 20);
+            this.label2.Size = new System.Drawing.Size(52, 17);
             this.label2.TabIndex = 6;
             this.label2.Text = "Priority";
             // 
             // PriorityBox
             // 
-            this.PriorityBox.Location = new System.Drawing.Point(81, 306);
+            this.PriorityBox.Location = new System.Drawing.Point(72, 245);
+            this.PriorityBox.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.PriorityBox.Maximum = new decimal(new int[] {
             10000,
             0,
             0,
             0});
             this.PriorityBox.Name = "PriorityBox";
-            this.PriorityBox.Size = new System.Drawing.Size(120, 26);
+            this.PriorityBox.Size = new System.Drawing.Size(107, 22);
             this.PriorityBox.TabIndex = 5;
             // 
             // OKButton
             // 
             this.OKButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.OKButton.Location = new System.Drawing.Point(313, 288);
+            this.OKButton.Location = new System.Drawing.Point(278, 230);
+            this.OKButton.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.OKButton.Name = "OKButton";
-            this.OKButton.Size = new System.Drawing.Size(221, 52);
+            this.OKButton.Size = new System.Drawing.Size(196, 42);
             this.OKButton.TabIndex = 4;
             this.OKButton.Text = "OK";
             this.OKButton.UseVisualStyleBackColor = true;
@@ -80,58 +82,61 @@
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(81, 29);
+            this.label1.Location = new System.Drawing.Point(72, 23);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(75, 20);
+            this.label1.Size = new System.Drawing.Size(66, 17);
             this.label1.TabIndex = 8;
             this.label1.Text = "Baudrate";
             // 
             // BaudrateBox
             // 
-            this.BaudrateBox.Location = new System.Drawing.Point(81, 55);
+            this.BaudrateBox.Location = new System.Drawing.Point(72, 44);
+            this.BaudrateBox.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.BaudrateBox.Maximum = new decimal(new int[] {
             1000000,
             0,
             0,
             0});
             this.BaudrateBox.Name = "BaudrateBox";
-            this.BaudrateBox.Size = new System.Drawing.Size(120, 26);
+            this.BaudrateBox.Size = new System.Drawing.Size(107, 22);
             this.BaudrateBox.TabIndex = 7;
             // 
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(81, 105);
+            this.label3.Location = new System.Drawing.Point(72, 84);
             this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(82, 20);
+            this.label3.Size = new System.Drawing.Size(71, 17);
             this.label3.TabIndex = 10;
             this.label3.Text = "Start Step";
             // 
             // StartStepBox
             // 
-            this.StartStepBox.Location = new System.Drawing.Point(81, 131);
+            this.StartStepBox.Location = new System.Drawing.Point(72, 105);
+            this.StartStepBox.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.StartStepBox.Maximum = new decimal(new int[] {
             1079,
             0,
             0,
             0});
             this.StartStepBox.Name = "StartStepBox";
-            this.StartStepBox.Size = new System.Drawing.Size(120, 26);
+            this.StartStepBox.Size = new System.Drawing.Size(107, 22);
             this.StartStepBox.TabIndex = 9;
             this.StartStepBox.ValueChanged += new System.EventHandler(this.StartStepBox_ValueChanged);
             // 
             // label4
             // 
             this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(81, 181);
+            this.label4.Location = new System.Drawing.Point(72, 145);
             this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(76, 20);
+            this.label4.Size = new System.Drawing.Size(66, 17);
             this.label4.TabIndex = 12;
             this.label4.Text = "End Step";
             // 
             // EndStepBox
             // 
-            this.EndStepBox.Location = new System.Drawing.Point(81, 207);
+            this.EndStepBox.Location = new System.Drawing.Point(72, 166);
+            this.EndStepBox.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.EndStepBox.Maximum = new decimal(new int[] {
             1080,
             0,
@@ -143,7 +148,7 @@
             0,
             0});
             this.EndStepBox.Name = "EndStepBox";
-            this.EndStepBox.Size = new System.Drawing.Size(120, 26);
+            this.EndStepBox.Size = new System.Drawing.Size(107, 22);
             this.EndStepBox.TabIndex = 11;
             this.EndStepBox.Value = new decimal(new int[] {
             1,
@@ -155,24 +160,25 @@
             // label5
             // 
             this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(352, 29);
+            this.label5.Location = new System.Drawing.Point(313, 23);
             this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(84, 20);
+            this.label5.Size = new System.Drawing.Size(75, 17);
             this.label5.TabIndex = 13;
             this.label5.Text = "Port Name";
             // 
             // PortNameBox
             // 
-            this.PortNameBox.Location = new System.Drawing.Point(356, 55);
+            this.PortNameBox.Location = new System.Drawing.Point(316, 44);
+            this.PortNameBox.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.PortNameBox.Name = "PortNameBox";
-            this.PortNameBox.Size = new System.Drawing.Size(130, 26);
+            this.PortNameBox.Size = new System.Drawing.Size(116, 22);
             this.PortNameBox.TabIndex = 14;
             // 
             // LIDAR_InterfaceEditor
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(605, 352);
+            this.ClientSize = new System.Drawing.Size(538, 282);
             this.Controls.Add(this.PortNameBox);
             this.Controls.Add(this.label5);
             this.Controls.Add(this.label4);
@@ -184,6 +190,7 @@
             this.Controls.Add(this.label2);
             this.Controls.Add(this.PriorityBox);
             this.Controls.Add(this.OKButton);
+            this.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.Name = "LIDAR_InterfaceEditor";
             this.Text = "LIDAR_InterfaceEditor";
             ((System.ComponentModel.ISupportInitialize)(this.PriorityBox)).EndInit();

@@ -77,6 +77,12 @@
     <Compile Include="Code\ModuleSelectionWindow.Designer.cs">
       <DependentUpon>ModuleSelectionWindow.cs</DependentUpon>
     </Compile>
+    <Compile Include="Code\Modules\Cameras\CameraSetup.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Code\Modules\Cameras\CameraSetup.Designer.cs">
+      <DependentUpon>CameraSetup.cs</DependentUpon>
+    </Compile>
     <Compile Include="Code\Modules\Cameras\DualWebcam.cs" />
     <Compile Include="Code\Modules\Example\ForcedDelay.cs" />
     <Compile Include="Code\Modules\Example\RandomDataListener.cs" />
@@ -151,6 +157,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Code\ModuleSelectionWindow.resx">
       <DependentUpon>ModuleSelectionWindow.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Code\Modules\Cameras\CameraSetup.resx">
+      <DependentUpon>CameraSetup.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Code\Modules\GPS\GPS_InterfaceEditor.resx">
       <DependentUpon>GPS_InterfaceEditor.cs</DependentUpon>
