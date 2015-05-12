@@ -31,10 +31,10 @@ namespace IGVC_Controller.Code.Modules.Cameras
         MCvPoint3D32f[][] corners_object_Points = new MCvPoint3D32f[sampleSize][];
         IntrinsicCameraParameters IntrinsicCam1 = new IntrinsicCameraParameters();
         IntrinsicCameraParameters IntrinsicCam2 = new IntrinsicCameraParameters();
-        IntrinsicCameraParameters IntrinsicCam3 = new IntrinsicCameraParameters();
         ExtrinsicCameraParameters[] ExtrinsicCam1;
         ExtrinsicCameraParameters[] ExtrinsicCam2;
         CalibrationState state;
+        HomographyMatrix homographyMatrix;
 
         delegate void delegateSetText(string data);
         private delegateSetText setText;
@@ -74,8 +74,8 @@ namespace IGVC_Controller.Code.Modules.Cameras
         {
             //value = module;
             this.PriorityBox.Value = module.modulePriority;
-            this.IntrinsicCam1 = module.intrinsic1;
-            this.IntrinsicCam2 = module.intrinsic2;
+            this.IntrinsicCam1 = DualWebcam.intrinsic1;
+            this.IntrinsicCam2 = DualWebcam.intrinsic2;
             this.LeftCamIndex.Value = module.cap1Index;
             this.RightCamIndex.Value = module.cap2Index;
         }
@@ -83,8 +83,8 @@ namespace IGVC_Controller.Code.Modules.Cameras
         void IModuleEditor.setDataToModule()
         {
             module.modulePriority = (int)this.PriorityBox.Value;
-            module.intrinsic1 = this.IntrinsicCam1;
-            module.intrinsic2 = this.IntrinsicCam2;
+            DualWebcam.intrinsic1 = this.IntrinsicCam1;
+            DualWebcam.intrinsic2 = this.IntrinsicCam2;
             module.cap1Index = (int)this.LeftCamIndex.Value;
             module.cap2Index = (int)this.RightCamIndex.Value;
         }
@@ -123,22 +123,89 @@ namespace IGVC_Controller.Code.Modules.Cameras
             {
                 case CalibrationState.Demo:
 
-                    if (this.IntrinsicCam1 != null)
-                        this.imageBox1.Image = this.IntrinsicCam1.Undistort(img1);
-                    else
-                        this.imageBox1.Image = img1;
 
-                    if (this.IntrinsicCam2 != null)
-                        this.imageBox2.Image = this.IntrinsicCam2.Undistort(img2);
-                    else
-                        this.imageBox2.Image = img2;
+                    if(homographyMatrix != null)
+                    {
+                        Rectangle rect = img1.ROI;
+                        PointF[] pts = new PointF[]
+                        {
+                            new PointF(rect.Left, rect.Bottom),
+                            new PointF(rect.Right, rect.Bottom),
+                            new PointF(rect.Right, rect.Top),
+                            new PointF(rect.Left, rect.Top)
+                        };
+                        homographyMatrix.ProjectPoints(pts);
 
+                        HomographyMatrix origin = new HomographyMatrix();
+                        origin.SetIdentity();
+                        origin.Data[0, 2] = 0;
+                        origin.Data[1, 2] = 0;
+                        Image<Bgr, byte> mosaic = new Image<Bgr, byte>(1000, 1000);
+
+                        Image<Bgr, byte> warp_image = mosaic.Clone();
+
+                        mosaic = img1.WarpPerspective(origin, mosaic.Width, mosaic.Height, Emgu.CV.CvEnum.INTER.CV_INTER_LINEAR,
+                            Emgu.CV.CvEnum.WARP.CV_WARP_DEFAULT, new Bgr(0, 0, 0));
+                        warp_image = img2.WarpPerspective(homographyMatrix, warp_image.Width, warp_image.Height, Emgu.CV.CvEnum.INTER.CV_INTER_LINEAR,
+                            Emgu.CV.CvEnum.WARP.CV_WARP_INVERSE_MAP, new Bgr(200, 0, 0));
+                        Image<Gray, byte> warp_image_mask = gray2.Clone();
+                        warp_image_mask.SetValue(new Gray(255));
+                        Image<Gray, byte> warp_mosaic_mask = mosaic.Convert<Gray, byte>();
+                        warp_image_mask.SetValue(255);
+                        warp_mosaic_mask = warp_image_mask.WarpPerspective(homographyMatrix, warp_mosaic_mask.Width, warp_mosaic_mask.Height,
+                            Emgu.CV.CvEnum.INTER.CV_INTER_LINEAR, Emgu.CV.CvEnum.WARP.CV_WARP_INVERSE_MAP, new Gray(0));
+                        warp_image.Copy(mosaic, warp_mosaic_mask);
+
+                        this.imageBox3.Image = mosaic;
+                        this.imageBox1.Image = warp_mosaic_mask;
+                        this.imageBox2.Image = warp_image;
+                    }
+                    else
+                    {
+                        if (this.IntrinsicCam1 != null)
+                            this.imageBox1.Image = this.IntrinsicCam1.Undistort(img1);
+                        else
+                            this.imageBox1.Image = img1;
+
+                        if (this.IntrinsicCam2 != null)
+                            this.imageBox2.Image = this.IntrinsicCam2.Undistort(img2);
+                        else
+                            this.imageBox2.Image = img2;
+                    }
                     break;
 
                 case CalibrationState.Homography:
 
-                    //Find Homography Matrix
+                    if (this.IntrinsicCam1 != null)
+                        gray1 = IntrinsicCam1.Undistort(gray1);
+                    if (this.IntrinsicCam2 != null)
+                        gray2 = IntrinsicCam2.Undistort(gray2);
 
+                    //Find Homography Matrix
+                    if (sampleIndex < sampleSize)
+                    {
+                        PointF[] cornersLeft = CameraCalibration.FindChessboardCorners(gray1, patternSize, Emgu.CV.CvEnum.CALIB_CB_TYPE.ADAPTIVE_THRESH);
+                        PointF[] cornersRight = CameraCalibration.FindChessboardCorners(gray2, patternSize, Emgu.CV.CvEnum.CALIB_CB_TYPE.ADAPTIVE_THRESH);
+                        if (cornersLeft != null && cornersRight != null)
+                        {
+                            gray1.FindCornerSubPix(new PointF[1][] { cornersLeft }, new Size(11, 11), new Size(-1, -1), new MCvTermCriteria(30, 0.01));
+                            gray2.FindCornerSubPix(new PointF[1][] { cornersRight }, new Size(11, 11), new Size(-1, -1), new MCvTermCriteria(30, 0.01));
+
+                            corners_points_Left[sampleIndex] = cornersLeft;
+                            corners_points_Right[sampleIndex] = cornersRight;
+                            this.setCalibrationState(CalibrationState.Homography, sampleIndex.ToString());
+                            sampleIndex++;
+                        }
+                        this.imageBox1.Image = gray1;
+                        this.imageBox2.Image = gray2;
+                        Thread.Sleep(200);
+                    }
+                    else
+                    {
+                        homographyMatrix = CameraCalibration.FindHomography(corners_points_Left[sampleSize - 1], corners_points_Right[sampleSize - 1], Emgu.CV.CvEnum.HOMOGRAPHY_METHOD.DEFAULT, 2.0);
+                        this.setCalibrationState(CalibrationState.Demo, "Homography Complete");
+                    }
+                        
                     break;
 
                 case CalibrationState.Intrinsics_Left:
@@ -198,6 +265,7 @@ namespace IGVC_Controller.Code.Modules.Cameras
             if (this.state == CalibrationState.Demo)
             {
                 sampleIndex = 0;
+                this.IntrinsicCam1 = new IntrinsicCameraParameters();
                 this.setCalibrationState(CalibrationState.Intrinsics_Left, null);
             }
         }
@@ -207,6 +275,7 @@ namespace IGVC_Controller.Code.Modules.Cameras
             if (this.state == CalibrationState.Demo)
             {
                 sampleIndex = 0;
+                this.IntrinsicCam2 = new IntrinsicCameraParameters();
                 this.setCalibrationState(CalibrationState.Intrinsics_Right, null);
             }
         }

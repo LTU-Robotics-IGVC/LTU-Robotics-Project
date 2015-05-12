@@ -17,8 +17,8 @@ namespace IGVC_Controller.Code.Modules.Cameras
         public int cap2Index = 2;
         int imageWidth = 320;
         int imageHeight = 240;
-        public IntrinsicCameraParameters intrinsic1;
-        public IntrinsicCameraParameters intrinsic2;
+        public static IntrinsicCameraParameters intrinsic1;
+        public static IntrinsicCameraParameters intrinsic2;
 
         public DualWebcam() : base()
         {
@@ -32,8 +32,8 @@ namespace IGVC_Controller.Code.Modules.Cameras
             this.cap1Index = config.Read<int>("leftCamIndex", 1);
             this.cap2Index = config.Read<int>("rightCamIndex", -1);
 
-            this.intrinsic1 = config.Read<IntrinsicCameraParameters>("intrinsic1", null);
-            this.intrinsic2 = config.Read<IntrinsicCameraParameters>("intrinsic2", null);
+            intrinsic1 = config.Read<IntrinsicCameraParameters>("intrinsic1", null);
+            intrinsic2 = config.Read<IntrinsicCameraParameters>("intrinsic2", null);
             base.loadFromConfig(config);
         }
 
@@ -44,8 +44,8 @@ namespace IGVC_Controller.Code.Modules.Cameras
             //config.Write<Matrix<double>>("intrinsic1_Intrinsic", this.intrinsic1.IntrinsicMatrix);
             //config.Write<Matrix<double>>("intrinsic2_Distortion", this.intrinsic2.DistortionCoeffs);
             //config.Write<Matrix<double>>("intrinsic2_Intrinsic", this.intrinsic2.IntrinsicMatrix);
-            config.Write<IntrinsicCameraParameters>("intrinsic1", this.intrinsic1);
-            config.Write<IntrinsicCameraParameters>("intrinsic2", this.intrinsic2);
+            config.Write<IntrinsicCameraParameters>("intrinsic1", intrinsic1);
+            config.Write<IntrinsicCameraParameters>("intrinsic2", intrinsic2);
             config.Write<int>("leftCamIndex", cap1Index);
             config.Write<int>("rightCamIndex", cap2Index);
 
