@@ -154,7 +154,7 @@ namespace IGVC_Controller.Code.Modules
                 this.registry.sendMessageToLogger(this.logTag, severity, message);
         }
 
-        virtual public void loadFromConfig(SaveFile config) { this.modulePriority = config.Read<int>("priority", 100); }
+        virtual public void loadFromConfig(SaveFile config) { this.modulePriority = config.Read<int>("priority", this.modulePriority); }
 
         virtual public void writeToConfig(SaveFile config) { config.Write<int>("priority", this.modulePriority); }
 
