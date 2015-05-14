@@ -12,6 +12,7 @@ using Emgu.Util;
 
 namespace IGVC_Controller.Code.Modules.Vision
 {
+    [Obsolete]
     class WideAngleMonoVision : IModule
     {
         GatedVariable leftCamFeed;

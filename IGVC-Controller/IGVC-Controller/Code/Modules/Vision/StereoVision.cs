@@ -7,6 +7,7 @@ using IGVC_Controller.Code.Registries;
 
 namespace IGVC_Controller.Code.Modules.Vision
 {
+    [Obsolete]
     class StereoVision : IModule
     {
         public StereoVision() : base()

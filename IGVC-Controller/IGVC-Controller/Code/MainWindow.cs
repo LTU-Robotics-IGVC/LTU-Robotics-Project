@@ -70,17 +70,17 @@ namespace IGVC_Controller
         {
             config.BeginRead();
 
-            this.setupModule("StereoVision", new StereoVision());
+            //this.setupModule("StereoVision", new StereoVision());
             this.setupModule("Logger", new Logger());
             this.setupModule("ConsoleLogger", new ConsoleLogger());
-            this.setupModule("RandomDataGenerator", new RandomDataGenerator());
-            this.setupModule("RandomDataListener", new RandomDataListener());
+            //this.setupModule("RandomDataGenerator", new RandomDataGenerator());
+            //this.setupModule("RandomDataListener", new RandomDataListener());
             this.setupModule("ForcedDelay", new ForcedDelay());
             this.setupModule("LIDAR_Interface", new LIDAR_Interface());
             this.setupModule("LIDAR_Visualizer", new LIDAR_Visualizer());
             this.setupModule("GPS_Interface", new GPS_Interface());
             this.setupModule("GPS_Visualizer", new GPS_Visualizer());
-            this.setupModule("WideAngleMonoVision", new WideAngleMonoVision());
+            //this.setupModule("WideAngleMonoVision", new WideAngleMonoVision());
             this.setupModule("DualWebcam", new DualWebcam());
             this.setupModule("Vision_Visualizer", new Vision_Visualizer());
 

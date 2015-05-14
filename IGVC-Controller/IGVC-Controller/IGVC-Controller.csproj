@@ -105,6 +105,10 @@
     </Compile>
     <Compile Include="Code\Modules\Logger\ConsoleLogger.cs" />
     <Compile Include="Code\Modules\Logger\Logger.cs" />
+    <Compile Include="Code\Modules\Mapping\DualVision_LIDAR_ObstacleMapBuilder.cs" />
+    <Compile Include="Code\Modules\Navigation\PathFinder.cs" />
+    <Compile Include="Code\Modules\Navigation\TargetPathBuilder.cs" />
+    <Compile Include="Code\Modules\Navigation\TrajectoryPredictor.cs" />
     <Compile Include="Code\Modules\NoModulePropertiesWindow.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -112,6 +116,8 @@
       <DependentUpon>NoModulePropertiesWindow.cs</DependentUpon>
     </Compile>
     <Compile Include="Code\Modules\Example\RandomDataGenerator.cs" />
+    <Compile Include="Code\Modules\Vision\DualVisionObstacleDetection.cs" />
+    <Compile Include="Code\Modules\Vision\DualVisionObstacleReprojection.cs" />
     <Compile Include="Code\Modules\Vision\StereoVision.cs" />
     <Compile Include="Code\Modules\Vision\WideAngleMonoVision.cs" />
     <Compile Include="Code\Modules\Visualizer\GPS\GPS_Visualizer.cs" />
@@ -276,8 +282,6 @@
     </Content>
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Code\Modules\Mapping\" />
-    <Folder Include="Code\Modules\Navigation\" />
     <Folder Include="Code\Modules\Positioning\" />
     <Folder Include="Code\Modules\SystemInputs\" />
   </ItemGroup>
