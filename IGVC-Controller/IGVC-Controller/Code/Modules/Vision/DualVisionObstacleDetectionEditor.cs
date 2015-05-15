@@ -41,7 +41,7 @@ namespace IGVC_Controller.Code.Modules.Vision
         {
             module.minGreen = minGreen.Value / 255.0 * 180.0;
             module.maxGreen = maxGreen.Value / 255.0 * 180.0;
-            module.minVal = minVal.Value / 255.0 * 180.0;
+            module.minVal = minVal.Value / 255.0;
         }
 
         private void minGreen_Scroll(object sender, ScrollEventArgs e)
