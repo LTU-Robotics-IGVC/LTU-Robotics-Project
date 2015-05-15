@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using Emgu.CV;
 using Emgu.CV.Structure;
 using IGVC_Controller.Code.MathX;
+using Emgu.CV.GPU;
 
 namespace IGVC_Controller.Code.Modules.Vision
 {
@@ -15,6 +16,10 @@ namespace IGVC_Controller.Code.Modules.Vision
         GatedVariable visionleft;
         GatedVariable visionright;
 
+        public double minGreen = 70.0;
+        public double maxGreen = 50.0;
+        public double minVal = 0.25;
+
         public DualVisionObstacleDetection() : base()
         {
             this.modulePriority = 51;
@@ -22,15 +27,48 @@ namespace IGVC_Controller.Code.Modules.Vision
             this.addSubscription(INTERMODULE_VARIABLE.VISION_RIGHT);
         }
 
+        public override void loadFromConfig(IGVC_Controller.DataIO.SaveFile config)
+        {
+            //Note that the min is greater than the max because we want everything but green
+            this.minGreen = config.Read<double>("minGreen", 70.0);
+            this.maxGreen = config.Read<double>("maxGreen", 50.0);
+            this.minVal = config.Read<double>("minVal", 0.25);
+
+            base.loadFromConfig(config);
+        }
+
+        public override void writeToConfig(IGVC_Controller.DataIO.SaveFile config)
+        {
+            config.Write<double>("minGreen", this.minGreen);
+            config.Write<double>("maxGreen", this.maxGreen);
+            config.Write<double>("minVal", this.minVal);
+
+            base.writeToConfig(config);
+        }
+
         public override void process()
         {
             visionleft.shiftObject();
             visionright.shiftObject();
 
+            if(GpuInvoke.HasCuda)
+            {
+                processWithoutGPU();
+            }
+            else
+            {
+                processWithoutGPU();
+            }
+
+            base.process();
+        }
+
+        private void processWithoutGPU()
+        {
             Image<Bgr, byte> leftColor = (Image<Bgr, byte>)visionleft.getObject();
             Image<Bgr, byte> rightColor = (Image<Bgr, byte>)visionright.getObject();
 
-            if(leftColor != null)
+            if (leftColor != null)
             {
                 Image<Gray, byte> leftGray = leftColor.Convert<Gray, byte>();
                 Image<Gray, byte> leftObstacles = new Image<Gray, byte>(leftGray.Width, leftGray.Height);
@@ -39,27 +77,25 @@ namespace IGVC_Controller.Code.Modules.Vision
 
                 //This is an example until the filters can be figured out (should filter out green and dark colors)
                 Image<Hsv, byte> leftHSV = leftColor.Convert<Hsv, byte>();
-                leftObstacles = leftObstacles.Add(ImageFiltering.HSVFilter(new Hsv(50.0, 0, 0.25), new Hsv(70.0, 1.0, 1.0), leftHSV));
+                leftObstacles = leftObstacles.Add(ImageFiltering.HSVFilter(new Hsv(minGreen, 0, minVal), new Hsv(maxGreen, 1.0, 1.0), leftHSV));
 
                 this.sendDataToRegistry(INTERMODULE_VARIABLE.OBSTACLE_IMAGE_LEFT, leftObstacles);
-                this.sendDataToRegistry(INTERMODULE_VARIABLE.VISION_LEFT, leftObstacles.Convert<Bgr, byte>());
+                //this.sendDataToRegistry(INTERMODULE_VARIABLE.VISION_LEFT, leftObstacles.Convert<Bgr, byte>());
             }
 
-            if(rightColor != null)
+            if (rightColor != null)
             {
                 Image<Gray, byte> rightGray = rightColor.Convert<Gray, byte>();
                 Image<Gray, byte> rightObstacles = new Image<Gray, byte>(rightGray.Width, rightGray.Height);
 
                 //Process
-                
+
                 //This is an example until the filters can be figured out (should filter out green)
                 Image<Hsv, byte> rightHSV = rightColor.Convert<Hsv, byte>();
-                rightObstacles.Add(ImageFiltering.HSVFilter(new Hsv(70.0, 0, 0.5), new Hsv(50.0, 1.0, 1.0), rightHSV));
+                rightObstacles = rightObstacles.Add(ImageFiltering.HSVFilter(new Hsv(minGreen, 0, minVal), new Hsv(maxGreen, 1.0, 1.0), rightHSV));
 
                 this.sendDataToRegistry(INTERMODULE_VARIABLE.OBSTACLE_IMAGE_RIGHT, rightObstacles);
             }
-
-            base.process();
         }
 
         public override bool startup()
@@ -82,6 +118,11 @@ namespace IGVC_Controller.Code.Modules.Vision
                     this.visionleft.setObject(data);
                     break;
             }
+        }
+
+        public override System.Windows.Forms.Form getEditorForm()
+        {
+            return new DualVisionObstacleDetectionEditor();
         }
     }
 }

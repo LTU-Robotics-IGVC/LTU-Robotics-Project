@@ -13,8 +13,8 @@ namespace IGVC_Controller.Code.Modules.Cameras
         Capture capture1;
         Capture capture2;
         bool leftGoesToCapture1 = true;
-        public int cap1Index = 1;
-        public int cap2Index = 2;
+        public static int cap1Index = 1;
+        public static int cap2Index = 2;
         int imageWidth = 320;
         int imageHeight = 240;
         public static IntrinsicCameraParameters intrinsic1;
@@ -29,8 +29,8 @@ namespace IGVC_Controller.Code.Modules.Cameras
         {
             this.leftGoesToCapture1 = config.Read<bool>("leftGoesToCapture1", true);
 
-            this.cap1Index = config.Read<int>("leftCamIndex", 1);
-            this.cap2Index = config.Read<int>("rightCamIndex", -1);
+            cap1Index = config.Read<int>("leftCamIndex", 1);
+            cap2Index = config.Read<int>("rightCamIndex", -1);
 
             intrinsic1 = config.Read<IntrinsicCameraParameters>("intrinsic1", null);
             intrinsic2 = config.Read<IntrinsicCameraParameters>("intrinsic2", null);
@@ -74,8 +74,8 @@ namespace IGVC_Controller.Code.Modules.Cameras
 
             if(leftGoesToCapture1)
             {
-                left = new Image<Bgr, byte>(capture1.QueryFrame().Resize(imageWidth, imageHeight, Emgu.CV.CvEnum.INTER.CV_INTER_LINEAR).ToBitmap());
-                right = new Image<Bgr, byte>(capture2.QueryFrame().Resize(imageWidth, imageHeight, Emgu.CV.CvEnum.INTER.CV_INTER_LINEAR).ToBitmap());
+                left = capture1.QueryFrame().Resize(imageWidth, imageHeight, Emgu.CV.CvEnum.INTER.CV_INTER_LINEAR);
+                right = capture2.QueryFrame().Resize(imageWidth, imageHeight, Emgu.CV.CvEnum.INTER.CV_INTER_LINEAR);
             }
             else
             {

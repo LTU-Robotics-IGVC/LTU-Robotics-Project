@@ -24,6 +24,15 @@ namespace IGVC_Controller.Code.Modules.Vision
 
         public override void recieveDataFromRegistry(IModule.INTERMODULE_VARIABLE tag, object data)
         {
+            switch(tag)
+            {
+                case INTERMODULE_VARIABLE.OBSTACLE_IMAGE_LEFT:
+                    obstacleLeft.setObject(data);
+                    break;
+                case INTERMODULE_VARIABLE.OBSTACLE_IMAGE_RIGHT:
+                    obstacleRight.setObject(data);
+                    break;
+            }
             base.recieveDataFromRegistry(tag, data);
         }
 
@@ -65,7 +74,7 @@ namespace IGVC_Controller.Code.Modules.Vision
                 };
 
                 HomographyMatrix homography = CameraCalibration.GetPerspectiveTransform(src, dst);
-                collisionMap.Add(obstLeft.WarpPerspective(homography, Emgu.CV.CvEnum.INTER.CV_INTER_LINEAR, Emgu.CV.CvEnum.WARP.CV_WARP_INVERSE_MAP, new Gray(0)));
+                collisionMap = collisionMap.Add(obstLeft.WarpPerspective(homography, 600, 600, Emgu.CV.CvEnum.INTER.CV_INTER_LINEAR, Emgu.CV.CvEnum.WARP.CV_WARP_DEFAULT, new Gray(0)));
             }
 
             Image<Gray, byte> obstRight = (Image<Gray, byte>)obstacleRight.getObject();
@@ -89,7 +98,7 @@ namespace IGVC_Controller.Code.Modules.Vision
                 };
 
                 HomographyMatrix homography = CameraCalibration.GetPerspectiveTransform(src, dst);
-                collisionMap.Add(obstRight.WarpPerspective(homography, Emgu.CV.CvEnum.INTER.CV_INTER_LINEAR, Emgu.CV.CvEnum.WARP.CV_WARP_INVERSE_MAP, new Gray(0)));
+                collisionMap = collisionMap.Add(obstRight.WarpPerspective(homography, 600, 600, Emgu.CV.CvEnum.INTER.CV_INTER_LINEAR, Emgu.CV.CvEnum.WARP.CV_WARP_DEFAULT, new Gray(0)));
             }
 
             this.sendDataToRegistry(INTERMODULE_VARIABLE.COLLISION_IMAGE, collisionMap);

@@ -121,6 +121,12 @@
     <Compile Include="Code\Modules\SystemInputs\ManualDrive.cs" />
     <Compile Include="Code\Modules\UI\RobotControlPanel.cs" />
     <Compile Include="Code\Modules\Vision\DualVisionObstacleDetection.cs" />
+    <Compile Include="Code\Modules\Vision\DualVisionObstacleDetectionEditor.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Code\Modules\Vision\DualVisionObstacleDetectionEditor.Designer.cs">
+      <DependentUpon>DualVisionObstacleDetectionEditor.cs</DependentUpon>
+    </Compile>
     <Compile Include="Code\Modules\Vision\DualVisionObstacleReprojection.cs" />
     <Compile Include="Code\Modules\Vision\StereoVision.cs" />
     <Compile Include="Code\Modules\Vision\WideAngleMonoVision.cs" />
@@ -166,6 +172,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Code\Modules\NoModulePropertiesWindow.resx">
       <DependentUpon>NoModulePropertiesWindow.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Code\Modules\Vision\DualVisionObstacleDetectionEditor.resx">
+      <DependentUpon>DualVisionObstacleDetectionEditor.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Code\Modules\Visualizer\GPS\GPS_Visualizer_Form.resx">
       <DependentUpon>GPS_Visualizer_Form.cs</DependentUpon>

@@ -76,8 +76,8 @@ namespace IGVC_Controller.Code.Modules.Cameras
             this.PriorityBox.Value = module.modulePriority;
             this.IntrinsicCam1 = DualWebcam.intrinsic1;
             this.IntrinsicCam2 = DualWebcam.intrinsic2;
-            this.LeftCamIndex.Value = module.cap1Index;
-            this.RightCamIndex.Value = module.cap2Index;
+            this.LeftCamIndex.Value = DualWebcam.cap1Index;
+            this.RightCamIndex.Value = DualWebcam.cap2Index;
         }
 
         void IModuleEditor.setDataToModule()
@@ -85,8 +85,8 @@ namespace IGVC_Controller.Code.Modules.Cameras
             module.modulePriority = (int)this.PriorityBox.Value;
             DualWebcam.intrinsic1 = this.IntrinsicCam1;
             DualWebcam.intrinsic2 = this.IntrinsicCam2;
-            module.cap1Index = (int)this.LeftCamIndex.Value;
-            module.cap2Index = (int)this.RightCamIndex.Value;
+            DualWebcam.cap1Index = (int)this.LeftCamIndex.Value;
+            DualWebcam.cap2Index = (int)this.RightCamIndex.Value;
         }
 
         private void OKButton_Click(object sender, EventArgs e)
