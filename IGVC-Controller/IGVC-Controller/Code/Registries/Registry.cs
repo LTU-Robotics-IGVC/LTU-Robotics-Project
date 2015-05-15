@@ -80,11 +80,12 @@ namespace IGVC_Controller.Code.Registries
                     {
                         modules[i].process();
                     }
-                    catch (Exception)
+                    catch (Exception ex)
                     {
                         this.sendData(IModule.INTERMODULE_VARIABLE.STATUS, "Module " + modules[i].moduleID + ":"
                             + MainWindow.instance.moduleNameDictionary[modules[i]] + " with priority "
                             + modules[i].modulePriority + " had to abort due to an unhandled exception");
+                        this.sendData(IModule.INTERMODULE_VARIABLE.STATUS, "\t" + ex.ToString());
                     }
                 }
             }

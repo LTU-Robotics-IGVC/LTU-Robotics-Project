@@ -97,7 +97,13 @@ namespace IGVC_Controller.Code.Modules
             /// <summary>
             /// This is just to be used for module example
             /// </summary>
-            EXAMPLE
+            EXAMPLE,
+
+            /// <summary>
+            /// Variable that holds a combined image from the collision detection
+            /// <para>that exists on the world plane</para>
+            /// </summary>
+            COLLISION_IMAGE
         }
 
         public struct LOG_TYPES

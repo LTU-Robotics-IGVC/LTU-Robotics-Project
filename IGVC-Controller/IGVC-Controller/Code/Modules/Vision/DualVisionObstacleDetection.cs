@@ -38,10 +38,11 @@ namespace IGVC_Controller.Code.Modules.Vision
                 //Process
 
                 //This is an example until the filters can be figured out (should filter out green and dark colors)
-                Image<Hsv, double> leftHSV = leftColor.Convert<Hsv, double>();
-                leftObstacles.Add(ImageFiltering.HSVFilter(new Hsv(70.0, 0, 0.5), new Hsv(50.0, 1.0, 1.0), leftHSV));
+                Image<Hsv, byte> leftHSV = leftColor.Convert<Hsv, byte>();
+                leftObstacles = leftObstacles.Add(ImageFiltering.HSVFilter(new Hsv(50.0, 0, 0.25), new Hsv(70.0, 1.0, 1.0), leftHSV));
 
                 this.sendDataToRegistry(INTERMODULE_VARIABLE.OBSTACLE_IMAGE_LEFT, leftObstacles);
+                this.sendDataToRegistry(INTERMODULE_VARIABLE.VISION_LEFT, leftObstacles.Convert<Bgr, byte>());
             }
 
             if(rightColor != null)
@@ -52,7 +53,7 @@ namespace IGVC_Controller.Code.Modules.Vision
                 //Process
                 
                 //This is an example until the filters can be figured out (should filter out green)
-                Image<Hsv, double> rightHSV = rightColor.Convert<Hsv, double>();
+                Image<Hsv, byte> rightHSV = rightColor.Convert<Hsv, byte>();
                 rightObstacles.Add(ImageFiltering.HSVFilter(new Hsv(70.0, 0, 0.5), new Hsv(50.0, 1.0, 1.0), rightHSV));
 
                 this.sendDataToRegistry(INTERMODULE_VARIABLE.OBSTACLE_IMAGE_RIGHT, rightObstacles);
@@ -74,9 +75,11 @@ namespace IGVC_Controller.Code.Modules.Vision
             switch(tag)
             {
                 case INTERMODULE_VARIABLE.VISION_RIGHT:
+                    this.visionright.setObject(data);
                     break;
 
                 case INTERMODULE_VARIABLE.VISION_LEFT:
+                    this.visionleft.setObject(data);
                     break;
             }
         }

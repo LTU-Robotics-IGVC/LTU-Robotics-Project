@@ -10,8 +10,9 @@ namespace IGVC_Controller.Code.MathX
 {
     class ImageFiltering
     {
-        public static Image<Gray, byte> HSVFilter(Hsv min, Hsv max, Image<Hsv, double> image)
+        public static Image<Gray, byte> HSVFilter(Hsv min, Hsv max, Image<Hsv, byte> image)
         {
+            //return image.InRange(min, max);
             int width = image.Width;
             int height = image.Height;
             Image<Gray, byte> copy = new Image<Gray, byte>(width, height);
@@ -20,9 +21,9 @@ namespace IGVC_Controller.Code.MathX
             {
                 for (int y = 0; y < height; y++)
                 {
-                    double hue = image.Data[y, x, 0];
-                    double sat = image.Data[y, x, 1];
-                    double val = image.Data[y, x, 2];
+                    double hue = ((double)image.Data[y, x, 0]) / 255.0 * 180.0;
+                    double sat = ((double)image.Data[y, x, 1]) / 255.0;
+                    double val = ((double)image.Data[y, x, 2]) / 255.0;
 
                     if (min.Hue < max.Hue)
                     {

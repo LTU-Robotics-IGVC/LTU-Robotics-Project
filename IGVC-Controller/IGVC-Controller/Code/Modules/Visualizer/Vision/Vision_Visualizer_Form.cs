@@ -25,14 +25,14 @@ namespace IGVC_Controller.Code.Modules.Visualizer.Vision
             switch(index)
             {
                 case 0:
-                    this.pictureBox1.Image = image.ToBitmap();
+                    this.imageBox1.Image = image;
                     break;
                 case 1:
-                    this.pictureBox2.Image = image.ToBitmap();
+                    this.imageBox2.Image = image;
                     break;
                 case 2:
-                    if(image != null && image.Width > 1 && image.Height > 1)
-                        this.pictureBox3.Image = image.ToBitmap();
+                    if (image != null && image.Width > 1 && image.Height > 1)
+                        this.imageBox3.Image = image;
                     break;
             }
         }

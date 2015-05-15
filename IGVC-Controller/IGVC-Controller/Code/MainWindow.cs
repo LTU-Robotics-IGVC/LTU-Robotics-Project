@@ -9,7 +9,6 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using Emgu.CV;
 using Emgu.CV.Structure;
-using IGVC_Controller.RobotInterface.Simulator;
 using IGVC_Controller.Code.Registries;
 using IGVC_Controller.Code.Modules.Logger;
 using IGVC_Controller.Code.Modules.Vision;
@@ -83,6 +82,8 @@ namespace IGVC_Controller
             //this.setupModule("WideAngleMonoVision", new WideAngleMonoVision());
             this.setupModule("DualWebcam", new DualWebcam());
             this.setupModule("Vision_Visualizer", new Vision_Visualizer());
+            this.setupModule("DualVisionObstacleDetection", new DualVisionObstacleDetection());
+            this.setupModule("DualVisionObstacleReprojection", new DualVisionObstacleReprojection());
 
             activeModules = config.Read<List<string>>("Active_Modules", new List<string>());
 

@@ -27,6 +27,7 @@ namespace IGVC_Controller.Code.Modules.Visualizer.Vision
             this.addSubscription(INTERMODULE_VARIABLE.VISION_RIGHT);
             this.addSubscription(INTERMODULE_VARIABLE.VISION_LEFT);
             this.addSubscription(INTERMODULE_VARIABLE.STITCHED_IMAGE);
+            this.addSubscription(INTERMODULE_VARIABLE.COLLISION_IMAGE);
             this.setImageDelegate = this.setImage;
             this.modulePriority = 90;
         }
@@ -54,6 +55,9 @@ namespace IGVC_Controller.Code.Modules.Visualizer.Vision
                 case INTERMODULE_VARIABLE.STITCHED_IMAGE:
                     stitchedImage.setObject(data);
                     break;
+                case INTERMODULE_VARIABLE.COLLISION_IMAGE:
+                    stitchedImage.setObject(((Image<Gray,byte>)data).Convert<Bgr, byte>());
+                    break;
             }
         }
 
@@ -65,9 +69,12 @@ namespace IGVC_Controller.Code.Modules.Visualizer.Vision
 
             if (form.InvokeRequired)
             {
-                form.Invoke(this.setImageDelegate, new object[] { 0, visionLeft.getObject() });
-                form.Invoke(this.setImageDelegate, new object[] { 1, visionRight.getObject() });
-                form.Invoke(this.setImageDelegate, new object[] { 2, stitchedImage.getObject() });
+                if(visionLeft.getObject() != null)
+                    form.Invoke(this.setImageDelegate, new object[] { 0, visionLeft.getObject() });
+                if(visionRight.getObject() != null)
+                    form.Invoke(this.setImageDelegate, new object[] { 1, visionRight.getObject() });
+                if(stitchedImage.getObject() != null)
+                    form.Invoke(this.setImageDelegate, new object[] { 2, stitchedImage.getObject() });
             }
 
             base.process();
