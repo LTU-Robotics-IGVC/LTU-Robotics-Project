@@ -39,6 +39,20 @@ namespace IGVC_Controller.Code.Modules
             VISION_RIGHT,
 
             /// <summary>
+            /// Represents a binary image that holds marked obstacles
+            /// <para>Source : ObstacleDetection</para>
+            /// <para>Format : Image(Gray, Byte)</para>
+            /// </summary>
+            OBSTACLE_IMAGE_RIGHT,
+
+            /// <summary>
+            /// Represents the raw image feed from the RIGHT stereo camera
+            /// <para>Source : ObstacleDetection</para>
+            /// <para>Format : Image(Gray, Byte)</para>
+            /// </summary>
+            OBSTACLE_IMAGE_LEFT,
+
+            /// <summary>
             /// Represents the stitched image from the left and right camera
             /// <para>Source : WideAngleMonoVision</para>
             /// <para>Format : Image(Bgr, Byte)</para>
