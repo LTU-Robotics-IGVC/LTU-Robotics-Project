@@ -54,9 +54,9 @@ namespace IGVC_Controller.Code.Modules.Cameras
 
         public override bool startup()
         {
-            capture1 = new Capture(0);
+            capture1 = new Capture(cap1Index);
             capture1.Start();
-            capture2 = new Capture(2);
+            capture2 = new Capture(cap2Index);
             return base.startup();
         }
 
