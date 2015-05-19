@@ -82,5 +82,15 @@ namespace IGVC_Controller.Code.Modules.Vision
             ((IModuleEditor)this).setDataToModule();
             this.Close();
         }
+
+        private void label2_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void PriorityBox_ValueChanged(object sender, EventArgs e)
+        {
+
+        }
     }
 }

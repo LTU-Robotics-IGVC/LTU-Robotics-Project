@@ -49,6 +49,7 @@
             this.label2.Size = new System.Drawing.Size(52, 17);
             this.label2.TabIndex = 10;
             this.label2.Text = "Priority";
+            this.label2.Click += new System.EventHandler(this.label2_Click);
             // 
             // PriorityBox
             // 
@@ -62,6 +63,7 @@
             this.PriorityBox.Name = "PriorityBox";
             this.PriorityBox.Size = new System.Drawing.Size(107, 22);
             this.PriorityBox.TabIndex = 9;
+            this.PriorityBox.ValueChanged += new System.EventHandler(this.PriorityBox_ValueChanged);
             // 
             // imageBox1
             // 
