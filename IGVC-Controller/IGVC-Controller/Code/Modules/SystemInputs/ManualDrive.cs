@@ -9,12 +9,16 @@ namespace IGVC_Controller.Code.Modules.SystemInputs
 {
     class ManualDrive : IModule
     {
-        IGVC_Controller.DataIO.Keyboard key_input;
+        //IGVC_Controller.DataIO.Keyboard key_input;
 
         GatedVariable drive_on;
 
         // Default speed for arrow keys movement
         public double def_speed = 3.00;
+
+        //Variables of speeds to send to each motor
+        public double right_motor_speed = 0.00;
+        public double left_motor_speed = 0.00;
 
         public ManualDrive() : base()
         {
@@ -52,6 +56,11 @@ namespace IGVC_Controller.Code.Modules.SystemInputs
             drive_on = new GatedVariable();
 
             return base.startup();
+        }
+
+        public override System.Windows.Forms.Form getEditorForm()
+        {
+            return new ManualDriveEditor();
         }
     }
 }
