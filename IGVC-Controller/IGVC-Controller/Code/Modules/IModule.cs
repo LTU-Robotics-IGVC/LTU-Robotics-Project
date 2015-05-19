@@ -103,7 +103,11 @@ namespace IGVC_Controller.Code.Modules
             /// Variable that holds a combined image from the collision detection
             /// <para>that exists on the world plane</para>
             /// </summary>
-            COLLISION_IMAGE
+            COLLISION_IMAGE,
+
+            MOTOR_SPEED_LEFT,
+
+            MOTOR_SPEED_RIGHT
         }
 
         public struct LOG_TYPES

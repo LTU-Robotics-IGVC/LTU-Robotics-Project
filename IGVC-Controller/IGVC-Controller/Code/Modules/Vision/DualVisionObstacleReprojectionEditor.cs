@@ -26,13 +26,13 @@ namespace IGVC_Controller.Code.Modules.Vision
         const int height = 6;
         Size patternSize = new Size(width, height);
         PointF[] worldPoints = new PointF[width * height];
-        const double checkerboardBoxSize = 10;//2.7; //In centimeters
+        const double checkerboardBoxSize = 2.7; //In centimeters
         //Note that the coordinates are relative to the center of TurtleBot
         const double checkerboardUpperLeftX = 0.0;
         const double checkerboardUpperLeftY = 0.0;
 
-        int combinedWidth = 500;
-        int combinedHeight = 500;
+        int combinedWidth = 1000;
+        int combinedHeight = 1000;
 
         public DualVisionObstacleReprojectionEditor()
         {
@@ -112,8 +112,8 @@ namespace IGVC_Controller.Code.Modules.Vision
 
         void leftCamera_ImageGrabbed(object sender, EventArgs e)
         {
-            Image<Bgr, byte> leftColor = leftCamera.RetrieveBgrFrame().Resize(320, 240, Emgu.CV.CvEnum.INTER.CV_INTER_LINEAR);
-            Image<Bgr, byte> rightColor = rightCamera.RetrieveBgrFrame().Resize(320, 240, Emgu.CV.CvEnum.INTER.CV_INTER_LINEAR);
+            Image<Bgr, byte> leftColor = leftCamera.RetrieveBgrFrame().Resize(320, 240, Emgu.CV.CvEnum.INTER.CV_INTER_NN);
+            Image<Bgr, byte> rightColor = rightCamera.RetrieveBgrFrame().Resize(320, 240, Emgu.CV.CvEnum.INTER.CV_INTER_NN);
 
             if (DualWebcam.intrinsic1 != null) leftColor = DualWebcam.intrinsic1.Undistort(leftColor);
             if (DualWebcam.intrinsic2 != null) rightColor = DualWebcam.intrinsic2.Undistort(rightColor);
@@ -131,11 +131,35 @@ namespace IGVC_Controller.Code.Modules.Vision
                     leftGray.FindCornerSubPix(new PointF[1][] { cornersLeft }, new Size(11, 11), new Size(-1, -1), new MCvTermCriteria(30, 0.01));
                     rightGray.FindCornerSubPix(new PointF[1][] { cornersRight }, new Size(11, 11), new Size(-1, -1), new MCvTermCriteria(30, 0.01));
 
-                    leftHomography = CameraCalibration.FindHomography(cornersLeft, worldPoints, Emgu.CV.CvEnum.HOMOGRAPHY_METHOD.DEFAULT, 2.0);
-                    rightHomography = CameraCalibration.FindHomography(cornersRight, worldPoints, Emgu.CV.CvEnum.HOMOGRAPHY_METHOD.DEFAULT, 2.0);
+                    //leftHomography = CameraCalibration.FindHomography(cornersLeft, worldPoints, Emgu.CV.CvEnum.HOMOGRAPHY_METHOD.DEFAULT, 2.0);
+                    //rightHomography = CameraCalibration.FindHomography(cornersRight, worldPoints, Emgu.CV.CvEnum.HOMOGRAPHY_METHOD.DEFAULT, 2.0);
 
-                    //leftHomography = CameraCalibration.GetPerspectiveTransform(cornersLeft, worldPoints);
-                    //rightHomography = CameraCalibration.GetPerspectiveTransform(cornersRight, worldPoints);
+                    PointF[] worldCorners = new PointF[]
+                    {
+                        worldPoints[0],
+                        worldPoints[8],
+                        worldPoints[width*height-1],
+                        worldPoints[width*height-9]
+                    };
+
+                    PointF[] leftCorners = new PointF[]
+                    {
+                        cornersLeft[0],
+                        cornersLeft[8],
+                        cornersLeft[width*height-1],
+                        cornersLeft[width*height-9]
+                    };
+
+                    PointF[] rightCorners = new PointF[]
+                    {
+                        cornersRight[0],
+                        cornersRight[8],
+                        cornersRight[width*height-1],
+                        cornersRight[width*height-9]
+                    };
+
+                    leftHomography = CameraCalibration.GetPerspectiveTransform(leftCorners, worldCorners);
+                    rightHomography = CameraCalibration.GetPerspectiveTransform(rightCorners, worldCorners);
 
                     this.isCalibrating = false;
                     this.CalibrateButton.BackColor = Color.Green;
