@@ -26,7 +26,7 @@ namespace IGVC_Controller.Code.Modules.Vision
         const int height = 6;
         Size patternSize = new Size(width, height);
         PointF[] worldPoints = new PointF[width * height];
-        const double checkerboardBoxSize = 2.7; //In centimeters
+        const double checkerboardBoxSize = 10;//2.7; //In centimeters
         //Note that the coordinates are relative to the center of TurtleBot
         const double checkerboardUpperLeftX = 0.0;
         const double checkerboardUpperLeftY = 0.0;
@@ -52,11 +52,29 @@ namespace IGVC_Controller.Code.Modules.Vision
             {
                 for (int y = 0; y < height; y++)
                 {
-                    worldPoints[x + y * height] = new PointF(
+                    worldPoints[(width - x - 1) + y * width] = new PointF(
                         (float)(combinedWidth/2 + checkerboardUpperLeftX + (double)x * checkerboardBoxSize),
-                        (float)(combinedHeight/2 - checkerboardUpperLeftY - (double)y * checkerboardBoxSize));
+                        (float)(combinedHeight/2 + checkerboardUpperLeftY + (double)y * checkerboardBoxSize));
                 }
             }
+
+            /*for (int x = 0; x < width; x++)
+            {
+                for (int y = 0; y < height; y++)
+                {
+                    worldPoints[(width - x - 1) + y * width] = new PointF(
+                        (float)(x * checkerboardBoxSize), (float)(y * checkerboardBoxSize));
+                }
+            }
+            */
+            //for(int x = 0; x < width; x++)
+            //{
+            //    for(int y = 0;  y < height; y++)
+            //    {
+            //        worldPoints[(width - x - 1) + y * width].X = x * 100;
+            //        worldPoints[(width - x - 1) + y * width].Y = y * 100;
+            //    }
+            //}
         }
 
         void IModuleEditor.setModule(IModule module)
@@ -67,7 +85,8 @@ namespace IGVC_Controller.Code.Modules.Vision
 
         void IModuleEditor.loadDataFromModule()
         {
-
+            this.leftHomography = module.leftHomography;
+            this.rightHomography = module.rightHomography;
         }
 
         void IModuleEditor.setDataToModule()
@@ -77,7 +96,7 @@ namespace IGVC_Controller.Code.Modules.Vision
 
         private void StartCamera_Click(object sender, EventArgs e)
         {
-            if(leftCamera == null && rightCamera != null)
+            if(leftCamera == null && rightCamera == null)
             {
                 leftCamera = new Capture(DualWebcam.cap1Index);
                 rightCamera = new Capture(DualWebcam.cap2Index);
@@ -112,28 +131,36 @@ namespace IGVC_Controller.Code.Modules.Vision
 
                     leftHomography = CameraCalibration.FindHomography(cornersLeft, worldPoints, Emgu.CV.CvEnum.HOMOGRAPHY_METHOD.DEFAULT, 2.0);
                     rightHomography = CameraCalibration.FindHomography(cornersRight, worldPoints, Emgu.CV.CvEnum.HOMOGRAPHY_METHOD.DEFAULT, 2.0);
+
+                    //leftHomography = CameraCalibration.GetPerspectiveTransform(cornersLeft, worldPoints);
+                    //rightHomography = CameraCalibration.GetPerspectiveTransform(cornersRight, worldPoints);
+
+                    this.isCalibrating = false;
+                    this.CalibrateButton.BackColor = Color.Green;
                 }
             }
 
-            this.imageBox1.Image = leftColor;
-            this.imageBox3.Image = rightColor;
             leftGray = ImageFiltering.Threshold(leftGray, 125);
             rightGray = ImageFiltering.Threshold(rightGray, 125);
             Image<Gray, byte> combined = new Image<Gray, byte>(combinedWidth, combinedHeight);
-            combined.Add(leftGray.WarpPerspective(leftHomography, combinedWidth, combinedHeight, Emgu.CV.CvEnum.INTER.CV_INTER_LINEAR, Emgu.CV.CvEnum.WARP.CV_WARP_DEFAULT, new Gray(0)));
-            combined.Add(rightGray.WarpPerspective(rightHomography, combinedWidth, combinedHeight, Emgu.CV.CvEnum.INTER.CV_INTER_LINEAR, Emgu.CV.CvEnum.WARP.CV_WARP_DEFAULT, new Gray(0)));
+            combined = combined.Add(leftGray.WarpPerspective(leftHomography, combinedWidth, combinedHeight, Emgu.CV.CvEnum.INTER.CV_INTER_LINEAR, Emgu.CV.CvEnum.WARP.CV_WARP_DEFAULT, new Gray(0)));
+            combined = combined.Add(rightGray.WarpPerspective(rightHomography, combinedWidth, combinedHeight, Emgu.CV.CvEnum.INTER.CV_INTER_LINEAR, Emgu.CV.CvEnum.WARP.CV_WARP_DEFAULT, new Gray(0)));
+
+            this.imageBox1.Image = leftColor;
+            this.imageBox3.Image = rightColor; 
             this.imageBox2.Image = combined;
         }
 
         private void CalibrateButton_Click(object sender, EventArgs e)
         {
             this.isCalibrating = true;
+            this.CalibrateButton.BackColor = Color.Red;
         }
 
         private void OKButton_Click(object sender, EventArgs e)
         {
-            if (leftCamera != null) leftCamera.Stop();
-            if (rightCamera != null) rightCamera.Stop();
+            if (leftCamera != null) { leftCamera.Stop(); leftCamera.Dispose(); }
+            if (rightCamera != null) { rightCamera.Stop(); rightCamera.Dispose(); }
 
             ((IModuleEditor)this).setDataToModule();
 

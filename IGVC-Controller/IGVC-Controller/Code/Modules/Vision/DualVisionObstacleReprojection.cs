@@ -118,5 +118,10 @@ namespace IGVC_Controller.Code.Modules.Vision
 
             this.sendDataToRegistry(INTERMODULE_VARIABLE.COLLISION_IMAGE, collisionMap);
         }
+
+        public override System.Windows.Forms.Form getEditorForm()
+        {
+            return new DualVisionObstacleReprojectionEditor();
+        }
     }
 }
