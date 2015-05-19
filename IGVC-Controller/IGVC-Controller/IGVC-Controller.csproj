@@ -119,6 +119,10 @@
     </Compile>
     <Compile Include="Code\Modules\Example\RandomDataGenerator.cs" />
     <Compile Include="Code\Modules\SystemInputs\ManualDrive.cs" />
+    <Compile Include="Code\Modules\SystemInputs\ManualDriveEditor.cs" />
+    <Compile Include="Code\Modules\SystemInputs\ManualDriveEditor.Designer.cs">
+      <DependentUpon>ManualDriveEditor.cs</DependentUpon>
+    </Compile>
     <Compile Include="Code\Modules\UI\RobotControlPanel.cs" />
     <Compile Include="Code\Modules\Vision\DualVisionObstacleDetection.cs" />
     <Compile Include="Code\Modules\Vision\DualVisionObstacleDetectionEditor.cs">
@@ -172,6 +176,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Code\Modules\NoModulePropertiesWindow.resx">
       <DependentUpon>NoModulePropertiesWindow.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Code\Modules\SystemInputs\ManualDriveEditor.resx">
+      <DependentUpon>ManualDriveEditor.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Code\Modules\Vision\DualVisionObstacleDetectionEditor.resx">
       <DependentUpon>DualVisionObstacleDetectionEditor.cs</DependentUpon>
