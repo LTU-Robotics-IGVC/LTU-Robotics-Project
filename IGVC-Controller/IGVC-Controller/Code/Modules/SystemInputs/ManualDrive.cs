@@ -11,6 +11,11 @@ namespace IGVC_Controller.Code.Modules.SystemInputs
     {
         //IGVC_Controller.DataIO.Keyboard key_input;
 
+        //Remember that key_input needs to be bound to a Windows Form
+        //A Windows Form using the Keyboard class will have abnormal behavior
+        //if any text boxes are used as the Form and Keyboard will both listen
+        //to keyboard events
+
         GatedVariable drive_on;
 
         // Default speed for arrow keys movement
@@ -22,7 +27,11 @@ namespace IGVC_Controller.Code.Modules.SystemInputs
 
         public ManualDrive() : base()
         {
-            this.modulePriority = 90; // Should it be high priority in order to override automatic drive?
+            //this.modulePriority = 90; // Should it be high priority in order to override automatic drive?
+            //Its a system input so it should be in the Range of 0-25
+            //Automatic drive will be disabled through the trajectory planner module
+            this.modulePriority = 10; 
+
             this.addSubscription(INTERMODULE_VARIABLE.DRIVING_ENABLED);
         }
 
