@@ -31,18 +31,30 @@ namespace IGVC_Controller.Code.Modules.Vision
         const double checkerboardUpperLeftX = 0.0;
         const double checkerboardUpperLeftY = 0.0;
 
+        int combinedWidth = 1000;
+        int combinedHeight = 1000;
+
         public DualVisionObstacleReprojectionEditor()
         {
             InitializeComponent();
 
+            prepareCalibartionPoints();
+        }
+
+        private void prepareCalibartionPoints()
+        {
             //Set up calibration points
-            for(int x = 0; x < width; x++)
+            double CheckerboardWidth = checkerboardBoxSize * width;
+            double CheckerboardHeight = checkerboardBoxSize * height;
+            double HalfWidth = CheckerboardWidth / 2.0;
+            double HalfHeight = CheckerboardHeight / 2.0;
+            for (int x = 0; x < width; x++)
             {
                 for (int y = 0; y < height; y++)
                 {
                     worldPoints[x + y * height] = new PointF(
-                        (float)(checkerboardUpperLeftX + (double)x * checkerboardBoxSize),
-                        (float)(checkerboardUpperLeftY - (double)y * checkerboardBoxSize));
+                        (float)(combinedWidth/2 + checkerboardUpperLeftX + (double)x * checkerboardBoxSize),
+                        (float)(combinedHeight/2 - checkerboardUpperLeftY - (double)y * checkerboardBoxSize));
                 }
             }
         }
@@ -107,9 +119,9 @@ namespace IGVC_Controller.Code.Modules.Vision
             this.imageBox3.Image = rightColor;
             leftGray = ImageFiltering.Threshold(leftGray, 125);
             rightGray = ImageFiltering.Threshold(rightGray, 125);
-            Image<Gray, byte> combined = new Image<Gray, byte>(1000, 1000);
-            combined.Add(leftGray.WarpPerspective(leftHomography, 1000, 1000, Emgu.CV.CvEnum.INTER.CV_INTER_LINEAR, Emgu.CV.CvEnum.WARP.CV_WARP_DEFAULT, new Gray(0)));
-            combined.Add(rightGray.WarpPerspective(rightHomography, 1000, 1000, Emgu.CV.CvEnum.INTER.CV_INTER_LINEAR, Emgu.CV.CvEnum.WARP.CV_WARP_DEFAULT, new Gray(0)));
+            Image<Gray, byte> combined = new Image<Gray, byte>(combinedWidth, combinedHeight);
+            combined.Add(leftGray.WarpPerspective(leftHomography, combinedWidth, combinedHeight, Emgu.CV.CvEnum.INTER.CV_INTER_LINEAR, Emgu.CV.CvEnum.WARP.CV_WARP_DEFAULT, new Gray(0)));
+            combined.Add(rightGray.WarpPerspective(rightHomography, combinedWidth, combinedHeight, Emgu.CV.CvEnum.INTER.CV_INTER_LINEAR, Emgu.CV.CvEnum.WARP.CV_WARP_DEFAULT, new Gray(0)));
             this.imageBox2.Image = combined;
         }
 
