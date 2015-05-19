@@ -48,6 +48,7 @@
             this.imageBox1.Location = new System.Drawing.Point(12, 12);
             this.imageBox1.Name = "imageBox1";
             this.imageBox1.Size = new System.Drawing.Size(320, 240);
+            this.imageBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.imageBox1.TabIndex = 2;
             this.imageBox1.TabStop = false;
             // 
@@ -56,6 +57,7 @@
             this.imageBox2.Location = new System.Drawing.Point(338, 12);
             this.imageBox2.Name = "imageBox2";
             this.imageBox2.Size = new System.Drawing.Size(320, 240);
+            this.imageBox2.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.imageBox2.TabIndex = 3;
             this.imageBox2.TabStop = false;
             // 
@@ -118,6 +120,7 @@
             this.imageBox3.Location = new System.Drawing.Point(664, 12);
             this.imageBox3.Name = "imageBox3";
             this.imageBox3.Size = new System.Drawing.Size(320, 240);
+            this.imageBox3.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.imageBox3.TabIndex = 18;
             this.imageBox3.TabStop = false;
             // 
@@ -126,6 +129,7 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(999, 411);
+            this.ControlBox = false;
             this.Controls.Add(this.imageBox3);
             this.Controls.Add(this.CalibrateButton);
             this.Controls.Add(this.OKButton);
