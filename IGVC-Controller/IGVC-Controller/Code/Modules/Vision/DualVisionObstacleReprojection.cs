@@ -15,11 +15,48 @@ namespace IGVC_Controller.Code.Modules.Vision
         GatedVariable obstacleLeft;
         GatedVariable obstacleRight;
 
+        public HomographyMatrix leftHomography;
+        public HomographyMatrix rightHomography;
+
         public DualVisionObstacleReprojection() : base()
         {
             this.modulePriority = 52;
             this.addSubscription(INTERMODULE_VARIABLE.OBSTACLE_IMAGE_LEFT);
             this.addSubscription(INTERMODULE_VARIABLE.OBSTACLE_IMAGE_RIGHT);
+
+            //set default homography matrices
+            //The Region of Interest may need to be adjusted to ignore the horizon
+            Rectangle rect = new Rectangle(0, 0, 320, 240);
+
+            PointF[] src = new PointF[]
+                {
+                    new PointF(rect.Left, rect.Bottom),
+                    new PointF(rect.Right, rect.Bottom),
+                    new PointF(rect.Right, rect.Top),
+                    new PointF(rect.Left, rect.Top)
+                };
+
+            //These are the planar points of the cameras perspective
+            PointF[] dst = new PointF[]
+                {
+                    new PointF(150, 300),
+                    new PointF(300, 150),
+                    new PointF(300, 0),
+                    new PointF(0, 300)
+                };
+
+            leftHomography = CameraCalibration.GetPerspectiveTransform(src, dst);
+
+            dst = new PointF[]
+                {
+                    new PointF(300, 150),
+                    new PointF(450, 300),
+                    new PointF(600, 300),
+                    new PointF(300, 0)
+                };
+
+            rightHomography = CameraCalibration.GetPerspectiveTransform(src, dst);
+            
         }
 
         public override void recieveDataFromRegistry(IModule.INTERMODULE_VARIABLE tag, object data)
@@ -44,6 +81,22 @@ namespace IGVC_Controller.Code.Modules.Vision
             return base.startup();
         }
 
+        public override void loadFromConfig(IGVC_Controller.DataIO.SaveFile config)
+        {
+            leftHomography = config.Read<HomographyMatrix>("leftHomography", leftHomography);
+            rightHomography = config.Read<HomographyMatrix>("rightHomography", rightHomography);
+
+            base.loadFromConfig(config);
+        }
+
+        public override void writeToConfig(IGVC_Controller.DataIO.SaveFile config)
+        {
+            config.Write<HomographyMatrix>("leftHomography", leftHomography);
+            config.Write<HomographyMatrix>("rightHomography", rightHomography);
+
+            base.writeToConfig(config);
+        }
+
         public override void process()
         {
             obstacleLeft.shiftObject();
@@ -54,51 +107,13 @@ namespace IGVC_Controller.Code.Modules.Vision
             Image<Gray, byte> obstLeft = (Image<Gray, byte>)obstacleLeft.getObject();
             if(obstLeft != null)
             {
-                //The Region of Interest may need to be adjusted to ignore the horizon
-                Rectangle rect = obstLeft.ROI;
-                PointF[] src = new PointF[]
-                {
-                    new PointF(rect.Left, rect.Bottom),
-                    new PointF(rect.Right, rect.Bottom),
-                    new PointF(rect.Right, rect.Top),
-                    new PointF(rect.Left, rect.Top)
-                };
-
-                //These are the planar points of the cameras perspective
-                PointF[] dst = new PointF[]
-                {
-                    new PointF(150, 300),
-                    new PointF(300, 150),
-                    new PointF(300, 0),
-                    new PointF(0, 300)
-                };
-
-                HomographyMatrix homography = CameraCalibration.GetPerspectiveTransform(src, dst);
-                collisionMap = collisionMap.Add(obstLeft.WarpPerspective(homography, 600, 600, Emgu.CV.CvEnum.INTER.CV_INTER_LINEAR, Emgu.CV.CvEnum.WARP.CV_WARP_DEFAULT, new Gray(0)));
+                collisionMap = collisionMap.Add(obstLeft.WarpPerspective(leftHomography, 600, 600, Emgu.CV.CvEnum.INTER.CV_INTER_LINEAR, Emgu.CV.CvEnum.WARP.CV_WARP_DEFAULT, new Gray(0)));
             }
 
             Image<Gray, byte> obstRight = (Image<Gray, byte>)obstacleRight.getObject();
             if(obstRight != null)
             {
-                Rectangle rect = obstRight.ROI;
-                PointF[] src = new PointF[]
-                {
-                    new PointF(rect.Left, rect.Bottom),
-                    new PointF(rect.Right, rect.Bottom),
-                    new PointF(rect.Right, rect.Top),
-                    new PointF(rect.Left, rect.Top)
-                };
-
-                PointF[] dst = new PointF[]
-                {
-                    new PointF(300, 150),
-                    new PointF(450, 300),
-                    new PointF(600, 300),
-                    new PointF(300, 0)
-                };
-
-                HomographyMatrix homography = CameraCalibration.GetPerspectiveTransform(src, dst);
-                collisionMap = collisionMap.Add(obstRight.WarpPerspective(homography, 600, 600, Emgu.CV.CvEnum.INTER.CV_INTER_LINEAR, Emgu.CV.CvEnum.WARP.CV_WARP_DEFAULT, new Gray(0)));
+                collisionMap = collisionMap.Add(obstRight.WarpPerspective(rightHomography, 600, 600, Emgu.CV.CvEnum.INTER.CV_INTER_LINEAR, Emgu.CV.CvEnum.WARP.CV_WARP_DEFAULT, new Gray(0)));
             }
 
             this.sendDataToRegistry(INTERMODULE_VARIABLE.COLLISION_IMAGE, collisionMap);

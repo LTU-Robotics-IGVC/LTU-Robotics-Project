@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Emgu.CV;
 using Emgu.CV.Structure;
+using System.Drawing;
 
 namespace IGVC_Controller.Code.MathX
 {
@@ -60,74 +61,65 @@ namespace IGVC_Controller.Code.MathX
             }
 
             return Hue.And(Sat.And(Val));
-            //int width = image.Width;
-            //int height = image.Height;
-            //Image<Gray, byte> copy = new Image<Gray, byte>(width, height);
-
-            //for (int x = 0; x < width; x++)
-            //{
-            //    for (int y = 0; y < height; y++)
-            //    {
-            //        double hue = ((double)image.Data[y, x, 0]) / 255.0 * 180.0;
-            //        double sat = ((double)image.Data[y, x, 1]) / 255.0;
-            //        double val = ((double)image.Data[y, x, 2]) / 255.0;
-
-            //        if (min.Hue < max.Hue)
-            //        {
-            //            if (hue < min.Hue || hue > max.Hue)
-            //            {
-            //                continue;
-            //            }
-            //        }
-            //        else
-            //        {
-            //            if (hue > min.Hue || hue < max.Hue)
-            //            {
-            //                continue;
-            //            }
-            //        }
-
-            //        if (min.Satuation < max.Satuation)
-            //        {
-            //            if (sat < min.Satuation || sat > max.Satuation)
-            //            {
-            //                continue;
-            //            }
-            //        }
-            //        else
-            //        {
-            //            if (sat > min.Satuation || sat < max.Satuation)
-            //            {
-            //                continue;
-            //            }
-            //        }
-
-            //        if (min.Value < max.Value)
-            //        {
-            //            if (val < min.Value || val > max.Value)
-            //            {
-            //                continue;
-            //            }
-            //        }
-            //        else
-            //        {
-            //            if (val > min.Value || val < max.Value)
-            //            {
-            //                continue;
-            //            }
-            //        }
-
-            //        //Pixel should be value if it reaches this point
-            //        copy.Data[y, x, 0] = 255;
-            //    }
-            //}
-
-            //return copy;
+           
         }
 
         public static Image<Gray, byte> Threshold(Image<Gray, byte> img, int threshold)
         {
             return img.ThresholdBinary(new Gray(threshold), new Gray(255));
+        }
+
+        /// <summary>
+        /// Blacks out the sections of the image not contained in RegionOfInterest
+        /// <para>This does not use image.ROI</para>
+        /// </summary>
+        /// <param name="image"></param>
+        /// <param name="RegionOfInterest"></param>
+        /// <returns></returns>
+        public static Image<Bgr, byte> Blackout(Image<Bgr, byte> image, Rectangle RegionOfInterest)
+        {
+            Image<Bgr, byte> Return = image.Clone();
+
+            Bgr black = new Bgr(0, 0, 0);
+
+            Point[] pts_upper = new Point[]
+            {
+                new Point(0, 0),
+                new Point(image.Width, 0),
+                new Point(image.Width, RegionOfInterest.Top),
+                new Point(0, RegionOfInterest.Top)
+            };
+
+            Point[] pts_lower = new Point[]
+            {
+                new Point(0, RegionOfInterest.Bottom),
+                new Point(image.Width, RegionOfInterest.Bottom),
+                new Point(image.Width, image.Height),
+                new Point(0, image.Height)
+            };
+
+            Point[] pts_left = new Point[]
+            {
+                new Point(0, 0),
+                new Point(RegionOfInterest.Left, 0),
+                new Point(RegionOfInterest.Left, image.Height),
+                new Point(0, image.Height)
+            };
+
+            Point[] pts_right = new Point[]
+            {
+                new Point(RegionOfInterest.Right, 0),
+                new Point(image.Width, 0),
+                new Point(image.Width, image.Height),
+                new Point(RegionOfInterest.Right, image.Height)
+            };
+
+            Return.FillConvexPoly(pts_upper, black);
+            Return.FillConvexPoly(pts_lower, black);
+            Return.FillConvexPoly(pts_left, black);
+            Return.FillConvexPoly(pts_right, black);
+
+            return Return;
         }
     }
 }

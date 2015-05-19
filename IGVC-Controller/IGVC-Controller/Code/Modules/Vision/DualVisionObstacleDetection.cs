@@ -8,6 +8,7 @@ using Emgu.CV;
 using Emgu.CV.Structure;
 using IGVC_Controller.Code.MathX;
 using Emgu.CV.GPU;
+using System.Drawing;
 
 namespace IGVC_Controller.Code.Modules.Vision
 {
@@ -20,9 +21,14 @@ namespace IGVC_Controller.Code.Modules.Vision
         public double maxGreen = 50.0;
         public double minVal = 0.25;
 
+        public Rectangle leftVisionRange;
+        public Rectangle rightVisionRange;
+
         public DualVisionObstacleDetection() : base()
         {
             this.modulePriority = 51;
+            leftVisionRange = new Rectangle(0, 0, 320, 240);
+            rightVisionRange = new Rectangle(0, 0, 320, 240);
             this.addSubscription(INTERMODULE_VARIABLE.VISION_LEFT);
             this.addSubscription(INTERMODULE_VARIABLE.VISION_RIGHT);
         }
@@ -33,6 +39,8 @@ namespace IGVC_Controller.Code.Modules.Vision
             this.minGreen = config.Read<double>("minGreen", 70.0);
             this.maxGreen = config.Read<double>("maxGreen", 50.0);
             this.minVal = config.Read<double>("minVal", 0.25);
+            this.leftVisionRange = config.Read<Rectangle>("leftVisionRange", leftVisionRange);
+            this.rightVisionRange = config.Read<Rectangle>("rightVisionRange", rightVisionRange);
 
             base.loadFromConfig(config);
         }
@@ -42,6 +50,8 @@ namespace IGVC_Controller.Code.Modules.Vision
             config.Write<double>("minGreen", this.minGreen);
             config.Write<double>("maxGreen", this.maxGreen);
             config.Write<double>("minVal", this.minVal);
+            config.Write<Rectangle>("leftVisionRange", leftVisionRange);
+            config.Write<Rectangle>("rightVisionRange", rightVisionRange);
 
             base.writeToConfig(config);
         }
