@@ -26,6 +26,7 @@ namespace IGVC_Controller.Code.Modules.SystemInputs
         public ManualDriveEditor()
         {
             InitializeComponent();
+            Keyboard keyboard = new Keyboard(this);
         }
 
         void IModuleEditor.setModule(IModule module)
