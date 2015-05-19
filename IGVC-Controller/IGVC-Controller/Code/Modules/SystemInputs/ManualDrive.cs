@@ -18,11 +18,18 @@ namespace IGVC_Controller.Code.Modules.SystemInputs
 
         GatedVariable drive_on;
 
-        // Default speed for arrow keys movement
+        /// <summary>
+        /// Default speed for arrow keys movement (in m/s; must be always below 5.00 m/s)
+        /// </summary>
         public double def_speed = 3.00;
 
-        //Variables of speeds to send to each motor
+        /// <summary>
+        /// Value (in m/s) to be sent to right motor
+        /// </summary>
         public double right_motor_speed = 0.00;
+        /// <summary>
+        /// Value (in m/s) to be sent to left motor
+        /// </summary>
         public double left_motor_speed = 0.00;
 
         public ManualDrive() : base()

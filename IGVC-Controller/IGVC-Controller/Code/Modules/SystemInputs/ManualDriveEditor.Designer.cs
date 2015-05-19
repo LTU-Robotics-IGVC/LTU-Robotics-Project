@@ -28,90 +28,101 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.button1 = new System.Windows.Forms.Button();
-            this.button2 = new System.Windows.Forms.Button();
-            this.button3 = new System.Windows.Forms.Button();
-            this.button4 = new System.Windows.Forms.Button();
-            this.button5 = new System.Windows.Forms.Button();
-            this.button6 = new System.Windows.Forms.Button();
-            this.button7 = new System.Windows.Forms.Button();
-            this.numericUpDown1 = new System.Windows.Forms.NumericUpDown();
+            this.Forward = new System.Windows.Forms.Button();
+            this.Bck = new System.Windows.Forms.Button();
+            this.TRight = new System.Windows.Forms.Button();
+            this.TLeft = new System.Windows.Forms.Button();
+            this.SRight = new System.Windows.Forms.Button();
+            this.SLeft = new System.Windows.Forms.Button();
+            this.Close = new System.Windows.Forms.Button();
+            this.SetSpeed = new System.Windows.Forms.NumericUpDown();
             this.label1 = new System.Windows.Forms.Label();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.SetSpeed)).BeginInit();
             this.SuspendLayout();
             // 
-            // button1
+            // Forward
             // 
-            this.button1.Location = new System.Drawing.Point(189, 97);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(119, 102);
-            this.button1.TabIndex = 0;
-            this.button1.Text = "Forward";
-            this.button1.UseVisualStyleBackColor = true;
-            this.button1.Click += new System.EventHandler(this.button1_Click);
-            this.button1.MouseDown += new System.Windows.Forms.MouseEventHandler(this.button1_MouseDown);
+            this.Forward.Location = new System.Drawing.Point(189, 97);
+            this.Forward.Name = "Forward";
+            this.Forward.Size = new System.Drawing.Size(119, 102);
+            this.Forward.TabIndex = 0;
+            this.Forward.Text = "Forward";
+            this.Forward.UseVisualStyleBackColor = true;
+            this.Forward.MouseDown += new System.Windows.Forms.MouseEventHandler(this.Fwd_MouseDown);
+            this.Forward.MouseUp += new System.Windows.Forms.MouseEventHandler(this.Fwd_MouseUp);
             // 
-            // button2
+            // Bck
             // 
-            this.button2.Location = new System.Drawing.Point(189, 215);
-            this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(119, 102);
-            this.button2.TabIndex = 1;
-            this.button2.Text = "Backward";
-            this.button2.UseVisualStyleBackColor = true;
-            this.button2.MouseDown += new System.Windows.Forms.MouseEventHandler(this.button2_MouseDown);
+            this.Bck.Location = new System.Drawing.Point(189, 215);
+            this.Bck.Name = "Bck";
+            this.Bck.Size = new System.Drawing.Size(119, 102);
+            this.Bck.TabIndex = 1;
+            this.Bck.Text = "Backward";
+            this.Bck.UseVisualStyleBackColor = true;
+            this.Bck.MouseDown += new System.Windows.Forms.MouseEventHandler(this.Bck_MouseDown);
+            this.Bck.MouseUp += new System.Windows.Forms.MouseEventHandler(this.Bck_MouseUp);
             // 
-            // button3
+            // TRight
             // 
-            this.button3.Location = new System.Drawing.Point(332, 215);
-            this.button3.Name = "button3";
-            this.button3.Size = new System.Drawing.Size(119, 102);
-            this.button3.TabIndex = 2;
-            this.button3.Text = "Turn Right";
-            this.button3.UseVisualStyleBackColor = true;
+            this.TRight.Location = new System.Drawing.Point(332, 215);
+            this.TRight.Name = "TRight";
+            this.TRight.Size = new System.Drawing.Size(119, 102);
+            this.TRight.TabIndex = 2;
+            this.TRight.Text = "Turn Right";
+            this.TRight.UseVisualStyleBackColor = true;
+            this.TRight.MouseDown += new System.Windows.Forms.MouseEventHandler(this.TRight_MouseDown);
+            this.TRight.MouseUp += new System.Windows.Forms.MouseEventHandler(this.TRight_MouseUp);
             // 
-            // button4
+            // TLeft
             // 
-            this.button4.Location = new System.Drawing.Point(48, 215);
-            this.button4.Name = "button4";
-            this.button4.Size = new System.Drawing.Size(119, 102);
-            this.button4.TabIndex = 3;
-            this.button4.Text = "Turn Left";
-            this.button4.UseVisualStyleBackColor = true;
+            this.TLeft.Location = new System.Drawing.Point(48, 215);
+            this.TLeft.Name = "TLeft";
+            this.TLeft.Size = new System.Drawing.Size(119, 102);
+            this.TLeft.TabIndex = 3;
+            this.TLeft.Text = "Turn Left";
+            this.TLeft.UseVisualStyleBackColor = true;
+            this.TLeft.MouseDown += new System.Windows.Forms.MouseEventHandler(this.TLeft_MouseDown);
+            this.TLeft.MouseUp += new System.Windows.Forms.MouseEventHandler(this.TLeft_MouseUp);
             // 
-            // button5
+            // SRight
             // 
-            this.button5.Location = new System.Drawing.Point(332, 118);
-            this.button5.Name = "button5";
-            this.button5.Size = new System.Drawing.Size(84, 81);
-            this.button5.TabIndex = 4;
-            this.button5.Text = "Swerve Right";
-            this.button5.UseVisualStyleBackColor = true;
+            this.SRight.Location = new System.Drawing.Point(332, 118);
+            this.SRight.Name = "SRight";
+            this.SRight.Size = new System.Drawing.Size(84, 81);
+            this.SRight.TabIndex = 4;
+            this.SRight.Text = "Swerve Right";
+            this.SRight.UseVisualStyleBackColor = true;
+            this.SRight.MouseDown += new System.Windows.Forms.MouseEventHandler(this.SRight_MouseDown);
+            this.SRight.MouseUp += new System.Windows.Forms.MouseEventHandler(this.SRight_MouseUp);
             // 
-            // button6
+            // SLeft
             // 
-            this.button6.Location = new System.Drawing.Point(83, 118);
-            this.button6.Name = "button6";
-            this.button6.Size = new System.Drawing.Size(84, 81);
-            this.button6.TabIndex = 5;
-            this.button6.Text = "Swerve Left";
-            this.button6.UseVisualStyleBackColor = true;
+            this.SLeft.Location = new System.Drawing.Point(83, 118);
+            this.SLeft.Name = "SLeft";
+            this.SLeft.Size = new System.Drawing.Size(84, 81);
+            this.SLeft.TabIndex = 5;
+            this.SLeft.Text = "Swerve Left";
+            this.SLeft.UseVisualStyleBackColor = true;
+            this.SLeft.MouseDown += new System.Windows.Forms.MouseEventHandler(this.SLeft_MouseDown);
+            this.SLeft.MouseUp += new System.Windows.Forms.MouseEventHandler(this.SLeft_MouseUp);
             // 
-            // button7
+            // Close
             // 
-            this.button7.Location = new System.Drawing.Point(371, 449);
-            this.button7.Name = "button7";
-            this.button7.Size = new System.Drawing.Size(187, 66);
-            this.button7.TabIndex = 6;
-            this.button7.Text = "Close and Stop";
-            this.button7.UseVisualStyleBackColor = true;
+            this.Close.Location = new System.Drawing.Point(371, 449);
+            this.Close.Name = "Close";
+            this.Close.Size = new System.Drawing.Size(187, 66);
+            this.Close.TabIndex = 6;
+            this.Close.Text = "Close and Stop";
+            this.Close.UseVisualStyleBackColor = true;
+            this.Close.Click += new System.EventHandler(this.Close_Click);
             // 
-            // numericUpDown1
+            // SetSpeed
             // 
-            this.numericUpDown1.Location = new System.Drawing.Point(205, 366);
-            this.numericUpDown1.Name = "numericUpDown1";
-            this.numericUpDown1.Size = new System.Drawing.Size(127, 26);
-            this.numericUpDown1.TabIndex = 7;
+            this.SetSpeed.Location = new System.Drawing.Point(205, 366);
+            this.SetSpeed.Name = "SetSpeed";
+            this.SetSpeed.Size = new System.Drawing.Size(127, 26);
+            this.SetSpeed.TabIndex = 7;
+            this.SetSpeed.ValueChanged += new System.EventHandler(this.SetSpeed_ValueChanged);
             // 
             // label1
             // 
@@ -128,17 +139,17 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(923, 582);
             this.Controls.Add(this.label1);
-            this.Controls.Add(this.numericUpDown1);
-            this.Controls.Add(this.button7);
-            this.Controls.Add(this.button6);
-            this.Controls.Add(this.button5);
-            this.Controls.Add(this.button4);
-            this.Controls.Add(this.button3);
-            this.Controls.Add(this.button2);
-            this.Controls.Add(this.button1);
+            this.Controls.Add(this.SetSpeed);
+            this.Controls.Add(this.Close);
+            this.Controls.Add(this.SLeft);
+            this.Controls.Add(this.SRight);
+            this.Controls.Add(this.TLeft);
+            this.Controls.Add(this.TRight);
+            this.Controls.Add(this.Bck);
+            this.Controls.Add(this.Forward);
             this.Name = "ManualDriveEditor";
             this.Text = "ManualDriveForm";
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.SetSpeed)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -146,14 +157,14 @@
 
         #endregion
 
-        private System.Windows.Forms.Button button1;
-        private System.Windows.Forms.Button button2;
-        private System.Windows.Forms.Button button3;
-        private System.Windows.Forms.Button button4;
-        private System.Windows.Forms.Button button5;
-        private System.Windows.Forms.Button button6;
-        private System.Windows.Forms.Button button7;
-        private System.Windows.Forms.NumericUpDown numericUpDown1;
+        private System.Windows.Forms.Button Forward;
+        private System.Windows.Forms.Button Bck;
+        private System.Windows.Forms.Button TRight;
+        private System.Windows.Forms.Button TLeft;
+        private System.Windows.Forms.Button SRight;
+        private System.Windows.Forms.Button SLeft;
+        private System.Windows.Forms.Button Close;
+        private System.Windows.Forms.NumericUpDown SetSpeed;
         private System.Windows.Forms.Label label1;
     }
 }
