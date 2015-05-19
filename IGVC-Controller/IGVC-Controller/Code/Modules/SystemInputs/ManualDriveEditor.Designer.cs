@@ -37,14 +37,18 @@
             this.Close = new System.Windows.Forms.Button();
             this.SetSpeed = new System.Windows.Forms.NumericUpDown();
             this.label1 = new System.Windows.Forms.Label();
+            this.label2 = new System.Windows.Forms.Label();
+            this.PriorityBox = new System.Windows.Forms.NumericUpDown();
             ((System.ComponentModel.ISupportInitialize)(this.SetSpeed)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.PriorityBox)).BeginInit();
             this.SuspendLayout();
             // 
             // Forward
             // 
-            this.Forward.Location = new System.Drawing.Point(189, 97);
+            this.Forward.Location = new System.Drawing.Point(168, 78);
+            this.Forward.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.Forward.Name = "Forward";
-            this.Forward.Size = new System.Drawing.Size(119, 102);
+            this.Forward.Size = new System.Drawing.Size(106, 82);
             this.Forward.TabIndex = 0;
             this.Forward.Text = "Forward";
             this.Forward.UseVisualStyleBackColor = true;
@@ -53,9 +57,10 @@
             // 
             // Bck
             // 
-            this.Bck.Location = new System.Drawing.Point(189, 215);
+            this.Bck.Location = new System.Drawing.Point(168, 172);
+            this.Bck.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.Bck.Name = "Bck";
-            this.Bck.Size = new System.Drawing.Size(119, 102);
+            this.Bck.Size = new System.Drawing.Size(106, 82);
             this.Bck.TabIndex = 1;
             this.Bck.Text = "Backward";
             this.Bck.UseVisualStyleBackColor = true;
@@ -64,9 +69,10 @@
             // 
             // TRight
             // 
-            this.TRight.Location = new System.Drawing.Point(332, 215);
+            this.TRight.Location = new System.Drawing.Point(295, 172);
+            this.TRight.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.TRight.Name = "TRight";
-            this.TRight.Size = new System.Drawing.Size(119, 102);
+            this.TRight.Size = new System.Drawing.Size(106, 82);
             this.TRight.TabIndex = 2;
             this.TRight.Text = "Turn Right";
             this.TRight.UseVisualStyleBackColor = true;
@@ -75,9 +81,10 @@
             // 
             // TLeft
             // 
-            this.TLeft.Location = new System.Drawing.Point(48, 215);
+            this.TLeft.Location = new System.Drawing.Point(43, 172);
+            this.TLeft.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.TLeft.Name = "TLeft";
-            this.TLeft.Size = new System.Drawing.Size(119, 102);
+            this.TLeft.Size = new System.Drawing.Size(106, 82);
             this.TLeft.TabIndex = 3;
             this.TLeft.Text = "Turn Left";
             this.TLeft.UseVisualStyleBackColor = true;
@@ -86,9 +93,10 @@
             // 
             // SRight
             // 
-            this.SRight.Location = new System.Drawing.Point(332, 118);
+            this.SRight.Location = new System.Drawing.Point(295, 94);
+            this.SRight.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.SRight.Name = "SRight";
-            this.SRight.Size = new System.Drawing.Size(84, 81);
+            this.SRight.Size = new System.Drawing.Size(75, 65);
             this.SRight.TabIndex = 4;
             this.SRight.Text = "Swerve Right";
             this.SRight.UseVisualStyleBackColor = true;
@@ -97,9 +105,10 @@
             // 
             // SLeft
             // 
-            this.SLeft.Location = new System.Drawing.Point(83, 118);
+            this.SLeft.Location = new System.Drawing.Point(74, 94);
+            this.SLeft.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.SLeft.Name = "SLeft";
-            this.SLeft.Size = new System.Drawing.Size(84, 81);
+            this.SLeft.Size = new System.Drawing.Size(75, 65);
             this.SLeft.TabIndex = 5;
             this.SLeft.Text = "Swerve Left";
             this.SLeft.UseVisualStyleBackColor = true;
@@ -108,9 +117,10 @@
             // 
             // Close
             // 
-            this.Close.Location = new System.Drawing.Point(371, 449);
+            this.Close.Location = new System.Drawing.Point(330, 359);
+            this.Close.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.Close.Name = "Close";
-            this.Close.Size = new System.Drawing.Size(187, 66);
+            this.Close.Size = new System.Drawing.Size(166, 53);
             this.Close.TabIndex = 6;
             this.Close.Text = "Close and Stop";
             this.Close.UseVisualStyleBackColor = true;
@@ -118,26 +128,52 @@
             // 
             // SetSpeed
             // 
-            this.SetSpeed.Location = new System.Drawing.Point(205, 366);
+            this.SetSpeed.Location = new System.Drawing.Point(182, 293);
+            this.SetSpeed.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.SetSpeed.Name = "SetSpeed";
-            this.SetSpeed.Size = new System.Drawing.Size(127, 26);
+            this.SetSpeed.Size = new System.Drawing.Size(113, 22);
             this.SetSpeed.TabIndex = 7;
             this.SetSpeed.ValueChanged += new System.EventHandler(this.SetSpeed_ValueChanged);
             // 
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(66, 368);
+            this.label1.Location = new System.Drawing.Point(59, 294);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(101, 20);
+            this.label1.Size = new System.Drawing.Size(89, 17);
             this.label1.TabIndex = 8;
             this.label1.Text = "Motor Speed";
             // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(12, 412);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(52, 17);
+            this.label2.TabIndex = 16;
+            this.label2.Text = "Priority";
+            // 
+            // PriorityBox
+            // 
+            this.PriorityBox.Location = new System.Drawing.Point(12, 433);
+            this.PriorityBox.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.PriorityBox.Maximum = new decimal(new int[] {
+            10000,
+            0,
+            0,
+            0});
+            this.PriorityBox.Name = "PriorityBox";
+            this.PriorityBox.Size = new System.Drawing.Size(107, 22);
+            this.PriorityBox.TabIndex = 15;
+            // 
             // ManualDriveEditor
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(923, 582);
+            this.ClientSize = new System.Drawing.Size(820, 466);
+            this.ControlBox = false;
+            this.Controls.Add(this.label2);
+            this.Controls.Add(this.PriorityBox);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.SetSpeed);
             this.Controls.Add(this.Close);
@@ -147,9 +183,11 @@
             this.Controls.Add(this.TRight);
             this.Controls.Add(this.Bck);
             this.Controls.Add(this.Forward);
+            this.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.Name = "ManualDriveEditor";
             this.Text = "ManualDriveForm";
             ((System.ComponentModel.ISupportInitialize)(this.SetSpeed)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.PriorityBox)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -166,5 +204,7 @@
         private System.Windows.Forms.Button Close;
         private System.Windows.Forms.NumericUpDown SetSpeed;
         private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.NumericUpDown PriorityBox;
     }
 }

@@ -84,6 +84,7 @@ namespace IGVC_Controller
             this.setupModule("Vision_Visualizer", new Vision_Visualizer());
             this.setupModule("DualVisionObstacleDetection", new DualVisionObstacleDetection());
             this.setupModule("DualVisionObstacleReprojection", new DualVisionObstacleReprojection());
+            this.setupModule("ManualDrive", new ManualDrive());
 
             activeModules = config.Read<List<string>>("Active_Modules", new List<string>());
 

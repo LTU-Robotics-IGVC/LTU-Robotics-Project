@@ -1,4 +1,5 @@
 ﻿using IGVC_Controller.Code.DataIO;
+using IGVC_Controller.DataIO;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -40,6 +41,11 @@ namespace IGVC_Controller.Code.Modules.SystemInputs
             this.modulePriority = 10; 
 
             this.addSubscription(INTERMODULE_VARIABLE.DRIVING_ENABLED);
+            //VisualizerForm a = new VisualizerForm();
+            //Keyboard k = new Keyboard(a);
+            //a.Show();
+            //Keyboard a;
+            //a.isKeyDown()
         }
 
         public override void loadFromConfig(IGVC_Controller.DataIO.SaveFile config)

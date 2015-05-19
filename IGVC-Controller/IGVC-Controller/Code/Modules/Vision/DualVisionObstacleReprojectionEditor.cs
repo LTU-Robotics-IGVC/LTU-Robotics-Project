@@ -31,8 +31,8 @@ namespace IGVC_Controller.Code.Modules.Vision
         const double checkerboardUpperLeftX = 0.0;
         const double checkerboardUpperLeftY = 0.0;
 
-        int combinedWidth = 1000;
-        int combinedHeight = 1000;
+        int combinedWidth = 500;
+        int combinedHeight = 500;
 
         public DualVisionObstacleReprojectionEditor()
         {
@@ -57,6 +57,8 @@ namespace IGVC_Controller.Code.Modules.Vision
                         (float)(combinedHeight/2 + checkerboardUpperLeftY + (double)y * checkerboardBoxSize));
                 }
             }
+            
+           // worldPoints = worldPoints.Reverse().ToArray();
 
             /*for (int x = 0; x < width; x++)
             {
@@ -146,9 +148,13 @@ namespace IGVC_Controller.Code.Modules.Vision
             combined = combined.Add(leftGray.WarpPerspective(leftHomography, combinedWidth, combinedHeight, Emgu.CV.CvEnum.INTER.CV_INTER_LINEAR, Emgu.CV.CvEnum.WARP.CV_WARP_DEFAULT, new Gray(0)));
             combined = combined.Add(rightGray.WarpPerspective(rightHomography, combinedWidth, combinedHeight, Emgu.CV.CvEnum.INTER.CV_INTER_LINEAR, Emgu.CV.CvEnum.WARP.CV_WARP_DEFAULT, new Gray(0)));
 
+            Image<Bgr, byte> c = new Image<Bgr, byte>(combinedWidth, combinedHeight);
+            c = c.Add(leftColor.WarpPerspective(leftHomography, combinedWidth, combinedHeight, Emgu.CV.CvEnum.INTER.CV_INTER_LINEAR, Emgu.CV.CvEnum.WARP.CV_WARP_DEFAULT, new Bgr(Color.Black)));
+            c = c.AddWeighted(rightColor.WarpPerspective(rightHomography, combinedWidth, combinedHeight, Emgu.CV.CvEnum.INTER.CV_INTER_LINEAR, Emgu.CV.CvEnum.WARP.CV_WARP_DEFAULT, new Bgr(Color.Black)), 0.5, 0.5, 0.0);
+            //c = c.Rotate(180, new Bgr(Color.Black));
             this.imageBox1.Image = leftColor;
             this.imageBox3.Image = rightColor; 
-            this.imageBox2.Image = combined;
+            this.imageBox2.Image = c;
         }
 
         private void CalibrateButton_Click(object sender, EventArgs e)
