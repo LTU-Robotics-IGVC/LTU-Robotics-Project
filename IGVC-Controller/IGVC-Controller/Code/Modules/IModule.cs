@@ -112,7 +112,9 @@ namespace IGVC_Controller.Code.Modules
             /// <summary>
             /// True if dynamic drive is working; false for three state drive
             /// </summary>
-            DYNAMIC_DRIVE_ENABLED
+            DYNAMIC_DRIVE_ENABLED,
+
+            NAV_MESH
         }
 
         public struct LOG_TYPES
