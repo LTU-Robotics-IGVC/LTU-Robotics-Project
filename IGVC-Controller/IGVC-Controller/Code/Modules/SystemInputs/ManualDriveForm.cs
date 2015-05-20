@@ -1,4 +1,5 @@
-﻿using System;
+﻿using IGVC_Controller.DataIO;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -15,6 +16,11 @@ namespace IGVC_Controller.Code.Modules.SystemInputs
         double right_motor = 0.0;
         double left_motor = 0.0;
 
+        bool moving;
+        bool dynd;
+
+        Keyboard k;
+
         public enum DriveSignal { FORWARD, BACKWARD, TRIGHT, SRIGHT, TLEFT, SLEFT, STOP };
 
         //SetSpeed.Value = (decimal)((module.def_speed * 100.0)/max_motor_speed);
@@ -26,14 +32,36 @@ namespace IGVC_Controller.Code.Modules.SystemInputs
         public ManualDriveForm()
         {
             InitializeComponent();
-            label3.Text = "0.0";
-            label4.Text = "0.0";            
+            label3.Text = "0.00";
+            label4.Text = "0.00";
+            k = new Keyboard(this);
+            timer1.Interval = 10;
+            timer1.Start();
+            
         }
 
         public void SetSpeed(double data)
         {
-            label5.Text = data.ToString();
-            label6.Text = data.ToString();
+            string s = string.Format("{0:N2}%", data);
+            label5.Text = s;
+            label6.Text = s;
+        }
+
+        public void DynEnabled(bool data)
+        {
+            if (data)
+            {
+                label9.Text = "Dynamic Drive";
+                dynd = true;
+            }  
+            else
+            {
+                label9.Text = "Three-State Drive";
+                Bck.Enabled = false;
+                TRight.Enabled = false;
+                TLeft.Enabled = false;
+                dynd = false;
+            }
         }
 
         public void Speed_control(DriveSignal d)
@@ -96,6 +124,7 @@ namespace IGVC_Controller.Code.Modules.SystemInputs
         private void Forward_MouseUp(object sender, MouseEventArgs e)
         {
             Speed_control(DriveSignal.STOP);
+            
         }
 
         private void Forward_MouseDown(object sender, MouseEventArgs e)
@@ -174,6 +203,71 @@ namespace IGVC_Controller.Code.Modules.SystemInputs
         private void label3_Click(object sender, EventArgs e)
         {
 
+        }
+
+        private void timer1_Tick(object sender, EventArgs e)
+        {
+            if (dynd)
+            {
+                if (k.isKeyDown(Keys.W))
+                {
+                    Speed_control(DriveSignal.FORWARD);
+                    moving = true;
+                }
+                else if (k.isKeyDown(Keys.S))
+                {
+                    Speed_control(DriveSignal.BACKWARD);
+                    moving = true;
+                }
+                else if (k.isKeyDown(Keys.A))
+                {
+                    Speed_control(DriveSignal.TLEFT);
+                    moving = true;
+                }
+                else if (k.isKeyDown(Keys.D))
+                {
+                    Speed_control(DriveSignal.TRIGHT);
+                    moving = true;
+                }
+                else if (k.isKeyDown(Keys.Q))
+                {
+                    Speed_control(DriveSignal.SLEFT);
+                    moving = true;
+                }
+                else if (k.isKeyDown(Keys.E))
+                {
+                    Speed_control(DriveSignal.SRIGHT);
+                    moving = true;
+                }
+                else if (moving == true)
+                {
+                    Speed_control(DriveSignal.STOP);
+                    moving = false;
+                }
+            }
+            else
+            {
+                if (k.isKeyDown(Keys.W))
+                {
+                    Speed_control(DriveSignal.FORWARD);
+                    moving = true;
+                }
+                else if (k.isKeyDown(Keys.Q))
+                {
+                    Speed_control(DriveSignal.SLEFT);
+                    moving = true;
+                }
+                else if (k.isKeyDown(Keys.E))
+                {
+                    Speed_control(DriveSignal.SRIGHT);
+                    moving = true;
+                }
+                else if (moving == true)
+                {
+                    Speed_control(DriveSignal.STOP);
+                    moving = false;
+                }
+            }
         }
     }
 }

@@ -127,7 +127,7 @@
             this.Controls.Add(this.SetSpeed);
             this.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.Name = "ManualDriveEditor";
-            this.Text = "ManualDriveForm";
+            this.Text = "ManualDriveEditor";
             ((System.ComponentModel.ISupportInitialize)(this.SetSpeed)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.PriorityBox)).EndInit();
             this.ResumeLayout(false);

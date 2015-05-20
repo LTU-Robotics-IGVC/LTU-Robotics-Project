@@ -19,7 +19,6 @@ namespace IGVC_Controller.Code.Modules.SystemInputs
         //to keyboard events
 
         ManualDriveForm form;
-        Keyboard k;
         delegate void delegateCloseForm();
 
         delegate void delegateSetFormData(object data);
@@ -118,11 +117,6 @@ namespace IGVC_Controller.Code.Modules.SystemInputs
                 form.Invoke(this.setFormDataDelegate, new object[] { Dyn_enabled.getObject() });
             }
 
-            // John, where would I put this so it's constantly checking for it?
-            if (k.isKeyDown(Keys.W))
-            {
-                form.Speed_control(ManualDriveForm.DriveSignal.FORWARD);
-            }
             
             base.process();
         }
@@ -135,7 +129,6 @@ namespace IGVC_Controller.Code.Modules.SystemInputs
             Dyn_enabled = new GatedVariable();
 
             form = new ManualDriveForm();
-            k = new Keyboard(form);
             
             
             form.Show();
@@ -169,6 +162,7 @@ namespace IGVC_Controller.Code.Modules.SystemInputs
         {
             //form.setLIDARData((List<long>)data);
             form.SetSpeed(def_speed);
+            form.DynEnabled(dynamic_drive);
         }
 
         public override System.Windows.Forms.Form getEditorForm()
