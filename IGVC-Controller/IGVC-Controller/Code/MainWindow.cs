@@ -23,6 +23,7 @@ using IGVC_Controller.Code.Modules.GPS;
 using IGVC_Controller.Code.Modules.Visualizer.GPS;
 using IGVC_Controller.Code.Modules.Cameras;
 using IGVC_Controller.Code.Modules.Visualizer.Vision;
+using IGVC_Controller.Code.Modules.Navigation;
 
 namespace IGVC_Controller
 {
@@ -85,6 +86,7 @@ namespace IGVC_Controller
             this.setupModule("DualVisionObstacleDetection", new DualVisionObstacleDetection());
             this.setupModule("DualVisionObstacleReprojection", new DualVisionObstacleReprojection());
             this.setupModule("ManualDrive", new ManualDrive());
+            this.setupModule("AStarPather", new PathFinder());
 
             activeModules = config.Read<List<string>>("Active_Modules", new List<string>());
 

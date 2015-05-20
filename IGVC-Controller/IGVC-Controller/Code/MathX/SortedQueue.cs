@@ -25,12 +25,12 @@ namespace IGVC_Controller.Code.MathX
             //Check if queue size needs to be increased
             if (count >= size)
             {
-                size = count++;
+                size = ++count;
                 T[] newList = new T[size];
                 int[] newPriority = new int[size];
 
                 int i;
-                for (i = size - 1; i >= 1 && priority[i] > itemPriority; i--)
+                for (i = size - 1; i >= 1 && priority[i-1] > itemPriority; i--)
                 {
                     newList[i] = list[i - 1];
                     newPriority[i] = priority[i - 1];
@@ -52,17 +52,30 @@ namespace IGVC_Controller.Code.MathX
             }
             else
             {
-                int i;
-                for (i = size - 1; i >= 1 && priority[i] > itemPriority; i--)
+                if (count == 0)
                 {
-                    list[i] = list[i - 1];
-                    priority[i] = priority[i - 1];
-                }
+                    list[0] = item;
+                    priority[0] = itemPriority;
 
-                list[i] = item;
-                priority[i] = itemPriority;
-                
-                //The rest of the list does not need to be changed
+                    count++;
+                }
+                else
+                {
+
+                    count++;
+
+                    int i;
+                    for (i = count - 1; i >= 1 && priority[i-1] > itemPriority; i--)
+                    {
+                        list[i] = list[i - 1];
+                        priority[i] = priority[i - 1];
+                    }
+
+                    list[i] = item;
+                    priority[i] = itemPriority;
+
+                    //The rest of the list does not need to be changed
+                }
             }
         }
 
@@ -71,7 +84,7 @@ namespace IGVC_Controller.Code.MathX
             if(count > 0)
             {
                 T item = list[0];
-                for (int i = 1; i < count; i--)
+                for (int i = 1; i < count; i++)
                 {
                     list[i - 1] = list[i];
                     priority[i - 1] = priority[i];

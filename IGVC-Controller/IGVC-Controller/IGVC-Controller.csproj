@@ -198,6 +198,9 @@
     <EmbeddedResource Include="Code\Modules\LIDAR\LIDAR_InterfaceEditor.resx">
       <DependentUpon>LIDAR_InterfaceEditor.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Code\Modules\Navigation\PathFinderEditor.resx">
+      <DependentUpon>PathFinderEditor.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Code\Modules\NoModulePropertiesWindow.resx">
       <DependentUpon>NoModulePropertiesWindow.cs</DependentUpon>
     </EmbeddedResource>

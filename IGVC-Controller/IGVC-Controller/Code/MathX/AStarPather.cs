@@ -40,6 +40,7 @@ namespace IGVC_Controller.Code.MathX
                     double diffY = end.Y - y;
                     navMesh.nodes[x + y * navMesh.Width].distanceRemaining =
                         (int)Math.Sqrt(diffX * diffX + diffY * diffY);
+                    navMesh.getNode(x, y).sourceIsNull = true;
                 }
             }
 
@@ -72,10 +73,11 @@ namespace IGVC_Controller.Code.MathX
                         found = true;
                         continue;
                     }
-                    if (n.sourceIsNull)
+                    if (n.sourceIsNull && n.isPassable)
                     {
                         n.distanceTraveled = n.traverseCost + evalNode.distanceTraveled;
                         n.source = p;
+                        n.sourceIsNull = false;
                         queue.Enqueue(new Point(evaluationPoint.X, evaluationPoint.Y), (int)(n.distanceTraveled + n.distanceRemaining));
                     }
                 }
@@ -93,10 +95,11 @@ namespace IGVC_Controller.Code.MathX
                         found = true;
                         continue;
                     }
-                    if (n.sourceIsNull)
+                    if (n.sourceIsNull && n.isPassable)
                     {
                         n.distanceTraveled = n.traverseCost + evalNode.distanceTraveled;
                         n.source = p;
+                        n.sourceIsNull = false;
                         queue.Enqueue(new Point(evaluationPoint.X, evaluationPoint.Y), (int)(n.distanceTraveled + n.distanceRemaining));
                     }
                 }
@@ -114,10 +117,11 @@ namespace IGVC_Controller.Code.MathX
                         found = true;
                         continue;
                     }
-                    if (n.sourceIsNull)
+                    if (n.sourceIsNull && n.isPassable)
                     {
                         n.distanceTraveled = n.traverseCost + evalNode.distanceTraveled;
                         n.source = p;
+                        n.sourceIsNull = false;
                         queue.Enqueue(new Point(evaluationPoint.X, evaluationPoint.Y), (int)(n.distanceTraveled + n.distanceRemaining));
                     }
                 }
@@ -135,10 +139,11 @@ namespace IGVC_Controller.Code.MathX
                         found = true;
                         continue;
                     }
-                    if (n.sourceIsNull)
+                    if (n.sourceIsNull && n.isPassable)
                     {
                         n.distanceTraveled = n.traverseCost + evalNode.distanceTraveled;
                         n.source = p;
+                        n.sourceIsNull = false;
                         queue.Enqueue(new Point(evaluationPoint.X, evaluationPoint.Y), (int)(n.distanceTraveled + n.distanceRemaining));
                     }
                 }
@@ -161,10 +166,11 @@ namespace IGVC_Controller.Code.MathX
                             found = true;
                             continue;
                         }
-                        if (n.sourceIsNull)
+                        if (n.sourceIsNull && n.isPassable)
                         {
                             n.distanceTraveled = n.traverseCost + evalNode.distanceTraveled;
                             n.source = p;
+                            n.sourceIsNull = false;
                             queue.Enqueue(new Point(evaluationPoint.X, evaluationPoint.Y), (int)(n.distanceTraveled + n.distanceRemaining));
                         }
                     }
@@ -182,10 +188,11 @@ namespace IGVC_Controller.Code.MathX
                             found = true;
                             continue;
                         }
-                        if (n.sourceIsNull)
+                        if (n.sourceIsNull && n.isPassable)
                         {
                             n.distanceTraveled = n.traverseCost + evalNode.distanceTraveled;
                             n.source = p;
+                            n.sourceIsNull = false;
                             queue.Enqueue(new Point(evaluationPoint.X, evaluationPoint.Y), (int)(n.distanceTraveled + n.distanceRemaining));
                         }
                     }
@@ -203,10 +210,11 @@ namespace IGVC_Controller.Code.MathX
                             found = true;
                             continue;
                         }
-                        if (n.sourceIsNull)
+                        if (n.sourceIsNull && n.isPassable)
                         {
                             n.distanceTraveled = n.traverseCost + evalNode.distanceTraveled;
                             n.source = p;
+                            n.sourceIsNull = false;
                             queue.Enqueue(new Point(evaluationPoint.X, evaluationPoint.Y), (int)(n.distanceTraveled + n.distanceRemaining));
                         }
                     }
@@ -224,10 +232,11 @@ namespace IGVC_Controller.Code.MathX
                             found = true;
                             continue;
                         }
-                        if (n.sourceIsNull)
+                        if (n.sourceIsNull && n.isPassable)
                         {
                             n.distanceTraveled = n.traverseCost + evalNode.distanceTraveled;
                             n.source = p;
+                            n.sourceIsNull = false;
                             queue.Enqueue(new Point(evaluationPoint.X, evaluationPoint.Y), (int)(n.distanceTraveled + n.distanceRemaining));
                         }
                     }

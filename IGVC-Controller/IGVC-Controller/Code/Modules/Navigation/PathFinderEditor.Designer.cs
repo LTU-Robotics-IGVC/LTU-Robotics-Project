@@ -29,10 +29,60 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
+            this.imageBox1 = new Emgu.CV.UI.ImageBox();
+            this.TestPathingButton = new System.Windows.Forms.Button();
+            this.CreateMapButton = new System.Windows.Forms.Button();
+            ((System.ComponentModel.ISupportInitialize)(this.imageBox1)).BeginInit();
+            this.SuspendLayout();
+            // 
+            // imageBox1
+            // 
+            this.imageBox1.Location = new System.Drawing.Point(12, 12);
+            this.imageBox1.Name = "imageBox1";
+            this.imageBox1.Size = new System.Drawing.Size(300, 300);
+            this.imageBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.imageBox1.TabIndex = 2;
+            this.imageBox1.TabStop = false;
+            // 
+            // TestPathingButton
+            // 
+            this.TestPathingButton.Location = new System.Drawing.Point(339, 23);
+            this.TestPathingButton.Name = "TestPathingButton";
+            this.TestPathingButton.Size = new System.Drawing.Size(75, 23);
+            this.TestPathingButton.TabIndex = 3;
+            this.TestPathingButton.Text = "button1";
+            this.TestPathingButton.UseVisualStyleBackColor = true;
+            this.TestPathingButton.Click += new System.EventHandler(this.TestPathingButton_Click);
+            // 
+            // CreateMapButton
+            // 
+            this.CreateMapButton.Location = new System.Drawing.Point(339, 52);
+            this.CreateMapButton.Name = "CreateMapButton";
+            this.CreateMapButton.Size = new System.Drawing.Size(75, 23);
+            this.CreateMapButton.TabIndex = 4;
+            this.CreateMapButton.Text = "button1";
+            this.CreateMapButton.UseVisualStyleBackColor = true;
+            this.CreateMapButton.Click += new System.EventHandler(this.CreateMapButton_Click);
+            // 
+            // PathFinderEditor
+            // 
+            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.ClientSize = new System.Drawing.Size(460, 373);
+            this.Controls.Add(this.CreateMapButton);
+            this.Controls.Add(this.TestPathingButton);
+            this.Controls.Add(this.imageBox1);
+            this.Name = "PathFinderEditor";
             this.Text = "PathFinderEditor";
+            ((System.ComponentModel.ISupportInitialize)(this.imageBox1)).EndInit();
+            this.ResumeLayout(false);
+
         }
 
         #endregion
+
+        private Emgu.CV.UI.ImageBox imageBox1;
+        private System.Windows.Forms.Button TestPathingButton;
+        private System.Windows.Forms.Button CreateMapButton;
     }
 }

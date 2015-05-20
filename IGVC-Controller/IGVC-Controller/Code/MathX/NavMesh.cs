@@ -14,13 +14,17 @@ namespace IGVC_Controller.Code.MathX
         public int Width;
         public int Height;
 
-        public const uint unpassable = uint.MaxValue;
+        public const int impassable = int.MaxValue;
 
         public NavMesh(int width, int height)
         {
             //Access is nodes[x + y * width]
             nodes = new Node[width * height];
             this.Size = width * height;
+
+            for (int i = 0; i < this.Size; i++)
+                nodes[i] = new Node();
+
             this.Width = width;
             this.Height = height;
         }
@@ -37,7 +41,12 @@ namespace IGVC_Controller.Code.MathX
 
         public Node getNode(Point p)
         {
-            return nodes[p.X + p.Y * this.Width];
+            return this.getNode(p.X, p.Y);
+        }
+
+        public Node getNode(int x, int y)
+        {
+            return nodes[x + y * this.Width];
         }
 
         public int getPathLength(Point p)
@@ -54,13 +63,16 @@ namespace IGVC_Controller.Code.MathX
         public int distanceRemaining;
         public int traverseCost;
         public bool sourceIsNull;
-
+        public bool isPassable
+        {
+            get { return this.traverseCost != NavMesh.impassable; }
+        }
         public Node()
         {
             source = new Point(-1, -1);
             this.sourceIsNull = true;
             this.distanceTraveled = 0;
-            this.distanceRemaining = int.MaxValue;
+            this.distanceRemaining = NavMesh.impassable;
             this.traverseCost = 1;
         }
     }

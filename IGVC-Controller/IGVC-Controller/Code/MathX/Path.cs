@@ -13,12 +13,17 @@ namespace IGVC_Controller.Code.MathX
 
         public Path()
         {
-
+            path = new Stack<Point>();
         }
 
         public void AddNode(Point node)
         {
             this.path.Push(node);
+        }
+
+        public Point[] getPointArray()
+        {
+            return path.ToArray();
         }
     }
 }
