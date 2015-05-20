@@ -107,7 +107,12 @@ namespace IGVC_Controller.Code.Modules
 
             MOTOR_SPEED_LEFT,
 
-            MOTOR_SPEED_RIGHT
+            MOTOR_SPEED_RIGHT,
+
+            /// <summary>
+            /// True if dynamic drive is working; false for three state drive
+            /// </summary>
+            DYNAMIC_DRIVE_ENABLED
         }
 
         public struct LOG_TYPES

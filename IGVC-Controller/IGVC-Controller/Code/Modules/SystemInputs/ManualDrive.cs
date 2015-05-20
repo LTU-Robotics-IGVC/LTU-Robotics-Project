@@ -17,7 +17,17 @@ namespace IGVC_Controller.Code.Modules.SystemInputs
         //if any text boxes are used as the Form and Keyboard will both listen
         //to keyboard events
 
+        ManualDriveForm form;
+
+        delegate void delegateCloseForm();
+
+        delegate void delegateSetFormData(object data);
+        private delegateSetFormData setFormDataDelegate;
+
         GatedVariable drive_on;
+        GatedVariable right_motor_speed;
+        GatedVariable left_motor_speed;
+        GatedVariable Dyn_enabled;
 
         /// <summary>
         /// Default speed for arrow keys movement (in m/s; must be always below 5.00 m/s)
@@ -25,13 +35,19 @@ namespace IGVC_Controller.Code.Modules.SystemInputs
         public double def_speed = 3.00;
 
         /// <summary>
-        /// Value (in m/s) to be sent to right motor
+        /// Enables dynamic drive (true) or three state drive (false) 
         /// </summary>
-        public double right_motor_speed = 0.00;
-        /// <summary>
-        /// Value (in m/s) to be sent to left motor
-        /// </summary>
-        public double left_motor_speed = 0.00;
+        public bool dynamic_drive = false;
+
+        ///// <summary>
+        ///// Value (in m/s) to be sent to right motor
+        ///// </summary>
+        //public double right_motor_speed = 0.00;
+
+        ///// <summary>
+        ///// Value (in m/s) to be sent to left motor
+        ///// </summary>
+        //public double left_motor_speed = 0.00;
 
         public ManualDrive() : base()
         {
@@ -41,6 +57,11 @@ namespace IGVC_Controller.Code.Modules.SystemInputs
             this.modulePriority = 10; 
 
             this.addSubscription(INTERMODULE_VARIABLE.DRIVING_ENABLED);
+            this.addSubscription(INTERMODULE_VARIABLE.MOTOR_SPEED_LEFT);
+            this.addSubscription(INTERMODULE_VARIABLE.MOTOR_SPEED_RIGHT);
+            this.addSubscription(INTERMODULE_VARIABLE.DYNAMIC_DRIVE_ENABLED);
+
+            this.setFormDataDelegate = this.setFormData;
             //VisualizerForm a = new VisualizerForm();
             //Keyboard k = new Keyboard(a);
             //a.Show();
@@ -51,6 +72,7 @@ namespace IGVC_Controller.Code.Modules.SystemInputs
         public override void loadFromConfig(IGVC_Controller.DataIO.SaveFile config)
         {
             this.def_speed = config.Read<double>("def_speed", 3.00);
+            this.dynamic_drive = config.Read<bool>("dynamic_drive", false);
 
             base.loadFromConfig(config);
         }
@@ -58,6 +80,7 @@ namespace IGVC_Controller.Code.Modules.SystemInputs
         public override void writeToConfig(IGVC_Controller.DataIO.SaveFile config)
         {
             config.Write<double> ("def_speed", this.def_speed);
+            config.Write<bool>("dynamic_drive", this.dynamic_drive);
 
             base.writeToConfig(config);
         }
@@ -70,19 +93,59 @@ namespace IGVC_Controller.Code.Modules.SystemInputs
                 case INTERMODULE_VARIABLE.DRIVING_ENABLED:
                     this.drive_on.setObject(data);
                     break;
+                case INTERMODULE_VARIABLE.MOTOR_SPEED_LEFT:
+                    this.left_motor_speed.setObject(data);
+                    break;
+                case INTERMODULE_VARIABLE.MOTOR_SPEED_RIGHT:
+                    this.right_motor_speed.setObject(data);
+                    break;
+                case INTERMODULE_VARIABLE.DYNAMIC_DRIVE_ENABLED:
+                    this.Dyn_enabled.setObject(data);
+                    break;
+
             }
+        }
+
+        public override void process()
+        {
+            if (form.InvokeRequired)
+            {
+                form.Invoke(this.setFormDataDelegate, new object[] { drive_on.getObject() });
+                form.Invoke(this.setFormDataDelegate, new object[] { right_motor_speed.getObject() });
+                form.Invoke(this.setFormDataDelegate, new object[] { left_motor_speed.getObject() });
+                form.Invoke(this.setFormDataDelegate, new object[] { Dyn_enabled.getObject() });
+            }
+
+
+            base.process();
         }
 
         public override bool startup()
         {
             drive_on = new GatedVariable();
+            right_motor_speed = new GatedVariable();
+            left_motor_speed = new GatedVariable();
+            Dyn_enabled = new GatedVariable();
 
+            form = new ManualDriveForm();
+            //Keyboard k = new Keyboard(a);
+            //a.Show();
+            
+            form.Show();
+            //Keyboard a;
+            //a.isKeyDown()
             return base.startup();
+        }
+
+        private void setFormData(object data)
+        {
+            //form.setLIDARData((List<long>)data);
         }
 
         public override System.Windows.Forms.Form getEditorForm()
         {
             return new ManualDriveEditor();
         }
+
     }
 }

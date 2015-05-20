@@ -125,6 +125,12 @@
     <Compile Include="Code\Modules\SystemInputs\ManualDriveEditor.Designer.cs">
       <DependentUpon>ManualDriveEditor.cs</DependentUpon>
     </Compile>
+    <Compile Include="Code\Modules\SystemInputs\ManualDriveForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Code\Modules\SystemInputs\ManualDriveForm.Designer.cs">
+      <DependentUpon>ManualDriveForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="Code\Modules\UI\RobotControlPanel.cs" />
     <Compile Include="Code\Modules\Vision\DualVisionObstacleDetection.cs" />
     <Compile Include="Code\Modules\Vision\DualVisionObstacleDetectionEditor.cs">
@@ -187,6 +193,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Code\Modules\SystemInputs\ManualDriveEditor.resx">
       <DependentUpon>ManualDriveEditor.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Code\Modules\SystemInputs\ManualDriveForm.resx">
+      <DependentUpon>ManualDriveForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Code\Modules\Vision\DualVisionObstacleDetectionEditor.resx">
       <DependentUpon>DualVisionObstacleDetectionEditor.cs</DependentUpon>
