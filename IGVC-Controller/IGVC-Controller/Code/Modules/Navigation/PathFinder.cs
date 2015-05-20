@@ -6,7 +6,16 @@ using System.Threading.Tasks;
 
 namespace IGVC_Controller.Code.Modules.Navigation
 {
-    class PathFinder
+    class PathFinder : IModule
     {
+        public PathFinder() : base()
+        {
+            this.modulePriority = 61;
+        }
+
+        public override System.Windows.Forms.Form getEditorForm()
+        {
+            return new PathFinderEditor();
+        }
     }
 }

@@ -113,6 +113,12 @@
     <Compile Include="Code\Modules\Mapping\DualVision_LIDAR_ObstacleMapBuilder.cs" />
     <Compile Include="Code\Modules\Motors\MotorControl.cs" />
     <Compile Include="Code\Modules\Navigation\PathFinder.cs" />
+    <Compile Include="Code\Modules\Navigation\PathFinderEditor.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Code\Modules\Navigation\PathFinderEditor.Designer.cs">
+      <DependentUpon>PathFinderEditor.cs</DependentUpon>
+    </Compile>
     <Compile Include="Code\Modules\Navigation\TargetPathBuilder.cs" />
     <Compile Include="Code\Modules\Navigation\TrajectoryPredictor.cs" />
     <Compile Include="Code\Modules\NoModulePropertiesWindow.cs">
