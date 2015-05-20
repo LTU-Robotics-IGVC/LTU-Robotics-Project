@@ -21,12 +21,12 @@ namespace IGVC_Controller.Code.Modules.SystemInputs
         ManualDriveForm form;
         delegate void delegateCloseForm();
 
-        delegate void delegateSetFormData(object data);
+        delegate void delegateSetFormData(bool motorEnable);
         private delegateSetFormData setFormDataDelegate;
 
         GatedVariable drive_on;
-        GatedVariable right_speed;
-        GatedVariable left_speed;
+        //GatedVariable right_speed;
+        //GatedVariable left_speed;
         GatedVariable Dyn_enabled;
 
         /// <summary>
@@ -57,8 +57,10 @@ namespace IGVC_Controller.Code.Modules.SystemInputs
             this.modulePriority = 10; 
 
             this.addSubscription(INTERMODULE_VARIABLE.DRIVING_ENABLED);
-            this.addSubscription(INTERMODULE_VARIABLE.MOTOR_SPEED_LEFT);
-            this.addSubscription(INTERMODULE_VARIABLE.MOTOR_SPEED_RIGHT);
+            //---------------------------------------------------------------
+            //We do not need to listen for speed
+            //this.addSubscription(INTERMODULE_VARIABLE.MOTOR_SPEED_LEFT);
+            //this.addSubscription(INTERMODULE_VARIABLE.MOTOR_SPEED_RIGHT);
             this.addSubscription(INTERMODULE_VARIABLE.DYNAMIC_DRIVE_ENABLED);
 
             this.setFormDataDelegate = this.setFormData;
@@ -94,12 +96,14 @@ namespace IGVC_Controller.Code.Modules.SystemInputs
                 case INTERMODULE_VARIABLE.DRIVING_ENABLED:
                     this.drive_on.setObject(data);
                     break;
-                case INTERMODULE_VARIABLE.MOTOR_SPEED_LEFT:
-                    this.left_speed.setObject(data);
-                    break;
-                case INTERMODULE_VARIABLE.MOTOR_SPEED_RIGHT:
-                    this.right_speed.setObject(data);
-                    break;
+                //-----------------------------------------------
+                    //We do not need to listen for speed
+                //case INTERMODULE_VARIABLE.MOTOR_SPEED_LEFT:
+                //    this.left_speed.setObject(data);
+                //    break;
+                //case INTERMODULE_VARIABLE.MOTOR_SPEED_RIGHT:
+                //    this.right_speed.setObject(data);
+                //    break;
                 case INTERMODULE_VARIABLE.DYNAMIC_DRIVE_ENABLED:
                     this.Dyn_enabled.setObject(data);
                     break;
@@ -115,22 +119,40 @@ namespace IGVC_Controller.Code.Modules.SystemInputs
             //right_motor_speed = (double)right_speed.getObject();
             //left_motor_speed = (double)left_speed.getObject();
 
+            //Need to call the .shiftObject() first
+            drive_on.shiftObject();
+            Dyn_enabled.shiftObject();
+
+            //We know an Invoke will be required for form
+            //but it is good coding practice to have both true and false cases
+            //handled
             if (form.InvokeRequired)
             {
-                form.Invoke(this.setFormDataDelegate, new object[] { drive_on.getObject() });
-                form.Invoke(this.setFormDataDelegate, new object[] { right_speed.getObject() });
-                form.Invoke(this.setFormDataDelegate, new object[] { left_speed.getObject() });
-                form.Invoke(this.setFormDataDelegate, new object[] { Dyn_enabled.getObject() });
+                //form.Invoke(this.setFormDataDelegate, new object[] { drive_on.getObject() });
+                //form.Invoke(this.setFormDataDelegate, new object[] { right_speed.getObject() });
+                //form.Invoke(this.setFormDataDelegate, new object[] { left_speed.getObject() });
+                //form.Invoke(this.setFormDataDelegate, new object[] { Dyn_enabled.getObject() });
+                form.Invoke(this.setFormDataDelegate, new object[] { (bool)Dyn_enabled.getObject() });
             }
-            
+            else
+            {
+                form.DynEnabled((bool)Dyn_enabled.getObject());
+            }
+
+            left_motor_speed = form.LeftSpeed();
+            right_motor_speed = form.RightSpeed();
+
+            this.sendDataToRegistry(INTERMODULE_VARIABLE.MOTOR_SPEED_LEFT, left_motor_speed);
+            this.sendDataToRegistry(INTERMODULE_VARIABLE.MOTOR_SPEED_RIGHT, right_motor_speed);
+
             base.process();
         }
 
         public override bool startup()
         {
             drive_on = new GatedVariable();
-            right_speed = new GatedVariable();
-            left_speed = new GatedVariable();
+            //right_speed = new GatedVariable();
+            //left_speed = new GatedVariable();
             Dyn_enabled = new GatedVariable();
 
             form = new ManualDriveForm();
@@ -161,11 +183,11 @@ namespace IGVC_Controller.Code.Modules.SystemInputs
             form.Close();
         }
 
-        private void setFormData(object data)
+        private void setFormData(bool motorEnable)
         {        
             //form.setLIDARData((List<long>)data);
-            form.SetSpeed(def_speed);
-            form.DynEnabled(dynamic_drive);
+            //form.SetSpeed(speed);
+            form.DynEnabled(motorEnable);
             //form.UpdateDisplay(right_motor_speed, left_motor_speed);
         }
 
