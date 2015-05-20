@@ -25,8 +25,8 @@ namespace IGVC_Controller.Code.Modules.SystemInputs
         private delegateSetFormData setFormDataDelegate;
 
         GatedVariable drive_on;
-        GatedVariable right_motor_speed;
-        GatedVariable left_motor_speed;
+        GatedVariable right_speed;
+        GatedVariable left_speed;
         GatedVariable Dyn_enabled;
 
         /// <summary>
@@ -39,15 +39,15 @@ namespace IGVC_Controller.Code.Modules.SystemInputs
         /// </summary>
         public bool dynamic_drive = false;
 
-        ///// <summary>
-        ///// Value (in m/s) to be sent to right motor
-        ///// </summary>
-        //public double right_motor_speed = 0.00;
+        /// <summary>
+        /// Value (in m/s) to be sent to right motor
+        /// </summary>
+        public double right_motor_speed = 0.00;
 
-        ///// <summary>
-        ///// Value (in m/s) to be sent to left motor
-        ///// </summary>
-        //public double left_motor_speed = 0.00;
+        /// <summary>
+        /// Value (in m/s) to be sent to left motor
+        /// </summary>
+        public double left_motor_speed = 0.00;
 
         public ManualDrive() : base()
         {
@@ -95,10 +95,10 @@ namespace IGVC_Controller.Code.Modules.SystemInputs
                     this.drive_on.setObject(data);
                     break;
                 case INTERMODULE_VARIABLE.MOTOR_SPEED_LEFT:
-                    this.left_motor_speed.setObject(data);
+                    this.left_speed.setObject(data);
                     break;
                 case INTERMODULE_VARIABLE.MOTOR_SPEED_RIGHT:
-                    this.right_motor_speed.setObject(data);
+                    this.right_speed.setObject(data);
                     break;
                 case INTERMODULE_VARIABLE.DYNAMIC_DRIVE_ENABLED:
                     this.Dyn_enabled.setObject(data);
@@ -108,15 +108,20 @@ namespace IGVC_Controller.Code.Modules.SystemInputs
         }
 
         public override void process()
-        {
+        {          
+            //sendDataToRegistry(INTERMODULE_VARIABLE.MOTOR_SPEED_RIGHT, right_motor_speed);
+            //sendDataToRegistry(INTERMODULE_VARIABLE.MOTOR_SPEED_LEFT, left_motor_speed);
+
+            //right_motor_speed = (double)right_speed.getObject();
+            //left_motor_speed = (double)left_speed.getObject();
+
             if (form.InvokeRequired)
             {
                 form.Invoke(this.setFormDataDelegate, new object[] { drive_on.getObject() });
-                form.Invoke(this.setFormDataDelegate, new object[] { right_motor_speed.getObject() });
-                form.Invoke(this.setFormDataDelegate, new object[] { left_motor_speed.getObject() });
+                form.Invoke(this.setFormDataDelegate, new object[] { right_speed.getObject() });
+                form.Invoke(this.setFormDataDelegate, new object[] { left_speed.getObject() });
                 form.Invoke(this.setFormDataDelegate, new object[] { Dyn_enabled.getObject() });
             }
-
             
             base.process();
         }
@@ -124,15 +129,13 @@ namespace IGVC_Controller.Code.Modules.SystemInputs
         public override bool startup()
         {
             drive_on = new GatedVariable();
-            right_motor_speed = new GatedVariable();
-            left_motor_speed = new GatedVariable();
+            right_speed = new GatedVariable();
+            left_speed = new GatedVariable();
             Dyn_enabled = new GatedVariable();
 
             form = new ManualDriveForm();
-            
-            
-            form.Show();
 
+            form.Show();
             
             return base.startup();
         }
@@ -159,10 +162,11 @@ namespace IGVC_Controller.Code.Modules.SystemInputs
         }
 
         private void setFormData(object data)
-        {
+        {        
             //form.setLIDARData((List<long>)data);
             form.SetSpeed(def_speed);
             form.DynEnabled(dynamic_drive);
+            //form.UpdateDisplay(right_motor_speed, left_motor_speed);
         }
 
         public override System.Windows.Forms.Form getEditorForm()

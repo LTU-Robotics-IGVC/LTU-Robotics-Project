@@ -64,7 +64,17 @@ namespace IGVC_Controller.Code.Modules.SystemInputs
             }
         }
 
-        public void Speed_control(DriveSignal d)
+        public double RightSpeed()
+        {
+            return right_motor;
+        }
+
+        public double LeftSpeed()
+        {
+            return left_motor;
+        }
+
+        private void Speed_control(DriveSignal d)
         {
             switch(d)
             {
@@ -98,24 +108,24 @@ namespace IGVC_Controller.Code.Modules.SystemInputs
                     break;
 
             }
-            UpdateDisplay();
+            UpdateDisplay(right_motor, left_motor);
         }
 
-        private void UpdateDisplay ()
+        public void UpdateDisplay (double right, double left)
         {
-            progressBar1.Value = (int)((double)progressBar1.Maximum * Math.Abs(right_motor));
-            progressBar2.Value = (int)((double)progressBar1.Maximum * Math.Abs(left_motor));
+            progressBar1.Value = (int)((double)progressBar1.Maximum * Math.Abs(right));
+            progressBar2.Value = (int)((double)progressBar1.Maximum * Math.Abs(left));
 
-            if (right_motor > 0)
+            if (right > 0)
                 RMDirection.Text = "Forward";
-            else if (right_motor < 0)
+            else if (right < 0)
                 RMDirection.Text = "Reverse";
             else
                 RMDirection.Text = "Stopped";
 
-            if (left_motor > 0)
+            if (left > 0)
                 LMDirection.Text = "Forward";
-            else if (left_motor < 0)
+            else if (left < 0)
                 LMDirection.Text = "Reverse";
             else
                 LMDirection.Text = "Stopped";
