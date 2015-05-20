@@ -137,6 +137,27 @@ namespace IGVC_Controller.Code.Modules.SystemInputs
             return base.startup();
         }
 
+        public override void shutdown()
+        {
+            if (form.InvokeRequired)
+            {
+                delegateCloseForm del = this.closeForm;
+                form.Invoke(del, null);
+            }
+            else
+            {
+                form.Close();
+            }
+
+            base.shutdown();
+        }
+
+
+        private void closeForm()
+        {
+            form.Close();
+        }
+
         private void setFormData(object data)
         {
             //form.setLIDARData((List<long>)data);
