@@ -70,8 +70,11 @@
     <Compile Include="Code\MainWindow.Designer.cs">
       <DependentUpon>MainWindow.cs</DependentUpon>
     </Compile>
+    <Compile Include="Code\MathX\AStarPather.cs" />
     <Compile Include="Code\MathX\ImageFiltering.cs" />
     <Compile Include="Code\MathX\NavMesh.cs" />
+    <Compile Include="Code\MathX\Path.cs" />
+    <Compile Include="Code\MathX\SortedQueue.cs" />
     <Compile Include="Code\MathX\Vector2.cs" />
     <Compile Include="Code\ModuleSelectionWindow.cs">
       <SubType>Form</SubType>
