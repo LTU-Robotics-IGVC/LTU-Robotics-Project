@@ -161,6 +161,7 @@ namespace IGVC_Controller.Code.Modules.SystemInputs
         private void setFormData(object data)
         {
             //form.setLIDARData((List<long>)data);
+            form.SetSpeed(def_speed);
         }
 
         public override System.Windows.Forms.Form getEditorForm()

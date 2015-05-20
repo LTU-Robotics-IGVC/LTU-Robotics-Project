@@ -31,6 +31,15 @@ namespace IGVC_Controller.Code.Modules.SystemInputs
         public ManualDriveForm()
         {
             InitializeComponent();
+            label3.Text = "0.0";
+            label4.Text = "0.0";
+            
+        }
+
+        public void SetSpeed(double data)
+        {
+            label5.Text = data.ToString();
+            label6.Text = data.ToString();
         }
 
         public void Speed_control(DriveSignal d)
