@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -8,16 +9,16 @@ namespace IGVC_Controller.Code.MathX
 {
     class Path
     {
-        private List<Node> path;
+        private Stack<Point> path;
 
         public Path()
         {
 
         }
 
-        public void AddNode(Node node)
+        public void AddNode(Point node)
         {
-            this.path.Add(node);
+            this.path.Push(node);
         }
     }
 }

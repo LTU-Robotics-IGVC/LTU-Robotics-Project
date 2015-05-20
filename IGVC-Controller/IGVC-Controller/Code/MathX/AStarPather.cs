@@ -45,6 +45,7 @@ namespace IGVC_Controller.Code.MathX
 
             //Setup needed variables
             bool found = false;
+            //best checks are not used yet
             Point bestNode = new Point(-1, -1);
             int bestDistance = int.MaxValue;
             //queue used to hold paths for evaluation
@@ -56,10 +57,6 @@ namespace IGVC_Controller.Code.MathX
             {
                 Point p = queue.Dequeue();
                 Node evalNode = navMesh.getNode(p);
-                if(evalNode.distanceTraveled + evalNode.distanceRemaining < bestDistance)
-                {
-
-                }
 
                 #region Search left, right, up, down
                 //Check left
@@ -238,9 +235,22 @@ namespace IGVC_Controller.Code.MathX
                 #endregion
             }
 
-            Path path = new Path();
+            if(found)
+            {
+                Path path = new Path();
+                Point p = new Point(end.X, end.Y);
+                path.AddNode(p);
+                while(p != start)
+                {
+                    Node n = navMesh.getNode(p);
+                    p = n.source;
+                    path.AddNode(p);
+                }
 
-            return path;
+                return path;
+            }
+
+            return null;
         }
 
         private bool isValidPoint(Point p)
