@@ -17,7 +17,7 @@ namespace IGVC_Controller.Code.Modules.SystemInputs
         double left_motor = 0.0;
 
         bool moving;
-        bool dynd;
+        bool dynd = false;
 
         Keyboard k;
 

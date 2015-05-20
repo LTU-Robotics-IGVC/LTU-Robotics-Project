@@ -34,10 +34,10 @@ namespace IGVC_Controller.Code.Modules.SystemInputs
         /// </summary>
         public double def_speed = 3.00;
 
-        /// <summary>
-        /// Enables dynamic drive (true) or three state drive (false) 
-        /// </summary>
-        public bool dynamic_drive = false;
+        ///// <summary>
+        ///// Enables dynamic drive (true) or three state drive (false) 
+        ///// </summary>
+        //public bool dynamic_drive = false;
 
         /// <summary>
         /// Value (in m/s) to be sent to right motor
@@ -75,7 +75,7 @@ namespace IGVC_Controller.Code.Modules.SystemInputs
         public override void loadFromConfig(IGVC_Controller.DataIO.SaveFile config)
         {
             this.def_speed = config.Read<double>("def_speed", 3.00);
-            this.dynamic_drive = config.Read<bool>("dynamic_drive", false);
+            //this.dynamic_drive = config.Read<bool>("dynamic_drive", false);
 
             base.loadFromConfig(config);
         }
@@ -83,7 +83,7 @@ namespace IGVC_Controller.Code.Modules.SystemInputs
         public override void writeToConfig(IGVC_Controller.DataIO.SaveFile config)
         {
             config.Write<double> ("def_speed", this.def_speed);
-            config.Write<bool>("dynamic_drive", this.dynamic_drive);
+            //config.Write<bool>("dynamic_drive", this.dynamic_drive);
 
             base.writeToConfig(config);
         }
@@ -113,8 +113,7 @@ namespace IGVC_Controller.Code.Modules.SystemInputs
 
         public override void process()
         {          
-            //sendDataToRegistry(INTERMODULE_VARIABLE.MOTOR_SPEED_RIGHT, right_motor_speed);
-            //sendDataToRegistry(INTERMODULE_VARIABLE.MOTOR_SPEED_LEFT, left_motor_speed);
+            //sendDataToRegistry(INTERMODULE_VARIABLE.DYNAMIC_DRIVE_ENABLED, true);
 
             //right_motor_speed = (double)right_speed.getObject();
             //left_motor_speed = (double)left_speed.getObject();
@@ -126,13 +125,14 @@ namespace IGVC_Controller.Code.Modules.SystemInputs
             //We know an Invoke will be required for form
             //but it is good coding practice to have both true and false cases
             //handled
+
             if (form.InvokeRequired)
             {
                 //form.Invoke(this.setFormDataDelegate, new object[] { drive_on.getObject() });
                 //form.Invoke(this.setFormDataDelegate, new object[] { right_speed.getObject() });
                 //form.Invoke(this.setFormDataDelegate, new object[] { left_speed.getObject() });
-                //form.Invoke(this.setFormDataDelegate, new object[] { Dyn_enabled.getObject() });
                 form.Invoke(this.setFormDataDelegate, new object[] { (bool)Dyn_enabled.getObject() });
+                
             }
             else
             {
@@ -158,6 +158,7 @@ namespace IGVC_Controller.Code.Modules.SystemInputs
             form = new ManualDriveForm();
 
             form.Show();
+            form.SetSpeed(def_speed);
             
             return base.startup();
         }
@@ -186,7 +187,7 @@ namespace IGVC_Controller.Code.Modules.SystemInputs
         private void setFormData(bool motorEnable)
         {        
             //form.setLIDARData((List<long>)data);
-            //form.SetSpeed(speed);
+            //form.SetSpeed(def_speed);
             form.DynEnabled(motorEnable);
             //form.UpdateDisplay(right_motor_speed, left_motor_speed);
         }

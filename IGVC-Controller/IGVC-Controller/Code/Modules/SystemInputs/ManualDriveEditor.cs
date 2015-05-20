@@ -25,7 +25,7 @@ namespace IGVC_Controller.Code.Modules.SystemInputs
         public ManualDriveEditor()
         {
             InitializeComponent();
-            Keyboard keyboard = new Keyboard(this);
+            DynDriveEnabled.Enabled = false;
         }
 
         void IModuleEditor.setModule(IModule module)
@@ -36,11 +36,11 @@ namespace IGVC_Controller.Code.Modules.SystemInputs
 
         void IModuleEditor.loadDataFromModule()
         {
-            Dyn_Dr_Enabled = module.dynamic_drive;
-            if (Dyn_Dr_Enabled)
-                DynDriveEnabled.Checked = true;
-            else
-                DynDriveEnabled.Checked = false;
+            ////Dyn_Dr_Enabled = false;
+            ////if (Dyn_Dr_Enabled)
+            ////    DynDriveEnabled.Checked = true;
+            ////else
+            ////    DynDriveEnabled.Checked = false;
             PriorityBox.Value = (decimal)module.modulePriority;
             SetSpeed.Value = (decimal)((module.def_speed * 100.0)/max_motor_speed);
         }
@@ -49,7 +49,7 @@ namespace IGVC_Controller.Code.Modules.SystemInputs
         {
             module.def_speed = ((double)(SetSpeed.Value) * max_motor_speed) / 100.0;
             module.modulePriority = (int)PriorityBox.Value;
-            module.dynamic_drive = DynDriveEnabled.Checked;
+            //module.dynamic_drive = DynDriveEnabled.Checked;
         }
 
         
