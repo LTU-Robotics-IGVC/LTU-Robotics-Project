@@ -44,7 +44,7 @@ namespace IGVC_Controller.Code.Modules.Navigation
             Stopwatch stopwatch = new Stopwatch();
             stopwatch.Start();
             AStarPather pather = new AStarPather(navMesh);
-            Path path = pather.getPath(new Point(10, 10), new Point(290, 290));
+            Path path = pather.getPath(new Point(10, 10), new Point(90, 90));
             stopwatch.Stop();
             MessageBox.Show("Time = " + stopwatch.ElapsedMilliseconds.ToString() + "ms");
             if(path != null)
@@ -57,8 +57,8 @@ namespace IGVC_Controller.Code.Modules.Navigation
 
         private void CreateMapButton_Click(object sender, EventArgs e)
         {
-            img = new Image<Gray, byte>(300, 300);
-            img.Draw(new CircleF(new PointF(150, 150), 100), new Gray(255), 1);
+            img = new Image<Gray, byte>(100, 100);
+            img.Draw(new CircleF(new PointF(50, 50), 25), new Gray(255), 1);
             Point[] pts = new Point[]
                 {
                     new Point(280, 20),
@@ -66,10 +66,10 @@ namespace IGVC_Controller.Code.Modules.Navigation
                     new Point(20, 280)
                 };
             img.DrawPolyline(pts, false, new Gray(255), 1);
-            navMesh = new NavMesh(300, 300);
-            for (int x = 0; x < 300; x++)
+            navMesh = new NavMesh(100, 100);
+            for (int x = 0; x < 100; x++)
             {
-                for (int y = 0; y < 300; y++)
+                for (int y = 0; y < 100; y++)
                 {
                     if(img.Data[y, x, 0] == 255)
                     {
