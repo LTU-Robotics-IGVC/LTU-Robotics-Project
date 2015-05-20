@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Forms;
 
 namespace IGVC_Controller.Code.Modules.SystemInputs
 {
@@ -18,7 +19,7 @@ namespace IGVC_Controller.Code.Modules.SystemInputs
         //to keyboard events
 
         ManualDriveForm form;
-
+        Keyboard k;
         delegate void delegateCloseForm();
 
         delegate void delegateSetFormData(object data);
@@ -67,6 +68,7 @@ namespace IGVC_Controller.Code.Modules.SystemInputs
             //a.Show();
             //Keyboard a;
             //a.isKeyDown()
+            
         }
 
         public override void loadFromConfig(IGVC_Controller.DataIO.SaveFile config)
@@ -116,7 +118,12 @@ namespace IGVC_Controller.Code.Modules.SystemInputs
                 form.Invoke(this.setFormDataDelegate, new object[] { Dyn_enabled.getObject() });
             }
 
-
+            // John, where would I put this so it's constantly checking for it?
+            if (k.isKeyDown(Keys.W))
+            {
+                form.Speed_control(ManualDriveForm.DriveSignal.FORWARD);
+            }
+            
             base.process();
         }
 
@@ -128,12 +135,12 @@ namespace IGVC_Controller.Code.Modules.SystemInputs
             Dyn_enabled = new GatedVariable();
 
             form = new ManualDriveForm();
-            //Keyboard k = new Keyboard(a);
-            //a.Show();
+            k = new Keyboard(form);
+            
             
             form.Show();
-            //Keyboard a;
-            //a.isKeyDown()
+
+            
             return base.startup();
         }
 

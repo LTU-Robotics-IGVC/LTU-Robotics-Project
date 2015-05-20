@@ -17,11 +17,6 @@ namespace IGVC_Controller.Code.Modules.SystemInputs
 
         public enum DriveSignal { FORWARD, BACKWARD, TRIGHT, SRIGHT, TLEFT, SLEFT, STOP };
 
-        /// <summary>
-        /// Maximum speed motors can maintain
-        /// </summary>
-        const double max_motor_speed = 5.0;
-
         //SetSpeed.Value = (decimal)((module.def_speed * 100.0)/max_motor_speed);
 
         //module.right_motor_speed = module.def_speed * right_motor;
@@ -32,8 +27,7 @@ namespace IGVC_Controller.Code.Modules.SystemInputs
         {
             InitializeComponent();
             label3.Text = "0.0";
-            label4.Text = "0.0";
-            
+            label4.Text = "0.0";            
         }
 
         public void SetSpeed(double data)
