@@ -34,21 +34,33 @@ namespace IGVC_Controller.Code.MathX
         {
             return new Point(index % Width, index / Width);
         }
+
+        public Node getNode(Point p)
+        {
+            return nodes[p.X + p.Y * this.Width];
+        }
+
+        public int getPathLength(Point p)
+        {
+            int index = p.X + p.Y * this.Width;
+            return nodes[index].distanceRemaining + nodes[index].distanceTraveled;
+        }
     }
 
-    struct Node
+    class Node
     {
-        public Node source;
-        public uint distanceTraveled;
-        public uint distanceRemaining;
-        public uint traverseCost;
-        bool sourceIsNull;
+        public Point source;
+        public int distanceTraveled;
+        public int distanceRemaining;
+        public int traverseCost;
+        public bool sourceIsNull;
 
         public Node()
         {
+            source = new Point(-1, -1);
             this.sourceIsNull = true;
             this.distanceTraveled = 0;
-            this.distanceRemaining = uint.MaxValue;
+            this.distanceRemaining = int.MaxValue;
             this.traverseCost = 1;
         }
     }

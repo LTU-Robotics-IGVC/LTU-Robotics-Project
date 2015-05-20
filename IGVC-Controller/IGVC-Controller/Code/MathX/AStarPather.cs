@@ -10,6 +10,8 @@ namespace IGVC_Controller.Code.MathX
     class AStarPather
     {
         private bool mustReachTarget = true;
+        private bool diagonalPath = false;
+
         private NavMesh navMesh;
 
         public AStarPather(NavMesh navMesh)
@@ -20,6 +22,11 @@ namespace IGVC_Controller.Code.MathX
         public void setMustReachTarget(bool mustReachTarget)
         {
             this.mustReachTarget = mustReachTarget;
+        }
+        
+        public void setCanTravelDiagonally(bool diagonalPath)
+        {
+            this.diagonalPath = diagonalPath;
         }
 
         public Path getPath(Point start, Point end)
@@ -32,19 +39,213 @@ namespace IGVC_Controller.Code.MathX
                     double diffX = end.X - x;
                     double diffY = end.Y - y;
                     navMesh.nodes[x + y * navMesh.Width].distanceRemaining =
-                        (uint)Math.Sqrt(diffX * diffX + diffY * diffY);
+                        (int)Math.Sqrt(diffX * diffX + diffY * diffY);
                 }
             }
 
+            //Setup needed variables
             bool found = false;
             Point bestNode = new Point(-1, -1);
-            while(!found)
+            int bestDistance = int.MaxValue;
+            //queue used to hold paths for evaluation
+            SortedQueue<Point> queue = new SortedQueue<Point>();
+            queue.Enqueue(start, (int)navMesh.getPathLength(start));
+            Point evaluationPoint = new Point();
+
+            while(!found && !queue.isEmpty())
             {
+                Point p = queue.Dequeue();
+                Node evalNode = navMesh.getNode(p);
+                if(evalNode.distanceTraveled + evalNode.distanceRemaining < bestDistance)
+                {
+
+                }
+
+                #region Search left, right, up, down
+                //Check left
+                evaluationPoint.X = p.X - 1;
+                evaluationPoint.Y = p.Y;
+                if (isValidPoint(evaluationPoint))
+                {
+                    Node n = navMesh.getNode(evaluationPoint);
+                    if(evaluationPoint == end)
+                    {
+                        n.distanceTraveled = n.traverseCost + evalNode.distanceTraveled;
+                        n.source = p;
+                        found = true;
+                        continue;
+                    }
+                    if (n.sourceIsNull)
+                    {
+                        n.distanceTraveled = n.traverseCost + evalNode.distanceTraveled;
+                        n.source = p;
+                        queue.Enqueue(new Point(evaluationPoint.X, evaluationPoint.Y), (int)(n.distanceTraveled + n.distanceRemaining));
+                    }
+                }
+
+                //Check right
+                evaluationPoint.X = p.X + 1;
+                //evaluationPoint.Y is already p.Y
+                if (isValidPoint(evaluationPoint))
+                {
+                    Node n = navMesh.getNode(evaluationPoint);
+                    if (evaluationPoint == end)
+                    {
+                        n.distanceTraveled = n.traverseCost + evalNode.distanceTraveled;
+                        n.source = p;
+                        found = true;
+                        continue;
+                    }
+                    if (n.sourceIsNull)
+                    {
+                        n.distanceTraveled = n.traverseCost + evalNode.distanceTraveled;
+                        n.source = p;
+                        queue.Enqueue(new Point(evaluationPoint.X, evaluationPoint.Y), (int)(n.distanceTraveled + n.distanceRemaining));
+                    }
+                }
+
+                //Check up
+                evaluationPoint.X = p.X;
+                evaluationPoint.Y = p.Y - 1;
+                if (isValidPoint(evaluationPoint))
+                {
+                    Node n = navMesh.getNode(evaluationPoint);
+                    if (evaluationPoint == end)
+                    {
+                        n.distanceTraveled = n.traverseCost + evalNode.distanceTraveled;
+                        n.source = p;
+                        found = true;
+                        continue;
+                    }
+                    if (n.sourceIsNull)
+                    {
+                        n.distanceTraveled = n.traverseCost + evalNode.distanceTraveled;
+                        n.source = p;
+                        queue.Enqueue(new Point(evaluationPoint.X, evaluationPoint.Y), (int)(n.distanceTraveled + n.distanceRemaining));
+                    }
+                }
+
+                //Check down
+                //evaluationPoint.X is already p.X
+                evaluationPoint.Y = p.Y + 1;
+                if (isValidPoint(evaluationPoint))
+                {
+                    Node n = navMesh.getNode(evaluationPoint);
+                    if (evaluationPoint == end)
+                    {
+                        n.distanceTraveled = n.traverseCost + evalNode.distanceTraveled;
+                        n.source = p;
+                        found = true;
+                        continue;
+                    }
+                    if (n.sourceIsNull)
+                    {
+                        n.distanceTraveled = n.traverseCost + evalNode.distanceTraveled;
+                        n.source = p;
+                        queue.Enqueue(new Point(evaluationPoint.X, evaluationPoint.Y), (int)(n.distanceTraveled + n.distanceRemaining));
+                    }
+                }
+
+                #endregion
+
+                #region Search ul, ur, ll, lr
+                if(this.diagonalPath)
+                {
+                    //Check upperleft
+                    evaluationPoint.X = p.X - 1;
+                    evaluationPoint.Y = p.Y - 1;
+                    if (isValidPoint(evaluationPoint))
+                    {
+                        Node n = navMesh.getNode(evaluationPoint);
+                        if (evaluationPoint == end)
+                        {
+                            n.distanceTraveled = n.traverseCost + evalNode.distanceTraveled;
+                            n.source = p;
+                            found = true;
+                            continue;
+                        }
+                        if (n.sourceIsNull)
+                        {
+                            n.distanceTraveled = n.traverseCost + evalNode.distanceTraveled;
+                            n.source = p;
+                            queue.Enqueue(new Point(evaluationPoint.X, evaluationPoint.Y), (int)(n.distanceTraveled + n.distanceRemaining));
+                        }
+                    }
+
+                    //Check upperright
+                    evaluationPoint.X = p.X + 1;
+                    //evaluationPoint.Y is already p.Y - 1
+                    if (isValidPoint(evaluationPoint))
+                    {
+                        Node n = navMesh.getNode(evaluationPoint);
+                        if (evaluationPoint == end)
+                        {
+                            n.distanceTraveled = n.traverseCost + evalNode.distanceTraveled;
+                            n.source = p;
+                            found = true;
+                            continue;
+                        }
+                        if (n.sourceIsNull)
+                        {
+                            n.distanceTraveled = n.traverseCost + evalNode.distanceTraveled;
+                            n.source = p;
+                            queue.Enqueue(new Point(evaluationPoint.X, evaluationPoint.Y), (int)(n.distanceTraveled + n.distanceRemaining));
+                        }
+                    }
+
+                    //Check lowerright
+                    //evaluationPoint.X is already p.X + 1
+                    evaluationPoint.Y = p.Y + 1;
+                    if (isValidPoint(evaluationPoint))
+                    {
+                        Node n = navMesh.getNode(evaluationPoint);
+                        if (evaluationPoint == end)
+                        {
+                            n.distanceTraveled = n.traverseCost + evalNode.distanceTraveled;
+                            n.source = p;
+                            found = true;
+                            continue;
+                        }
+                        if (n.sourceIsNull)
+                        {
+                            n.distanceTraveled = n.traverseCost + evalNode.distanceTraveled;
+                            n.source = p;
+                            queue.Enqueue(new Point(evaluationPoint.X, evaluationPoint.Y), (int)(n.distanceTraveled + n.distanceRemaining));
+                        }
+                    }
+
+                    //Check lowerleft
+                    evaluationPoint.X = p.X - 1;
+                    //evaluationPoint.Y is already p.Y + 1
+                    if (isValidPoint(evaluationPoint))
+                    {
+                        Node n = navMesh.getNode(evaluationPoint);
+                        if (evaluationPoint == end)
+                        {
+                            n.distanceTraveled = n.traverseCost + evalNode.distanceTraveled;
+                            n.source = p;
+                            found = true;
+                            continue;
+                        }
+                        if (n.sourceIsNull)
+                        {
+                            n.distanceTraveled = n.traverseCost + evalNode.distanceTraveled;
+                            n.source = p;
+                            queue.Enqueue(new Point(evaluationPoint.X, evaluationPoint.Y), (int)(n.distanceTraveled + n.distanceRemaining));
+                        }
+                    }
+                }
+                #endregion
             }
 
             Path path = new Path();
 
             return path;
+        }
+
+        private bool isValidPoint(Point p)
+        {
+            return p.X >= 0 && p.Y >= 0 && p.X < navMesh.Width && p.Y < navMesh.Height;
         }
     }
 }
