@@ -18,6 +18,10 @@ namespace IGVC_Controller.Code.Modules.Vision
         public HomographyMatrix leftHomography;
         public HomographyMatrix rightHomography;
 
+        public Point[] leftCaliCorners;
+        public Point[] rightCaliCorners;
+        public Point[] worldCaliCorners;
+
         public DualVisionObstacleReprojection() : base()
         {
             this.modulePriority = 52;
@@ -55,7 +59,32 @@ namespace IGVC_Controller.Code.Modules.Vision
                     new PointF(300, 0)
                 };
 
+
             rightHomography = CameraCalibration.GetPerspectiveTransform(src, dst);
+
+            leftCaliCorners = new Point[]
+            {
+                new Point(0, 0),
+                new Point(320, 0),
+                new Point(320, 240),
+                new Point(0, 240)
+            };
+
+            rightCaliCorners = new Point[]
+            {
+                new Point(0, 0),
+                new Point(320, 0),
+                new Point(320, 240),
+                new Point(0, 240)
+            };
+
+            worldCaliCorners = new Point[]
+            {
+                new Point(0, 0),
+                new Point(320, 0),
+                new Point(320, 240),
+                new Point(0, 240)
+            };
             
         }
 
@@ -85,6 +114,9 @@ namespace IGVC_Controller.Code.Modules.Vision
         {
             leftHomography = config.Read<HomographyMatrix>("leftHomography", leftHomography);
             rightHomography = config.Read<HomographyMatrix>("rightHomography", rightHomography);
+            leftCaliCorners = config.Read<Point[]>("leftCaliCorners", leftCaliCorners);
+            rightCaliCorners = config.Read<Point[]>("rightCaliCorners", rightCaliCorners);
+            worldCaliCorners = config.Read<Point[]>("worldCaliCorners", worldCaliCorners);
 
             base.loadFromConfig(config);
         }
@@ -93,6 +125,9 @@ namespace IGVC_Controller.Code.Modules.Vision
         {
             config.Write<HomographyMatrix>("leftHomography", leftHomography);
             config.Write<HomographyMatrix>("rightHomography", rightHomography);
+            config.Write<Point[]>("leftCaliCorners", leftCaliCorners);
+            config.Write<Point[]>("rightCaliCorners", rightCaliCorners);
+            config.Write<Point[]>("worldCaliCorners", worldCaliCorners);
 
             base.writeToConfig(config);
         }
