@@ -11,13 +11,6 @@ namespace IGVC_Controller.Code.Modules.SystemInputs
 {
     class ManualDrive : IModule
     {
-        //IGVC_Controller.DataIO.Keyboard key_input;
-
-        //Remember that key_input needs to be bound to a Windows Form
-        //A Windows Form using the Keyboard class will have abnormal behavior
-        //if any text boxes are used as the Form and Keyboard will both listen
-        //to keyboard events
-
         ManualDriveForm form;
         delegate void delegateCloseForm();
 
@@ -51,7 +44,6 @@ namespace IGVC_Controller.Code.Modules.SystemInputs
 
         public ManualDrive() : base()
         {
-            //this.modulePriority = 90; // Should it be high priority in order to override automatic drive?
             //Its a system input so it should be in the Range of 0-25
             //Automatic drive will be disabled through the trajectory planner module
             this.modulePriority = 10; 
@@ -64,11 +56,6 @@ namespace IGVC_Controller.Code.Modules.SystemInputs
             this.addSubscription(INTERMODULE_VARIABLE.DYNAMIC_DRIVE_ENABLED);
 
             this.setFormDataDelegate = this.setFormData;
-            //VisualizerForm a = new VisualizerForm();
-            //Keyboard k = new Keyboard(a);
-            //a.Show();
-            //Keyboard a;
-            //a.isKeyDown()
             
         }
 
@@ -90,7 +77,6 @@ namespace IGVC_Controller.Code.Modules.SystemInputs
 
         public override void recieveDataFromRegistry(INTERMODULE_VARIABLE tag, object data)
         {
-            //base.recieveDataFromRegistry(tag, data);
             switch(tag)
             {
                 case INTERMODULE_VARIABLE.DRIVING_ENABLED:
@@ -115,9 +101,6 @@ namespace IGVC_Controller.Code.Modules.SystemInputs
         {          
             //sendDataToRegistry(INTERMODULE_VARIABLE.DYNAMIC_DRIVE_ENABLED, true);
 
-            //right_motor_speed = (double)right_speed.getObject();
-            //left_motor_speed = (double)left_speed.getObject();
-
             //Need to call the .shiftObject() first
             drive_on.shiftObject();
             Dyn_enabled.shiftObject();
@@ -128,7 +111,6 @@ namespace IGVC_Controller.Code.Modules.SystemInputs
 
             if (form.InvokeRequired)
             {
-                //form.Invoke(this.setFormDataDelegate, new object[] { drive_on.getObject() });
                 //form.Invoke(this.setFormDataDelegate, new object[] { right_speed.getObject() });
                 //form.Invoke(this.setFormDataDelegate, new object[] { left_speed.getObject() });
                 form.Invoke(this.setFormDataDelegate, new object[] { (bool)Dyn_enabled.getObject() });
@@ -186,10 +168,7 @@ namespace IGVC_Controller.Code.Modules.SystemInputs
 
         private void setFormData(bool motorEnable)
         {        
-            //form.setLIDARData((List<long>)data);
-            //form.SetSpeed(def_speed);
             form.DynEnabled(motorEnable);
-            //form.UpdateDisplay(right_motor_speed, left_motor_speed);
         }
 
         public override System.Windows.Forms.Form getEditorForm()

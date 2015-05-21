@@ -23,12 +23,6 @@ namespace IGVC_Controller.Code.Modules.SystemInputs
 
         public enum DriveSignal { FORWARD, BACKWARD, TRIGHT, SRIGHT, TLEFT, SLEFT, STOP };
 
-        //SetSpeed.Value = (decimal)((module.def_speed * 100.0)/max_motor_speed);
-
-        //module.right_motor_speed = module.def_speed * right_motor;
-        //module.left_motor_speed = module.def_speed * left_motor;
-        //module.def_speed = ((double)(SetSpeed.Value) * max_motor_speed) / 100.0;
-
         public ManualDriveForm()
         {
             InitializeComponent();

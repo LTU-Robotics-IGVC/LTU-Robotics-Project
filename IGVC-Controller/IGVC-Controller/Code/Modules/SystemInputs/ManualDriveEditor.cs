@@ -20,7 +20,7 @@ namespace IGVC_Controller.Code.Modules.SystemInputs
         /// </summary>
         const double max_motor_speed = 5.0;
 
-        bool Dyn_Dr_Enabled;
+        //bool Dyn_Dr_Enabled;
         
         public ManualDriveEditor()
         {
