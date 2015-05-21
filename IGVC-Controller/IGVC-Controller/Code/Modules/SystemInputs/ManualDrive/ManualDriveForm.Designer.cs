@@ -269,6 +269,7 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(938, 595);
+            this.ControlBox = false;
             this.Controls.Add(this.LSpeedBox);
             this.Controls.Add(this.RSpeedBox);
             this.Controls.Add(this.label9);

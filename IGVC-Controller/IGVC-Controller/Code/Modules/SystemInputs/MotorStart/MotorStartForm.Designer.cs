@@ -48,6 +48,7 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(756, 446);
+            this.ControlBox = false;
             this.Controls.Add(this.Start);
             this.Name = "MotorStartForm";
             this.Text = "MotorStartForm";

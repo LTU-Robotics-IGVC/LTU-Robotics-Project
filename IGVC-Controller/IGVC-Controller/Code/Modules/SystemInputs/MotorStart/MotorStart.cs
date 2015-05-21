@@ -47,8 +47,20 @@ namespace IGVC_Controller.Code.Modules.SystemInputs.MotorStart
 
         public override void process()
         {
+            if (form.DidStatusChange())
+            {
+                if (form.CheckStatus())
+                {
+                    sendDataToRegistry(INTERMODULE_VARIABLE.STATUS, "Motors are ENABLED");
+                }
+                else
+                {
+                    sendDataToRegistry(INTERMODULE_VARIABLE.STATUS, "Motors are DISABLED");
+                }
+            }
+
             sendDataToRegistry(INTERMODULE_VARIABLE.DRIVING_ENABLED, form.CheckStatus());
-            
+                        
             base.process();
         }
 

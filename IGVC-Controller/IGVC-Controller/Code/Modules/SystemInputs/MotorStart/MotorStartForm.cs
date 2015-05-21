@@ -13,6 +13,7 @@ namespace IGVC_Controller.Code.Modules.SystemInputs.MotorStart
     public partial class MotorStartForm : Form
     {
         bool motors_on;
+        bool status_change;
 
         public MotorStartForm()
         {
@@ -34,10 +35,17 @@ namespace IGVC_Controller.Code.Modules.SystemInputs.MotorStart
                 Start.BackColor = Color.Red;
                 motors_on = false;
             }
+            status_change = true;
+        }
+
+        public bool DidStatusChange()
+        {
+            return status_change;
         }
 
         public bool CheckStatus()
         {
+            status_change = false;
             return motors_on;
         }
     }

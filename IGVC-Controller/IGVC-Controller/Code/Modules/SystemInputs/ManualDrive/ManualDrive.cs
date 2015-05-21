@@ -99,6 +99,11 @@ namespace IGVC_Controller.Code.Modules.SystemInputs.ManualDrive
             //but it is good coding practice to have both true and false cases
             //handled
 
+            if (Dyn_enabled.getObject() == null)
+            {
+                this.sendDataToRegistry(INTERMODULE_VARIABLE.DYNAMIC_DRIVE_ENABLED, false);
+            }
+
             if (form.InvokeRequired)
             {
                 //form.Invoke(this.setFormDataDelegate, new object[] { right_speed.getObject() });
