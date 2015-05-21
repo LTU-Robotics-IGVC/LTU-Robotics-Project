@@ -51,7 +51,6 @@ namespace IGVC_Controller.Code.Modules.SystemInputs.ManualDrive
             this.addSubscription(INTERMODULE_VARIABLE.DYNAMIC_DRIVE_ENABLED);
 
             this.setFormDataDelegate = this.setFormData;
-            
         }
 
         public override void loadFromConfig(IGVC_Controller.DataIO.SaveFile config)
@@ -92,8 +91,6 @@ namespace IGVC_Controller.Code.Modules.SystemInputs.ManualDrive
 
         public override void process()
         {          
-            //sendDataToRegistry(INTERMODULE_VARIABLE.DYNAMIC_DRIVE_ENABLED, true);
-
             //Need to call the .shiftObject() first
             drive_on.shiftObject();
             Dyn_enabled.shiftObject();
@@ -107,7 +104,6 @@ namespace IGVC_Controller.Code.Modules.SystemInputs.ManualDrive
                 //form.Invoke(this.setFormDataDelegate, new object[] { right_speed.getObject() });
                 //form.Invoke(this.setFormDataDelegate, new object[] { left_speed.getObject() });
                 form.Invoke(this.setFormDataDelegate, new object[] { (bool)Dyn_enabled.getObject() });
-                
             }
             else
             {
@@ -168,6 +164,5 @@ namespace IGVC_Controller.Code.Modules.SystemInputs.ManualDrive
         {
             return new ManualDriveEditor();
         }
-
     }
 }

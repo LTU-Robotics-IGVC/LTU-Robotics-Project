@@ -45,7 +45,6 @@
             this.SetSpeed.Name = "SetSpeed";
             this.SetSpeed.Size = new System.Drawing.Size(120, 26);
             this.SetSpeed.TabIndex = 7;
-            this.SetSpeed.ValueChanged += new System.EventHandler(this.SetSpeed_ValueChanged);
             // 
             // label1
             // 
@@ -77,7 +76,6 @@
             this.PriorityBox.Name = "PriorityBox";
             this.PriorityBox.Size = new System.Drawing.Size(120, 26);
             this.PriorityBox.TabIndex = 15;
-            this.PriorityBox.ValueChanged += new System.EventHandler(this.PriorityBox_ValueChanged);
             // 
             // OKButton
             // 

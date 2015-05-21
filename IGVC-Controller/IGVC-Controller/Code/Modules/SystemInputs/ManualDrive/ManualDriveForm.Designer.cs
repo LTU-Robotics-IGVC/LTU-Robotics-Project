@@ -49,6 +49,8 @@
             this.label8 = new System.Windows.Forms.Label();
             this.timer1 = new System.Windows.Forms.Timer(this.components);
             this.label9 = new System.Windows.Forms.Label();
+            this.RSpeedBox = new System.Windows.Forms.TextBox();
+            this.LSpeedBox = new System.Windows.Forms.TextBox();
             this.SuspendLayout();
             // 
             // SLeft
@@ -242,15 +244,33 @@
             this.label9.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label9.Location = new System.Drawing.Point(28, 49);
             this.label9.Name = "label9";
-            this.label9.Size = new System.Drawing.Size(85, 29);
+            this.label9.Size = new System.Drawing.Size(140, 29);
             this.label9.TabIndex = 24;
-            this.label9.Text = "label9";
+            this.label9.Text = "Drive Type";
+            // 
+            // RSpeedBox
+            // 
+            this.RSpeedBox.Location = new System.Drawing.Point(696, 202);
+            this.RSpeedBox.Name = "RSpeedBox";
+            this.RSpeedBox.ReadOnly = true;
+            this.RSpeedBox.Size = new System.Drawing.Size(61, 26);
+            this.RSpeedBox.TabIndex = 25;
+            // 
+            // LSpeedBox
+            // 
+            this.LSpeedBox.Location = new System.Drawing.Point(696, 364);
+            this.LSpeedBox.Name = "LSpeedBox";
+            this.LSpeedBox.ReadOnly = true;
+            this.LSpeedBox.Size = new System.Drawing.Size(61, 26);
+            this.LSpeedBox.TabIndex = 26;
             // 
             // ManualDriveForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(938, 595);
+            this.Controls.Add(this.LSpeedBox);
+            this.Controls.Add(this.RSpeedBox);
             this.Controls.Add(this.label9);
             this.Controls.Add(this.label8);
             this.Controls.Add(this.label7);
@@ -299,5 +319,7 @@
         private System.Windows.Forms.Label label8;
         private System.Windows.Forms.Timer timer1;
         private System.Windows.Forms.Label label9;
+        private System.Windows.Forms.TextBox RSpeedBox;
+        private System.Windows.Forms.TextBox LSpeedBox;
     }
 }

@@ -43,24 +43,10 @@ namespace IGVC_Controller.Code.Modules.SystemInputs.ManualDrive
             module.modulePriority = (int)PriorityBox.Value;
         }
 
-        
-
         private void OKButton_Click(object sender, EventArgs e)
         {
             ((IModuleEditor)this).setDataToModule();
             this.Close();
         }
-
-        private void PriorityBox_ValueChanged(object sender, EventArgs e)
-        {
-
-        }
-        
-        private void SetSpeed_ValueChanged(object sender, EventArgs e)
-        {
-
-        }
-
-        
     }
 }

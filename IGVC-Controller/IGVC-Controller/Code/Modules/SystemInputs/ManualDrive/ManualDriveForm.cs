@@ -16,6 +16,8 @@ namespace IGVC_Controller.Code.Modules.SystemInputs.ManualDrive
         double right_motor = 0.0;
         double left_motor = 0.0;
 
+        double speed;
+
         bool moving;
         bool dynd = false;
 
@@ -39,6 +41,7 @@ namespace IGVC_Controller.Code.Modules.SystemInputs.ManualDrive
             string s = string.Format("{0:N2}%", data);
             label5.Text = s;
             label6.Text = s;
+            speed = data;
         }
 
         public void DynEnabled(bool data)
@@ -109,6 +112,11 @@ namespace IGVC_Controller.Code.Modules.SystemInputs.ManualDrive
         {
             progressBar1.Value = (int)((double)progressBar1.Maximum * Math.Abs(right));
             progressBar2.Value = (int)((double)progressBar1.Maximum * Math.Abs(left));
+
+            string r = string.Format("{0:N2}", right*speed);
+            string l = string.Format("{0:N2}", left*speed);
+            RSpeedBox.Text = r;
+            LSpeedBox.Text = l;
 
             if (right > 0)
                 RMDirection.Text = "Forward";
