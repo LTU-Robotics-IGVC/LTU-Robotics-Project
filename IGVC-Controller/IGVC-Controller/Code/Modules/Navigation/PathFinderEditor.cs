@@ -18,6 +18,8 @@ namespace IGVC_Controller.Code.Modules.Navigation
     {
         Image<Gray, byte> img;
         NavMesh navMesh;
+        int width = 600;
+        int height = 600;
 
         public PathFinderEditor()
         {
@@ -44,8 +46,8 @@ namespace IGVC_Controller.Code.Modules.Navigation
             Stopwatch stopwatch = new Stopwatch();
             stopwatch.Start();
             AStarPather pather = new AStarPather(navMesh);
-            pather.setCanTravelDiagonally(true);
-            Path path = pather.getPath(new Point(10, 10), new Point(85, 85));
+            //pather.setCanTravelDiagonally(true);
+            Path path = pather.getPath(new Point(10, 10), new Point(width - 15, height - 15));
             stopwatch.Stop();
             MessageBox.Show("Time = " + stopwatch.ElapsedMilliseconds.ToString() + "ms");
             if(path != null)
@@ -58,7 +60,7 @@ namespace IGVC_Controller.Code.Modules.Navigation
 
         private void CreateMapButton_Click(object sender, EventArgs e)
         {
-            img = new Image<Gray, byte>(100, 100);
+            img = new Image<Gray, byte>(width, height);
             img.Draw(new CircleF(new PointF(50, 50), 25), new Gray(255), 2);
             img.Draw(new CircleF(new PointF(75, 75), 20), new Gray(255), 2);
             img.Draw(new CircleF(new PointF(50, 25), 30), new Gray(25), 2);
@@ -72,10 +74,10 @@ namespace IGVC_Controller.Code.Modules.Navigation
                     new Point(20, 280)
                 };
             img.DrawPolyline(pts, false, new Gray(255), 1);
-            navMesh = new NavMesh(100, 100);
-            for (int x = 0; x < 100; x++)
+            navMesh = new NavMesh(width, height);
+            for (int x = 0; x < width; x++)
             {
-                for (int y = 0; y < 100; y++)
+                for (int y = 0; y < height; y++)
                 {
                     if(img.Data[y, x, 0] == 255)
                     {
