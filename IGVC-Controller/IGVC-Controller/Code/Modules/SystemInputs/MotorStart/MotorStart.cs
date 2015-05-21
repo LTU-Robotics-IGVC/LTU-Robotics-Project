@@ -10,6 +10,11 @@ namespace IGVC_Controller.Code.Modules.SystemInputs.MotorStart
     {
         MotorStartForm form;
 
+        /// <summary>
+        /// Enables dynamic drive (true) or three state drive (false) 
+        /// </summary>
+        public bool dynamic_drive = false;
+
         delegate void delegateCloseForm();
 
         public MotorStart() : base()
@@ -17,12 +22,27 @@ namespace IGVC_Controller.Code.Modules.SystemInputs.MotorStart
             this.modulePriority = 11;
         }
 
+        public override void loadFromConfig(IGVC_Controller.DataIO.SaveFile config)
+        {
+            this.dynamic_drive = config.Read<bool>("dynamic_drive", false);
+
+            base.loadFromConfig(config);
+        }
+
+        public override void writeToConfig(IGVC_Controller.DataIO.SaveFile config)
+        {
+            config.Write<bool>("dynamic_drive", this.dynamic_drive);
+
+            base.writeToConfig(config);
+        }
+
         public override bool startup()
         {
-            form = new MotorStartForm();
+           sendDataToRegistry(INTERMODULE_VARIABLE.DYNAMIC_DRIVE_ENABLED, dynamic_drive);
+           form = new MotorStartForm();
             
-            form.Show();
-            return base.startup();
+           form.Show();
+           return base.startup();
         }
 
         public override void process()

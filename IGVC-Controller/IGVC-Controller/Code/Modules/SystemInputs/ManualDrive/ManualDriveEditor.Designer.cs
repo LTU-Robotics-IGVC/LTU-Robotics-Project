@@ -33,7 +33,6 @@
             this.label2 = new System.Windows.Forms.Label();
             this.PriorityBox = new System.Windows.Forms.NumericUpDown();
             this.OKButton = new System.Windows.Forms.Button();
-            this.DynDriveEnabled = new System.Windows.Forms.CheckBox();
             this.label3 = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.SetSpeed)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.PriorityBox)).BeginInit();
@@ -83,7 +82,7 @@
             // OKButton
             // 
             this.OKButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.OKButton.Location = new System.Drawing.Point(463, 292);
+            this.OKButton.Location = new System.Drawing.Point(465, 238);
             this.OKButton.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.OKButton.Name = "OKButton";
             this.OKButton.Size = new System.Drawing.Size(220, 52);
@@ -91,17 +90,6 @@
             this.OKButton.Text = "OK";
             this.OKButton.UseVisualStyleBackColor = true;
             this.OKButton.Click += new System.EventHandler(this.OKButton_Click);
-            // 
-            // DynDriveEnabled
-            // 
-            this.DynDriveEnabled.AutoSize = true;
-            this.DynDriveEnabled.Location = new System.Drawing.Point(70, 215);
-            this.DynDriveEnabled.Name = "DynDriveEnabled";
-            this.DynDriveEnabled.Size = new System.Drawing.Size(190, 24);
-            this.DynDriveEnabled.TabIndex = 18;
-            this.DynDriveEnabled.Text = "Enable Dynamic Drive";
-            this.DynDriveEnabled.UseVisualStyleBackColor = true;
-            this.DynDriveEnabled.CheckedChanged += new System.EventHandler(this.DynDriveEnabled_CheckedChanged);
             // 
             // label3
             // 
@@ -116,10 +104,9 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(697, 373);
+            this.ClientSize = new System.Drawing.Size(697, 301);
             this.ControlBox = false;
             this.Controls.Add(this.label3);
-            this.Controls.Add(this.DynDriveEnabled);
             this.Controls.Add(this.OKButton);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.PriorityBox);
@@ -142,7 +129,6 @@
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.NumericUpDown PriorityBox;
         private System.Windows.Forms.Button OKButton;
-        private System.Windows.Forms.CheckBox DynDriveEnabled;
         private System.Windows.Forms.Label label3;
     }
 }

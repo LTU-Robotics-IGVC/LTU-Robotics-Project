@@ -27,11 +27,6 @@ namespace IGVC_Controller.Code.Modules.SystemInputs.ManualDrive
         /// </summary>
         public double def_speed = 3.00;
 
-        ///// <summary>
-        ///// Enables dynamic drive (true) or three state drive (false) 
-        ///// </summary>
-        //public bool dynamic_drive = false;
-
         /// <summary>
         /// Value (in m/s) to be sent to right motor
         /// </summary>
@@ -62,7 +57,6 @@ namespace IGVC_Controller.Code.Modules.SystemInputs.ManualDrive
         public override void loadFromConfig(IGVC_Controller.DataIO.SaveFile config)
         {
             this.def_speed = config.Read<double>("def_speed", 3.00);
-            //this.dynamic_drive = config.Read<bool>("dynamic_drive", false);
 
             base.loadFromConfig(config);
         }
@@ -70,7 +64,6 @@ namespace IGVC_Controller.Code.Modules.SystemInputs.ManualDrive
         public override void writeToConfig(IGVC_Controller.DataIO.SaveFile config)
         {
             config.Write<double> ("def_speed", this.def_speed);
-            //config.Write<bool>("dynamic_drive", this.dynamic_drive);
 
             base.writeToConfig(config);
         }

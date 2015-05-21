@@ -19,13 +19,10 @@ namespace IGVC_Controller.Code.Modules.SystemInputs.ManualDrive
         /// Maximum speed motors can maintain in m/s (Not modifiable in editor)
         /// </summary>
         const double max_motor_speed = 5.0;
-
-        //bool Dyn_Dr_Enabled;
         
         public ManualDriveEditor()
         {
             InitializeComponent();
-            DynDriveEnabled.Enabled = false;
         }
 
         void IModuleEditor.setModule(IModule module)
@@ -36,11 +33,6 @@ namespace IGVC_Controller.Code.Modules.SystemInputs.ManualDrive
 
         void IModuleEditor.loadDataFromModule()
         {
-            ////Dyn_Dr_Enabled = false;
-            ////if (Dyn_Dr_Enabled)
-            ////    DynDriveEnabled.Checked = true;
-            ////else
-            ////    DynDriveEnabled.Checked = false;
             PriorityBox.Value = (decimal)module.modulePriority;
             SetSpeed.Value = (decimal)((module.def_speed * 100.0)/max_motor_speed);
         }
@@ -49,7 +41,6 @@ namespace IGVC_Controller.Code.Modules.SystemInputs.ManualDrive
         {
             module.def_speed = ((double)(SetSpeed.Value) * max_motor_speed) / 100.0;
             module.modulePriority = (int)PriorityBox.Value;
-            //module.dynamic_drive = DynDriveEnabled.Checked;
         }
 
         
@@ -66,11 +57,6 @@ namespace IGVC_Controller.Code.Modules.SystemInputs.ManualDrive
         }
         
         private void SetSpeed_ValueChanged(object sender, EventArgs e)
-        {
-
-        }
-
-        private void DynDriveEnabled_CheckedChanged(object sender, EventArgs e)
         {
 
         }
