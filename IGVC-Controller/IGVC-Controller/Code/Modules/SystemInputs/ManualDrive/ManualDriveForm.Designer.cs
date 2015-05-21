@@ -127,14 +127,14 @@
             // 
             // progressBar1
             // 
-            this.progressBar1.Location = new System.Drawing.Point(577, 159);
+            this.progressBar1.Location = new System.Drawing.Point(560, 467);
             this.progressBar1.Name = "progressBar1";
             this.progressBar1.Size = new System.Drawing.Size(298, 40);
             this.progressBar1.TabIndex = 12;
             // 
             // progressBar2
             // 
-            this.progressBar2.Location = new System.Drawing.Point(576, 318);
+            this.progressBar2.Location = new System.Drawing.Point(68, 467);
             this.progressBar2.Name = "progressBar2";
             this.progressBar2.Size = new System.Drawing.Size(299, 40);
             this.progressBar2.TabIndex = 13;
@@ -142,7 +142,7 @@
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(578, 119);
+            this.label1.Location = new System.Drawing.Point(561, 427);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(92, 20);
             this.label1.TabIndex = 14;
@@ -151,7 +151,7 @@
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(578, 277);
+            this.label2.Location = new System.Drawing.Point(70, 426);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(82, 20);
             this.label2.TabIndex = 15;
@@ -160,7 +160,7 @@
             // RMDirection
             // 
             this.RMDirection.AutoSize = true;
-            this.RMDirection.Location = new System.Drawing.Point(729, 120);
+            this.RMDirection.Location = new System.Drawing.Point(712, 428);
             this.RMDirection.Name = "RMDirection";
             this.RMDirection.Size = new System.Drawing.Size(70, 20);
             this.RMDirection.TabIndex = 16;
@@ -170,7 +170,7 @@
             // LMDirection
             // 
             this.LMDirection.AutoSize = true;
-            this.LMDirection.Location = new System.Drawing.Point(729, 277);
+            this.LMDirection.Location = new System.Drawing.Point(221, 426);
             this.LMDirection.Name = "LMDirection";
             this.LMDirection.Size = new System.Drawing.Size(70, 20);
             this.LMDirection.TabIndex = 17;
@@ -179,7 +179,7 @@
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(573, 361);
+            this.label3.Location = new System.Drawing.Point(65, 510);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(40, 20);
             this.label3.TabIndex = 18;
@@ -188,7 +188,7 @@
             // label4
             // 
             this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(573, 202);
+            this.label4.Location = new System.Drawing.Point(556, 510);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(40, 20);
             this.label4.TabIndex = 19;
@@ -197,7 +197,7 @@
             // label5
             // 
             this.label5.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.label5.Location = new System.Drawing.Point(824, 361);
+            this.label5.Location = new System.Drawing.Point(316, 510);
             this.label5.Name = "label5";
             this.label5.RightToLeft = System.Windows.Forms.RightToLeft.No;
             this.label5.Size = new System.Drawing.Size(51, 20);
@@ -208,7 +208,7 @@
             // label6
             // 
             this.label6.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.label6.Location = new System.Drawing.Point(824, 202);
+            this.label6.Location = new System.Drawing.Point(807, 510);
             this.label6.Name = "label6";
             this.label6.RightToLeft = System.Windows.Forms.RightToLeft.No;
             this.label6.Size = new System.Drawing.Size(51, 20);
@@ -219,7 +219,7 @@
             // label7
             // 
             this.label7.AutoSize = true;
-            this.label7.Location = new System.Drawing.Point(881, 169);
+            this.label7.Location = new System.Drawing.Point(864, 477);
             this.label7.Name = "label7";
             this.label7.Size = new System.Drawing.Size(34, 20);
             this.label7.TabIndex = 22;
@@ -228,7 +228,7 @@
             // label8
             // 
             this.label8.AutoSize = true;
-            this.label8.Location = new System.Drawing.Point(881, 327);
+            this.label8.Location = new System.Drawing.Point(373, 476);
             this.label8.Name = "label8";
             this.label8.Size = new System.Drawing.Size(34, 20);
             this.label8.TabIndex = 23;
@@ -250,7 +250,7 @@
             // 
             // RSpeedBox
             // 
-            this.RSpeedBox.Location = new System.Drawing.Point(696, 202);
+            this.RSpeedBox.Location = new System.Drawing.Point(679, 510);
             this.RSpeedBox.Name = "RSpeedBox";
             this.RSpeedBox.ReadOnly = true;
             this.RSpeedBox.Size = new System.Drawing.Size(61, 26);
@@ -258,7 +258,7 @@
             // 
             // LSpeedBox
             // 
-            this.LSpeedBox.Location = new System.Drawing.Point(696, 364);
+            this.LSpeedBox.Location = new System.Drawing.Point(188, 513);
             this.LSpeedBox.Name = "LSpeedBox";
             this.LSpeedBox.ReadOnly = true;
             this.LSpeedBox.Size = new System.Drawing.Size(61, 26);
