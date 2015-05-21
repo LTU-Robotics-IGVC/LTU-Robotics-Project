@@ -34,7 +34,7 @@ namespace IGVC_Controller.Code.MathX
             return x + y * Width;
         }
 
-        public int getIndex(Point p)
+        public int getIndex(ref Point p)
         {
             return this.getIndex(p.X, p.Y);
         }
@@ -44,7 +44,7 @@ namespace IGVC_Controller.Code.MathX
             return new Point(index % Width, index / Width);
         }
 
-        public Node getNode(Point p)
+        public Node getNode(ref Point p)
         {
             return this.getNode(p.X, p.Y);
         }
@@ -54,16 +54,26 @@ namespace IGVC_Controller.Code.MathX
             return nodes[x + y * this.Width];
         }
 
-        public int getPathLength(Point p)
+        public int getPathLength(ref Point p)
         {
             int index = p.X + p.Y * this.Width;
             return nodes[index].distanceRemaining + nodes[index].distanceTraveled;
+        }
+
+        public int getXFromIndex(int index)
+        {
+            return index % Width;
+        }
+
+        public int getYFromIndex(int index)
+        {
+            return index / Width;
         }
     }
 
     class Node
     {
-        public Point source;
+        public int source;
         public int distanceTraveled;
         public int distanceRemaining;
         public int traverseCost;
@@ -74,7 +84,7 @@ namespace IGVC_Controller.Code.MathX
         }
         public Node()
         {
-            source = new Point(-1, -1);
+            source = -1;
             this.sourceIsNull = true;
             this.distanceTraveled = 0;
             this.distanceRemaining = NavMesh.impassable;

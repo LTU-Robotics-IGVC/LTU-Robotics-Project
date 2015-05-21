@@ -47,109 +47,116 @@ namespace IGVC_Controller.Code.MathX
             //Setup needed variables
             bool found = false;
             //Note that if bestNode is needed the whole map will have been searched
-            Point bestNode = new Point(-1, -1);
+            int bestNode = -1;
             int bestDistance = int.MaxValue;
             //queue used to hold paths for evaluation
-            SortedQueue<Point> queue = new SortedQueue<Point>();
-            queue.Enqueue(start, (int)navMesh.getPathLength(start));
+            SortedQueue<int> queue = new SortedQueue<int>();
+            queue.Enqueue(navMesh.getIndex(ref start), (int)navMesh.getPathLength(ref start));
             Point evaluationPoint = new Point();
 
             while(!found && !queue.isEmpty())
             {
-                Point p = queue.Dequeue();
-                Node evalNode = navMesh.getNode(p);
+                int index = queue.Dequeue();
+                Node evalNode = navMesh.nodes[index];
                 if(evalNode.distanceRemaining < bestDistance)
                 {
                     bestDistance = evalNode.distanceRemaining;
-                    bestNode = p;
+                    bestNode = index;
                 }
+
+                int x = navMesh.getXFromIndex(index);
+                int y = navMesh.getYFromIndex(index);
 
                 #region Search left, right, up, down
                 //Check left
-                evaluationPoint.X = p.X - 1;
-                evaluationPoint.Y = p.Y;
-                if (isValidPoint(evaluationPoint))
+                evaluationPoint.X = x - 1;
+                evaluationPoint.Y = y;
+                if (isValidPoint(ref evaluationPoint))
                 {
-                    Node n = navMesh.getNode(evaluationPoint);
+                    Node n = navMesh.getNode(ref evaluationPoint);
                     if(evaluationPoint == end)
                     {
                         n.distanceTraveled = n.traverseCost + evalNode.distanceTraveled;
-                        n.source = p;
+                        n.source = index;
+                        n.sourceIsNull = false;
                         found = true;
                         continue;
                     }
                     if (n.sourceIsNull && n.isPassable)
                     {
                         n.distanceTraveled = n.traverseCost + evalNode.distanceTraveled;
-                        n.source = p;
+                        n.source = index;
                         n.sourceIsNull = false;
-                        queue.Enqueue(new Point(evaluationPoint.X, evaluationPoint.Y), (int)(n.distanceTraveled + n.distanceRemaining));
+                        queue.Enqueue(navMesh.getIndex(ref evaluationPoint), (int)(n.distanceTraveled + n.distanceRemaining));
                     }
                 }
 
                 //Check right
-                evaluationPoint.X = p.X + 1;
+                evaluationPoint.X = x + 1;
                 //evaluationPoint.Y is already p.Y
-                if (isValidPoint(evaluationPoint))
+                if (isValidPoint(ref evaluationPoint))
                 {
-                    Node n = navMesh.getNode(evaluationPoint);
+                    Node n = navMesh.getNode(ref evaluationPoint);
                     if (evaluationPoint == end)
                     {
                         n.distanceTraveled = n.traverseCost + evalNode.distanceTraveled;
-                        n.source = p;
+                        n.source = index;
+                        n.sourceIsNull = false;
                         found = true;
                         continue;
                     }
                     if (n.sourceIsNull && n.isPassable)
                     {
                         n.distanceTraveled = n.traverseCost + evalNode.distanceTraveled;
-                        n.source = p;
+                        n.source = index;
                         n.sourceIsNull = false;
-                        queue.Enqueue(new Point(evaluationPoint.X, evaluationPoint.Y), (int)(n.distanceTraveled + n.distanceRemaining));
+                        queue.Enqueue(navMesh.getIndex(ref evaluationPoint), (int)(n.distanceTraveled + n.distanceRemaining));
                     }
                 }
 
                 //Check up
-                evaluationPoint.X = p.X;
-                evaluationPoint.Y = p.Y - 1;
-                if (isValidPoint(evaluationPoint))
+                evaluationPoint.X = x;
+                evaluationPoint.Y = y - 1;
+                if (isValidPoint(ref evaluationPoint))
                 {
-                    Node n = navMesh.getNode(evaluationPoint);
+                    Node n = navMesh.getNode(ref evaluationPoint);
                     if (evaluationPoint == end)
                     {
                         n.distanceTraveled = n.traverseCost + evalNode.distanceTraveled;
-                        n.source = p;
+                        n.source = index;
+                        n.sourceIsNull = false;
                         found = true;
                         continue;
                     }
                     if (n.sourceIsNull && n.isPassable)
                     {
                         n.distanceTraveled = n.traverseCost + evalNode.distanceTraveled;
-                        n.source = p;
+                        n.source = index;
                         n.sourceIsNull = false;
-                        queue.Enqueue(new Point(evaluationPoint.X, evaluationPoint.Y), (int)(n.distanceTraveled + n.distanceRemaining));
+                        queue.Enqueue(navMesh.getIndex(ref evaluationPoint), (int)(n.distanceTraveled + n.distanceRemaining));
                     }
                 }
 
                 //Check down
                 //evaluationPoint.X is already p.X
-                evaluationPoint.Y = p.Y + 1;
-                if (isValidPoint(evaluationPoint))
+                evaluationPoint.Y = y + 1;
+                if (isValidPoint(ref evaluationPoint))
                 {
-                    Node n = navMesh.getNode(evaluationPoint);
+                    Node n = navMesh.getNode(ref evaluationPoint);
                     if (evaluationPoint == end)
                     {
                         n.distanceTraveled = n.traverseCost + evalNode.distanceTraveled;
-                        n.source = p;
+                        n.source = index;
+                        n.sourceIsNull = false;
                         found = true;
                         continue;
                     }
                     if (n.sourceIsNull && n.isPassable)
                     {
                         n.distanceTraveled = n.traverseCost + evalNode.distanceTraveled;
-                        n.source = p;
+                        n.source = index;
                         n.sourceIsNull = false;
-                        queue.Enqueue(new Point(evaluationPoint.X, evaluationPoint.Y), (int)(n.distanceTraveled + n.distanceRemaining));
+                        queue.Enqueue(navMesh.getIndex(ref evaluationPoint), (int)(n.distanceTraveled + n.distanceRemaining));
                     }
                 }
 
@@ -159,90 +166,94 @@ namespace IGVC_Controller.Code.MathX
                 if(this.diagonalPath)
                 {
                     //Check upperleft
-                    evaluationPoint.X = p.X - 1;
-                    evaluationPoint.Y = p.Y - 1;
-                    if (isValidPoint(evaluationPoint))
+                    evaluationPoint.X = x - 1;
+                    evaluationPoint.Y = y - 1;
+                    if (isValidPoint(ref evaluationPoint))
                     {
-                        Node n = navMesh.getNode(evaluationPoint);
+                        Node n = navMesh.getNode(ref evaluationPoint);
                         if (evaluationPoint == end)
                         {
                             n.distanceTraveled = n.traverseCost + evalNode.distanceTraveled;
-                            n.source = p;
+                            n.source = index;
+                            n.sourceIsNull = false;
                             found = true;
                             continue;
                         }
                         if (n.sourceIsNull && n.isPassable)
                         {
                             n.distanceTraveled = n.traverseCost + evalNode.distanceTraveled;
-                            n.source = p;
+                            n.source = index;
                             n.sourceIsNull = false;
-                            queue.Enqueue(new Point(evaluationPoint.X, evaluationPoint.Y), (int)(n.distanceTraveled + n.distanceRemaining));
+                            queue.Enqueue(navMesh.getIndex(ref evaluationPoint), (int)(n.distanceTraveled + n.distanceRemaining));
                         }
                     }
 
                     //Check upperright
-                    evaluationPoint.X = p.X + 1;
+                    evaluationPoint.X = x + 1;
                     //evaluationPoint.Y is already p.Y - 1
-                    if (isValidPoint(evaluationPoint))
+                    if (isValidPoint(ref evaluationPoint))
                     {
-                        Node n = navMesh.getNode(evaluationPoint);
+                        Node n = navMesh.getNode(ref evaluationPoint);
                         if (evaluationPoint == end)
                         {
                             n.distanceTraveled = n.traverseCost + evalNode.distanceTraveled;
-                            n.source = p;
+                            n.source = index;
+                            n.sourceIsNull = false;
                             found = true;
                             continue;
                         }
                         if (n.sourceIsNull && n.isPassable)
                         {
                             n.distanceTraveled = n.traverseCost + evalNode.distanceTraveled;
-                            n.source = p;
+                            n.source = index;
                             n.sourceIsNull = false;
-                            queue.Enqueue(new Point(evaluationPoint.X, evaluationPoint.Y), (int)(n.distanceTraveled + n.distanceRemaining));
+                            queue.Enqueue(navMesh.getIndex(ref evaluationPoint), (int)(n.distanceTraveled + n.distanceRemaining));
                         }
                     }
 
                     //Check lowerright
                     //evaluationPoint.X is already p.X + 1
-                    evaluationPoint.Y = p.Y + 1;
-                    if (isValidPoint(evaluationPoint))
+                    evaluationPoint.Y = y + 1;
+                    if (isValidPoint(ref evaluationPoint))
                     {
-                        Node n = navMesh.getNode(evaluationPoint);
+                        Node n = navMesh.getNode(ref evaluationPoint);
                         if (evaluationPoint == end)
                         {
                             n.distanceTraveled = n.traverseCost + evalNode.distanceTraveled;
-                            n.source = p;
+                            n.source = index;
+                            n.sourceIsNull = false;
                             found = true;
                             continue;
                         }
                         if (n.sourceIsNull && n.isPassable)
                         {
                             n.distanceTraveled = n.traverseCost + evalNode.distanceTraveled;
-                            n.source = p;
+                            n.source = index;
                             n.sourceIsNull = false;
-                            queue.Enqueue(new Point(evaluationPoint.X, evaluationPoint.Y), (int)(n.distanceTraveled + n.distanceRemaining));
+                            queue.Enqueue(navMesh.getIndex(ref evaluationPoint), (int)(n.distanceTraveled + n.distanceRemaining));
                         }
                     }
 
                     //Check lowerleft
-                    evaluationPoint.X = p.X - 1;
+                    evaluationPoint.X = x - 1;
                     //evaluationPoint.Y is already p.Y + 1
-                    if (isValidPoint(evaluationPoint))
+                    if (isValidPoint(ref evaluationPoint))
                     {
-                        Node n = navMesh.getNode(evaluationPoint);
+                        Node n = navMesh.getNode(ref evaluationPoint);
                         if (evaluationPoint == end)
                         {
                             n.distanceTraveled = n.traverseCost + evalNode.distanceTraveled;
-                            n.source = p;
+                            n.source = index;
+                            n.sourceIsNull = false;
                             found = true;
                             continue;
                         }
                         if (n.sourceIsNull && n.isPassable)
                         {
                             n.distanceTraveled = n.traverseCost + evalNode.distanceTraveled;
-                            n.source = p;
+                            n.source = index;
                             n.sourceIsNull = false;
-                            queue.Enqueue(new Point(evaluationPoint.X, evaluationPoint.Y), (int)(n.distanceTraveled + n.distanceRemaining));
+                            queue.Enqueue(navMesh.getIndex(ref evaluationPoint), (int)(n.distanceTraveled + n.distanceRemaining));
                         }
                     }
                 }
@@ -256,22 +267,22 @@ namespace IGVC_Controller.Code.MathX
                 path.AddNode(p);
                 while(p != start)
                 {
-                    Node n = navMesh.getNode(p);
-                    p = n.source;
+                    Node n = navMesh.getNode(ref p);
+                    p = navMesh.getPoint(n.source);
                     path.AddNode(p);
                 }
 
                 return path;
             }
-            else if(!this.mustReachTarget && bestNode.X != -1)
+            else if(!this.mustReachTarget && bestNode != -1)
             {
                 Path path = new Path();
-                Point p = bestNode;
+                Point p = navMesh.getPoint(bestNode);
                 path.AddNode(p);
                 while(p != start)
                 {
-                    Node n = navMesh.getNode(p);
-                    p = n.source;
+                    Node n = navMesh.getNode(ref p);
+                    p = navMesh.getPoint(n.source);
                     path.AddNode(p);
                 }
                 return path;
@@ -280,9 +291,14 @@ namespace IGVC_Controller.Code.MathX
             return null;
         }
 
-        private bool isValidPoint(Point p)
+        private bool isValidPoint(ref Point p)
         {
             return p.X >= 0 && p.Y >= 0 && p.X < navMesh.Width && p.Y < navMesh.Height;
+        }
+
+        private bool isValidPoint(int x, int y)
+        {
+            return x >= 0 && y >= 0 && x < navMesh.Width && y < navMesh.Height;
         }
     }
 }
