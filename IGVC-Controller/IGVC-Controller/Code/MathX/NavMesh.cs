@@ -34,6 +34,11 @@ namespace IGVC_Controller.Code.MathX
             return x + y * Width;
         }
 
+        public int getIndex(Point p)
+        {
+            return this.getIndex(p.X, p.Y);
+        }
+
         public Point getPoint(int index)
         {
             return new Point(index % Width, index / Width);
