@@ -114,7 +114,9 @@ namespace IGVC_Controller.Code.Modules
             /// </summary>
             DYNAMIC_DRIVE_ENABLED,
 
-            NAV_MESH
+            NAV_MESH,
+
+            IS_AUTONOMOUS
         }
 
         public struct LOG_TYPES
