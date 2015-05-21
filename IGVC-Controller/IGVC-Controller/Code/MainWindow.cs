@@ -15,7 +15,8 @@ using IGVC_Controller.Code.Modules.Vision;
 using IGVC_Controller.DataIO;
 using IGVC_Controller.Code.Modules;
 using IGVC_Controller.Code;
-using IGVC_Controller.Code.Modules.SystemInputs;
+using IGVC_Controller.Code.Modules.SystemInputs.ManualDrive;
+using IGVC_Controller.Code.Modules.SystemInputs.MotorStart;
 using IGVC_Controller.Code.Modules.Example;
 using IGVC_Controller.Code.Modules.LIDAR;
 using IGVC_Controller.Code.Modules.Visualizer;
@@ -87,6 +88,7 @@ namespace IGVC_Controller
             this.setupModule("DualVisionObstacleReprojection", new DualVisionObstacleReprojection());
             this.setupModule("ManualDrive", new ManualDrive());
             this.setupModule("AStarPather", new PathFinder());
+            this.setupModule("MotorStart", new MotorStart());
 
             activeModules = config.Read<List<string>>("Active_Modules", new List<string>());
 

@@ -1,4 +1,4 @@
-﻿namespace IGVC_Controller.Code.Modules.SystemInputs
+﻿namespace IGVC_Controller.Code.Modules.SystemInputs.ManualDrive
 {
     partial class ManualDriveEditor
     {

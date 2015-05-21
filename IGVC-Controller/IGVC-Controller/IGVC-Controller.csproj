@@ -128,18 +128,31 @@
       <DependentUpon>NoModulePropertiesWindow.cs</DependentUpon>
     </Compile>
     <Compile Include="Code\Modules\Example\RandomDataGenerator.cs" />
-    <Compile Include="Code\Modules\SystemInputs\ManualDrive.cs" />
-    <Compile Include="Code\Modules\SystemInputs\ManualDriveEditor.cs">
+    <Compile Include="Code\Modules\SystemInputs\ManualDrive\ManualDrive.cs" />
+    <Compile Include="Code\Modules\SystemInputs\ManualDrive\ManualDriveEditor.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Code\Modules\SystemInputs\ManualDriveEditor.Designer.cs">
+    <Compile Include="Code\Modules\SystemInputs\ManualDrive\ManualDriveEditor.Designer.cs">
       <DependentUpon>ManualDriveEditor.cs</DependentUpon>
     </Compile>
-    <Compile Include="Code\Modules\SystemInputs\ManualDriveForm.cs">
+    <Compile Include="Code\Modules\SystemInputs\ManualDrive\ManualDriveForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Code\Modules\SystemInputs\ManualDriveForm.Designer.cs">
+    <Compile Include="Code\Modules\SystemInputs\ManualDrive\ManualDriveForm.Designer.cs">
       <DependentUpon>ManualDriveForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Code\Modules\SystemInputs\MotorStart\MotorStart.cs" />
+    <Compile Include="Code\Modules\SystemInputs\MotorStart\MotorStartEditor.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Code\Modules\SystemInputs\MotorStart\MotorStartEditor.Designer.cs">
+      <DependentUpon>MotorStartEditor.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Code\Modules\SystemInputs\MotorStart\MotorStartForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Code\Modules\SystemInputs\MotorStart\MotorStartForm.Designer.cs">
+      <DependentUpon>MotorStartForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Code\Modules\UI\RobotControlPanel.cs" />
     <Compile Include="Code\Modules\Vision\DualVisionObstacleDetection.cs" />
@@ -204,11 +217,17 @@
     <EmbeddedResource Include="Code\Modules\NoModulePropertiesWindow.resx">
       <DependentUpon>NoModulePropertiesWindow.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Code\Modules\SystemInputs\ManualDriveEditor.resx">
+    <EmbeddedResource Include="Code\Modules\SystemInputs\ManualDrive\ManualDriveEditor.resx">
       <DependentUpon>ManualDriveEditor.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Code\Modules\SystemInputs\ManualDriveForm.resx">
+    <EmbeddedResource Include="Code\Modules\SystemInputs\ManualDrive\ManualDriveForm.resx">
       <DependentUpon>ManualDriveForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Code\Modules\SystemInputs\MotorStart\MotorStartEditor.resx">
+      <DependentUpon>MotorStartEditor.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Code\Modules\SystemInputs\MotorStart\MotorStartForm.resx">
+      <DependentUpon>MotorStartForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Code\Modules\Vision\DualVisionObstacleDetectionEditor.resx">
       <DependentUpon>DualVisionObstacleDetectionEditor.cs</DependentUpon>

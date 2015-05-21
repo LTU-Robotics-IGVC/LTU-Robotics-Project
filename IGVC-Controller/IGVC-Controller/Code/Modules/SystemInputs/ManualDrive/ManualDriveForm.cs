@@ -9,7 +9,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace IGVC_Controller.Code.Modules.SystemInputs
+namespace IGVC_Controller.Code.Modules.SystemInputs.ManualDrive
 {
     public partial class ManualDriveForm : Form
     {
