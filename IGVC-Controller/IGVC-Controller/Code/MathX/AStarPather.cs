@@ -50,7 +50,7 @@ namespace IGVC_Controller.Code.MathX
             int bestNode = -1;
             int bestDistance = int.MaxValue;
             //queue used to hold paths for evaluation
-            SortedQueue<int> queue = new SortedQueue<int>();
+            SortedLinkQueue<int> queue = new SortedLinkQueue<int>();
             queue.Enqueue(navMesh.getIndex(ref start), (int)navMesh.getPathLength(ref start));
             Point evaluationPoint = new Point();
 

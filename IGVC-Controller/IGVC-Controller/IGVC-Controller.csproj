@@ -74,6 +74,7 @@
     <Compile Include="Code\MathX\ImageFiltering.cs" />
     <Compile Include="Code\MathX\NavMesh.cs" />
     <Compile Include="Code\MathX\Path.cs" />
+    <Compile Include="Code\MathX\SortedLinkQueue.cs" />
     <Compile Include="Code\MathX\SortedQueue.cs" />
     <Compile Include="Code\MathX\Vector2.cs" />
     <Compile Include="Code\ModuleSelectionWindow.cs">
