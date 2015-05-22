@@ -116,6 +116,10 @@ namespace IGVC_Controller.Code.Modules
 
             NAV_MESH,
 
+            NAV_PATH,
+
+            GPS_RELATIVE_POINT,
+
             IS_AUTONOMOUS
         }
 

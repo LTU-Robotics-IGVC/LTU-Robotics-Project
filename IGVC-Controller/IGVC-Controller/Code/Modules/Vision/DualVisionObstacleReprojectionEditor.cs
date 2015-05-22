@@ -251,24 +251,24 @@ namespace IGVC_Controller.Code.Modules.Vision
 
         private void SetPoint_Click(object sender, EventArgs e)
         {
-            if(SideSelect.SelectedItem == "Right")
+            if ((string)SideSelect.SelectedItem == "Right")
             {
-                if(Src_Dst_Select.SelectedItem == "Source")
+                if ((string)Src_Dst_Select.SelectedItem == "Source")
                 {
                     rightCorners[CornerSelect.SelectedIndex] = new Point((int)XCoord.Value, (int)YCoord.Value);
                 }
-                else if (Src_Dst_Select.SelectedItem == "Destination")
+                else if ((string)Src_Dst_Select.SelectedItem == "Destination")
                 {
                     worldCorners[CornerSelect.SelectedIndex] = new Point((int)XCoord.Value, (int)YCoord.Value);
                 }
             }
-            else if(SideSelect.SelectedItem == "Left")
+            else if ((string)SideSelect.SelectedItem == "Left")
             {
-                if (Src_Dst_Select.SelectedItem == "Source")
+                if ((string)Src_Dst_Select.SelectedItem == "Source")
                 {
                     leftCorners[CornerSelect.SelectedIndex] = new Point((int)XCoord.Value, (int)YCoord.Value);
                 }
-                else if (Src_Dst_Select.SelectedItem == "Destination")
+                else if ((string)Src_Dst_Select.SelectedItem == "Destination")
                 {
                     worldCorners[CornerSelect.SelectedIndex] = new Point((int)XCoord.Value, (int)YCoord.Value);
                 }

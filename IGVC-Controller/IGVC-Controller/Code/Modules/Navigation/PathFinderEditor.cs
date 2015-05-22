@@ -49,7 +49,8 @@ namespace IGVC_Controller.Code.Modules.Navigation
             //pather.setCanTravelDiagonally(true);
             Path path = pather.getPath(new Point(10, 10), new Point(width - 15, height - 15));
             stopwatch.Stop();
-            MessageBox.Show("Time = " + stopwatch.ElapsedMilliseconds.ToString() + "ms");
+            //MessageBox.Show("Time = " + stopwatch.ElapsedMilliseconds.ToString() + "ms");
+            this.label1.Text = "Time = " + stopwatch.ElapsedMilliseconds.ToString() + "ms";
             if(path != null)
             {
                 Image<Bgr, byte> color = img.Convert<Bgr, byte>();
@@ -60,6 +61,8 @@ namespace IGVC_Controller.Code.Modules.Navigation
 
         private void CreateMapButton_Click(object sender, EventArgs e)
         {
+            width = (int)WidthBox.Value;
+            height = (int)HeightBox.Value;
             img = new Image<Gray, byte>(width, height);
             img.Draw(new CircleF(new PointF(50, 50), 25), new Gray(255), 2);
             img.Draw(new CircleF(new PointF(75, 75), 20), new Gray(255), 2);
@@ -91,6 +94,11 @@ namespace IGVC_Controller.Code.Modules.Navigation
             }
 
             this.imageBox1.Image = img;
+        }
+
+        private void PathFinderEditor_Load(object sender, EventArgs e)
+        {
+
         }
     }
 }
