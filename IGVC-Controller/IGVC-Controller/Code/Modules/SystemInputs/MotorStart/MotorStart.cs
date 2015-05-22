@@ -17,6 +17,7 @@ namespace IGVC_Controller.Code.Modules.SystemInputs.MotorStart
 
         delegate void delegateCloseForm();
 
+
         public MotorStart() : base()
         {
             this.modulePriority = 11;
@@ -57,9 +58,11 @@ namespace IGVC_Controller.Code.Modules.SystemInputs.MotorStart
                 {
                     sendDataToRegistry(INTERMODULE_VARIABLE.STATUS, "Motors are DISABLED");
                 }
+                
+                sendDataToRegistry(INTERMODULE_VARIABLE.DRIVING_ENABLED, form.CheckStatus());
             }
 
-            sendDataToRegistry(INTERMODULE_VARIABLE.DRIVING_ENABLED, form.CheckStatus());
+            
                         
             base.process();
         }
