@@ -193,6 +193,8 @@
     <Compile Include="Code\Modules\Visualizer\Vision\Vision_Visualizer_Form.Designer.cs">
       <DependentUpon>Vision_Visualizer_Form.cs</DependentUpon>
     </Compile>
+    <Compile Include="Code\Modules\Waypoint\WaypointHandler.cs" />
+    <Compile Include="Code\Modules\Waypoint\WaypointHandlerEditor.cs" />
     <Compile Include="Code\Registries\Registry.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
