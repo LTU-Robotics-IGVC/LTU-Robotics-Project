@@ -118,7 +118,7 @@ namespace IGVC_Controller.Code.Modules
 
             NAV_PATH,
 
-            GPS_RELATIVE_POINT,
+            GPS_RELATIVE_VECTOR2,
 
             IS_AUTONOMOUS
         }
