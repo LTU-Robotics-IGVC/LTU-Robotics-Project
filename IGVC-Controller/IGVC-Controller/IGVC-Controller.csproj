@@ -71,6 +71,7 @@
       <DependentUpon>MainWindow.cs</DependentUpon>
     </Compile>
     <Compile Include="Code\MathX\AStarPather.cs" />
+    <Compile Include="Code\MathX\GPSWaypoint.cs" />
     <Compile Include="Code\MathX\ImageFiltering.cs" />
     <Compile Include="Code\MathX\NavMesh.cs" />
     <Compile Include="Code\MathX\Path.cs" />
@@ -92,7 +93,7 @@
     <Compile Include="Code\Modules\Cameras\DualWebcam.cs" />
     <Compile Include="Code\Modules\Example\ForcedDelay.cs" />
     <Compile Include="Code\Modules\Example\RandomDataListener.cs" />
-    <Compile Include="Code\Modules\GPS\GPSCoordinate.cs" />
+    <Compile Include="Code\MathX\GPSCoordinate.cs" />
     <Compile Include="Code\Modules\GPS\GPS_Interface.cs" />
     <Compile Include="Code\Modules\GPS\GPS_InterfaceEditor.cs">
       <SubType>Form</SubType>
