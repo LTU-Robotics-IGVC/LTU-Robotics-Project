@@ -64,6 +64,7 @@
   <ItemGroup>
     <Compile Include="Code\DataIO\GatedVariable.cs" />
     <Compile Include="Code\DataIO\Keyboard.cs" />
+    <Compile Include="Code\DataIO\RobotPort.cs" />
     <Compile Include="Code\MainWindow.cs">
       <SubType>Form</SubType>
     </Compile>
