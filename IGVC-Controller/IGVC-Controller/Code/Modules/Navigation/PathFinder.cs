@@ -20,7 +20,7 @@ namespace IGVC_Controller.Code.Modules.Navigation
             this.modulePriority = 61;
             startPoint = new Point();
             this.addSubscription(INTERMODULE_VARIABLE.NAV_MESH);
-            this.addSubscription(INTERMODULE_VARIABLE.GPS_RELATIVE_POINT);
+            this.addSubscription(INTERMODULE_VARIABLE.GPS_RELATIVE_VECTOR2);
         }
 
         public override void recieveDataFromRegistry(IModule.INTERMODULE_VARIABLE tag, object data)
@@ -30,7 +30,7 @@ namespace IGVC_Controller.Code.Modules.Navigation
                 case INTERMODULE_VARIABLE.NAV_MESH:
                     Nav_Mesh.setObject(data);
                     break;
-                case INTERMODULE_VARIABLE.GPS_RELATIVE_POINT:
+                case INTERMODULE_VARIABLE.GPS_RELATIVE_VECTOR2:
                     GPSRelativeWaypoint.setObject(data);
                     break;
             }
