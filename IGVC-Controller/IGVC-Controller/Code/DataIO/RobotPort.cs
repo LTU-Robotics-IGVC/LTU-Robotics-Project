@@ -78,6 +78,7 @@ namespace IGVC_Controller.Code.DataIO
                 if(users <= 0)
                 {
                     comPort.Close();
+                    comPort.Dispose();
                     currentPorts.Remove(comPort.PortName);
                     return true;
                 }
