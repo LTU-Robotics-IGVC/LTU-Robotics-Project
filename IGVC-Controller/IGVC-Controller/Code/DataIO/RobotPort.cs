@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO.Ports;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace IGVC_Controller.Code.DataIO
@@ -17,8 +18,19 @@ namespace IGVC_Controller.Code.DataIO
         private RobotPort(string portname, int baudrate, int messageSize)
         {
             comPort = new SerialPort(portname, baudrate);
+            //comPort.ReadTimeout = 1000;
+            comPort.DataReceived += comPort_DataReceived;
+            comPort.Parity = Parity.None;
+            comPort.DataBits = 8;
+            comPort.StopBits = StopBits.One;
+            comPort.ReceivedBytesThreshold = 1;
             this.messageSize = messageSize;
             currentPorts.Add(portname, this);
+        }
+
+        void comPort_DataReceived(object sender, SerialDataReceivedEventArgs e)
+        {
+            int a = 1;
         }
 
         /// <summary>
@@ -94,6 +106,7 @@ namespace IGVC_Controller.Code.DataIO
             {
                 message += objects[i].ToString() + ":";
             }
+            i = message.Length;
             while(i < messageSize)
             {
                 message += ' ';
@@ -119,11 +132,14 @@ namespace IGVC_Controller.Code.DataIO
             this.sendCommand(objects);
 
             //Wait for response to be ready
-            while (comPort.BytesToRead < messageSize) ;
 
             //Collect response
             char[] buffer = new char[messageSize];
-            comPort.Read(buffer, 0, messageSize);
+            int count = comPort.Read(buffer, 0, 1);
+            while(count < messageSize)
+            {
+                count += comPort.Read(buffer, count, 1);
+            }
             string response = new string(buffer);
 
             //Parse response

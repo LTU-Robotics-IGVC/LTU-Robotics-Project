@@ -104,6 +104,7 @@
     </Compile>
     <Compile Include="Code\Modules\IModule.cs" />
     <Compile Include="Code\Modules\IModuleEditor.cs" />
+    <Compile Include="Code\Modules\IMU\IMUDataCollector.cs" />
     <Compile Include="Code\Modules\LIDAR\LIDAR_Interface.cs" />
     <Compile Include="Code\DataIO\SCIP_library.cs" />
     <Compile Include="Code\Modules\LIDAR\LIDAR_InterfaceEditor.cs">
