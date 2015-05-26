@@ -112,7 +112,7 @@ namespace IGVC_Controller.Code.DataIO
                 throw new Exception("RobotPort has not been opened");
         }
 
-        public string sendCommandWithResponse(object[] objects)
+        public List<string> sendCommandWithResponse(object[] objects)
         {
             //Send the command message first
             this.sendCommand(objects);
@@ -124,7 +124,22 @@ namespace IGVC_Controller.Code.DataIO
             char[] buffer = new char[messageSize];
             comPort.Read(buffer, 0, messageSize);
             string response = new string(buffer);
-            return response;
+
+            //Parse response
+            //Note the structure example COMPASS:130.0:                <---Ends with 30 characters
+            response.TrimEnd(' ');
+            string[] components = response.Split(':');
+            List<string> Return = new List<string>();
+            //filter empty components
+            for (int i = 0; i < components.Length; i++)
+            {
+                if (components[i] != "")
+                {
+                    Return.Add(components[i]);
+                }
+            }
+            
+            return Return;
         }
     }
 }
