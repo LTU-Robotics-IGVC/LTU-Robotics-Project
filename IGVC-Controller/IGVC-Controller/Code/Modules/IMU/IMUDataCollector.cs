@@ -22,7 +22,6 @@ namespace IGVC_Controller.Code.Modules.IMU
             {
                 robot = RobotPort.getRobotPort("COM3", 9600, 30);
                 robot.open();
-                Thread.Sleep(5000);
                 return base.startup();
             }
             catch(Exception e)
