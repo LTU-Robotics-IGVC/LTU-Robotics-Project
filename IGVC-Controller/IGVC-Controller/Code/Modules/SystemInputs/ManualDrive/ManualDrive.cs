@@ -130,6 +130,7 @@ namespace IGVC_Controller.Code.Modules.SystemInputs.ManualDrive
             //right_speed = new GatedVariable();
             //left_speed = new GatedVariable();
             Dyn_enabled = new GatedVariable();
+            Dyn_enabled.setObject(true);
 
             form = new ManualDriveForm();
 
