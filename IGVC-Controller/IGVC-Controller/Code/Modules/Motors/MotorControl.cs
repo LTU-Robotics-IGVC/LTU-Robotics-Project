@@ -13,7 +13,7 @@ namespace IGVC_Controller.Code.Modules.Motors
         GatedVariable leftMotor;
         GatedVariable rightMotor;
         GatedVariable motorEnable;
-        SerialPort comPort;
+        RobotPort robot;
 
         public MotorControl() : base()
         {
@@ -43,34 +43,45 @@ namespace IGVC_Controller.Code.Modules.Motors
         public override bool startup()
         {
             leftMotor = new GatedVariable();
+            leftMotor.setObject(0.0);
             rightMotor = new GatedVariable();
+            rightMotor.setObject(0.0);
             motorEnable = new GatedVariable();
             motorEnable.setObject(false);
-            comPort = new SerialPort();
-            comPort.PortName = "COM7";
-            comPort.Open();
-
+            try
+            {
+                robot = RobotPort.getRobotPort("COM3", 9600, 30);
+            }
+            catch(Exception e)
+            {
+                this.sendDataToRegistry(INTERMODULE_VARIABLE.STATUS,
+                    "Failed to start MotorControl with Exception : " + e.ToString());
+                return false;
+            }
             return base.startup();
         }
 
         public override void shutdown()
         {
-            if (comPort != null && comPort.IsOpen)
-                comPort.Close();
+            robot.close();
 
             base.shutdown();
         }
 
         public override void process()
         {
+            leftMotor.shiftObject();
+            rightMotor.shiftObject();
+            motorEnable.shiftObject();
             double leftMotorSpeed = (double)leftMotor.getObject();
             double rightMotorSpeed = (double)rightMotor.getObject();
             bool motorEnabled = (bool)motorEnable.getObject();
 
             if(motorEnabled)
             {
-                comPort.WriteLine("LMO:" + leftMotorSpeed.ToString("F"));
-                comPort.WriteLine("RMO:" + rightMotorSpeed.ToString("F"));
+                //this.sendDataToRegistry(INTERMODULE_VARIABLE.STATUS, leftMotorSpeed.ToString() + " | " + rightMotorSpeed.ToString());
+                robot.sendCommand(new object[] { "LEFTMOTOR", "SET SPEED", leftMotorSpeed.ToString("N") });
+                robot.sendCommand(new object[] { "RIGHTMOTOR", "SET SPEED", rightMotorSpeed.ToString("N") });
             }
 
             base.process();
