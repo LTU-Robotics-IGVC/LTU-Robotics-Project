@@ -176,6 +176,13 @@
     </Compile>
     <Compile Include="Code\Modules\Vision\StereoVision.cs" />
     <Compile Include="Code\Modules\Vision\WideAngleMonoVision.cs" />
+    <Compile Include="Code\Modules\Visualizer\GeneralVisualizer\GeneralVisualizer.cs" />
+    <Compile Include="Code\Modules\Visualizer\GeneralVisualizer\GeneralVisualizerForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Code\Modules\Visualizer\GeneralVisualizer\GeneralVisualizerForm.Designer.cs">
+      <DependentUpon>GeneralVisualizerForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="Code\Modules\Visualizer\GPS\GPS_Visualizer.cs" />
     <Compile Include="Code\Modules\Visualizer\GPS\GPS_Visualizer_Form.cs">
       <SubType>Form</SubType>
@@ -246,6 +253,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Code\Modules\Vision\DualVisionObstacleReprojectionEditor.resx">
       <DependentUpon>DualVisionObstacleReprojectionEditor.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Code\Modules\Visualizer\GeneralVisualizer\GeneralVisualizerForm.resx">
+      <DependentUpon>GeneralVisualizerForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Code\Modules\Visualizer\GPS\GPS_Visualizer_Form.resx">
       <DependentUpon>GPS_Visualizer_Form.cs</DependentUpon>

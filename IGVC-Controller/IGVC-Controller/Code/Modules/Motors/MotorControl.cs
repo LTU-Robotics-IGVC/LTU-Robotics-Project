@@ -50,7 +50,8 @@ namespace IGVC_Controller.Code.Modules.Motors
             motorEnable.setObject(false);
             try
             {
-                robot = RobotPort.getRobotPort("COM3", 9600, 30);
+                robot = RobotPort.getRobotPort("COM5", 9600, 30);
+                robot.open();
             }
             catch(Exception e)
             {
