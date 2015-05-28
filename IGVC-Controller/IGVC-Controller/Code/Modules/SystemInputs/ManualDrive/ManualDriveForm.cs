@@ -84,20 +84,20 @@ namespace IGVC_Controller.Code.Modules.SystemInputs.ManualDrive
                     left_motor = -1.0;
                     break;
                 case DriveSignal.TRIGHT:
-                    right_motor = 1.0;
-                    left_motor = -1.0;
-                    break;
-                case DriveSignal.TLEFT:
                     right_motor = -1.0;
                     left_motor = 1.0;
                     break;
-                case DriveSignal.SRIGHT:
+                case DriveSignal.TLEFT:
                     right_motor = 1.0;
-                    left_motor = 0.5;
+                    left_motor = -1.0;
                     break;
-                case DriveSignal.SLEFT:
+                case DriveSignal.SRIGHT:
                     right_motor = 0.5;
                     left_motor = 1.0;
+                    break;
+                case DriveSignal.SLEFT:
+                    right_motor = 1.0;
+                    left_motor = 0.5;
                     break;
                 case DriveSignal.STOP:
                     right_motor = 0.0;
