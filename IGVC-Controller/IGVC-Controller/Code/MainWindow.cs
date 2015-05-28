@@ -26,6 +26,7 @@ using IGVC_Controller.Code.Modules.Cameras;
 using IGVC_Controller.Code.Modules.Visualizer.Vision;
 using IGVC_Controller.Code.Modules.Navigation;
 using IGVC_Controller.Code.Modules.IMU;
+using IGVC_Controller.Code.Modules.Motors;
 
 namespace IGVC_Controller
 {
@@ -91,6 +92,7 @@ namespace IGVC_Controller
             this.setupModule("AStarPather", new PathFinder());
             this.setupModule("MotorStart", new MotorStart());
             this.setupModule("IMUDataCollector", new IMUDataCollector());
+            this.setupModule("MotorControl", new MotorControl());
 
             activeModules = config.Read<List<string>>("Active_Modules", new List<string>());
 
