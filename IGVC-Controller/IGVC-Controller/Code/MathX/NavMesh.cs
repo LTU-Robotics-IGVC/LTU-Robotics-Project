@@ -51,7 +51,10 @@ namespace IGVC_Controller.Code.MathX
 
         public Node getNode(int x, int y)
         {
-            return nodes[x + y * this.Width];
+            int index = x + y * this.Width;
+            if(index < this.Size)
+                return nodes[x + y * this.Width];
+            return null;
         }
 
         public int getPathLength(ref Point p)
