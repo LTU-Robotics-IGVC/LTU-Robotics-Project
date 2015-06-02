@@ -31,7 +31,7 @@ namespace IGVC_Controller.Code.Modules.SystemInputs.ManualDrive
             label3.Text = "0.00";
             label4.Text = "0.00";
             k = new Keyboard(this);
-            timer1.Interval = 10;
+            timer1.Interval = 1;
             timer1.Start();
             
         }
