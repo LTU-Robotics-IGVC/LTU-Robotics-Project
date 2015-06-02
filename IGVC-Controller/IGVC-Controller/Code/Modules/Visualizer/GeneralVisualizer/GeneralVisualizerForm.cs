@@ -45,6 +45,9 @@ namespace IGVC_Controller.Code.Modules.Visualizer.GeneralVisualizer
                     break;
                 case IModule.INTERMODULE_VARIABLE.NAV_PATH:
                     Path path = (Path)data;
+                    break;
+                default:
+                    break;
             }
         }
     }
