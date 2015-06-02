@@ -81,8 +81,25 @@ namespace IGVC_Controller.Code.Modules.Motors
             if(motorEnabled)
             {
                 //this.sendDataToRegistry(INTERMODULE_VARIABLE.STATUS, leftMotorSpeed.ToString() + " | " + rightMotorSpeed.ToString());
-                robot.sendCommand(new object[] { "LEFTMOTOR", "SET SPEED", leftMotorSpeed.ToString("N") });
-                robot.sendCommand(new object[] { "RIGHTMOTOR", "SET SPEED", rightMotorSpeed.ToString("N") });
+                //robot.sendCommand(new object[] { "LEFTMOTOR", "SET SPEED", leftMotorSpeed.ToString("N") });
+
+                if(leftMotorSpeed >= 0 && rightMotorSpeed >= 0)
+                {
+                    if (leftMotorSpeed >= 1.9 * rightMotorSpeed)
+                        robot.sendCommand(new object[] { "LEFTMOTOR", "RIGHT", leftMotorSpeed.ToString("N") });
+                    else if (rightMotorSpeed >= 1.9 * leftMotorSpeed)
+                        robot.sendCommand(new object[] { "LEFTMOTOR", "LEFT", leftMotorSpeed.ToString("N") });
+                    else if (rightMotorSpeed < 0.0001 && leftMotorSpeed < 0.0001)
+                        robot.sendCommand(new object[] { "LEFTMOTOR", "STOP" });
+                    else
+                        robot.sendCommand(new object[] { "LEFTMOTOR", "FORWARD", leftMotorSpeed.ToString("N") });
+                }
+                else
+                {
+                    robot.sendCommand(new object[] { "LEFTMOTOR", "REVERSE", leftMotorSpeed.ToString("N") });
+                }
+
+                //robot.sendCommand(new object[] { "RIGHTMOTOR", "SET SPEED", rightMotorSpeed.ToString("N") });
             }
 
             base.process();
