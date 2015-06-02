@@ -13,8 +13,8 @@ namespace IGVC_Controller.Code.Modules.GPS
     {
         SerialPort phoneGPS;
 
-        public string port_name = "COM1";
-        public int baudrate = 115200;
+        public string port_name = "COM6";
+        public int baudrate = 4800;
         public string Lat, Long;
 
         public GPS_Interface() : base()
@@ -41,7 +41,7 @@ namespace IGVC_Controller.Code.Modules.GPS
 
         public override bool startup()
         {
-            this.sendDataToRegistry(INTERMODULE_VARIABLE.STATUS, "\tOpening GPS on port" + port_name
+            this.sendDataToRegistry(INTERMODULE_VARIABLE.STATUS, "\tOpening GPS on port " + port_name
                 + " with baudrate " + baudrate.ToString());
 
             try //opening the serail port
