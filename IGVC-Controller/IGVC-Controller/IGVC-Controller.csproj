@@ -266,6 +266,9 @@
     <EmbeddedResource Include="Code\Modules\Visualizer\Vision\Vision_Visualizer_Form.resx">
       <DependentUpon>Vision_Visualizer_Form.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Code\Modules\Waypoint\WaypointHandlerEditor.resx">
+      <DependentUpon>WaypointHandlerEditor.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
