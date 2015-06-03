@@ -262,7 +262,7 @@ namespace IGVC_Controller.Code.MathX
 
             if(found)
             {
-                Path path = new Path();
+                Path path = new Path(navMesh.Width, navMesh.Height);
                 Point p = new Point(end.X, end.Y);
                 path.AddNode(p);
                 while(p != start)
@@ -276,7 +276,7 @@ namespace IGVC_Controller.Code.MathX
             }
             else if(!this.mustReachTarget && bestNode != -1)
             {
-                Path path = new Path();
+                Path path = new Path(navMesh.Width, navMesh.Height);
                 Point p = navMesh.getPoint(bestNode);
                 path.AddNode(p);
                 while(p != start)

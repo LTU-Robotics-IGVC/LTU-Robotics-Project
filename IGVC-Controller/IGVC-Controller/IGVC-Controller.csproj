@@ -124,6 +124,7 @@
     <Compile Include="Code\Modules\Navigation\PathFinderEditor.Designer.cs">
       <DependentUpon>PathFinderEditor.cs</DependentUpon>
     </Compile>
+    <Compile Include="Code\Modules\Navigation\SimpleSteering.cs" />
     <Compile Include="Code\Modules\Navigation\TargetPathBuilder.cs" />
     <Compile Include="Code\Modules\Navigation\TrajectoryPredictor.cs" />
     <Compile Include="Code\Modules\NoModulePropertiesWindow.cs">

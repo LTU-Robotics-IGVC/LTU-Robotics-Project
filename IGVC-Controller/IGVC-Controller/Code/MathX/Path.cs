@@ -11,9 +11,15 @@ namespace IGVC_Controller.Code.MathX
     {
         private Stack<Point> path;
 
-        public Path()
+        public int MapWidth { get; private set; }
+
+        public int MapHeight { get; private set; }
+
+        public Path(int mapWidth, int mapHeight)
         {
             path = new Stack<Point>();
+            this.MapWidth = mapWidth;
+            this.MapHeight = mapHeight;
         }
 
         public void AddNode(Point node)
