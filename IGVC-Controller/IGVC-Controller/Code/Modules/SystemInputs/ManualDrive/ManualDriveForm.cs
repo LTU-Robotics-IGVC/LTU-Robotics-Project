@@ -15,6 +15,7 @@ namespace IGVC_Controller.Code.Modules.SystemInputs.ManualDrive
     {
         double right_motor = 0.0;
         double left_motor = 0.0;
+        bool lestop, restop;
 
         double speed;
 
@@ -23,7 +24,7 @@ namespace IGVC_Controller.Code.Modules.SystemInputs.ManualDrive
 
         Keyboard k;
 
-        public enum DriveSignal { FORWARD, BACKWARD, TRIGHT, SRIGHT, TLEFT, SLEFT, STOP };
+        public enum DriveSignal { FORWARD, BACKWARD, TRIGHT, SRIGHT, TLEFT, SLEFT, STOP, ESTOP };
 
         public ManualDriveForm()
         {
@@ -61,6 +62,16 @@ namespace IGVC_Controller.Code.Modules.SystemInputs.ManualDrive
             }
         }
 
+        public bool RightEstop()
+        {
+            return restop;
+        }
+
+        public bool LeftEstop()
+        {
+            return lestop;
+        }
+
         public double RightSpeed()
         {
             return right_motor;
@@ -76,34 +87,53 @@ namespace IGVC_Controller.Code.Modules.SystemInputs.ManualDrive
             switch(d)
             {
                 case DriveSignal.FORWARD:
+                    lestop = false;
+                    restop = false;
                     right_motor = 1.0;
                     left_motor = 1.0;
                     break;
                 case DriveSignal.BACKWARD:
+                    lestop = false;
+                    restop = false;
                     right_motor = -1.0;
                     left_motor = -1.0;
                     break;
                 case DriveSignal.TRIGHT:
-                    right_motor = -1.0;
+                    lestop = true;
+                    restop = false;
+                    right_motor = 0.0;
                     left_motor = 1.0;
                     break;
                 case DriveSignal.TLEFT:
+                    lestop = false;
+                    restop = true;
                     right_motor = 1.0;
-                    left_motor = -1.0;
+                    left_motor = 0.0;
                     break;
                 case DriveSignal.SRIGHT:
+                    lestop = false;
+                    restop = false;
                     right_motor = 0.5;
                     left_motor = 1.0;
                     break;
                 case DriveSignal.SLEFT:
+                    lestop = false;
+                    restop = false;
                     right_motor = 1.0;
                     left_motor = 0.5;
                     break;
                 case DriveSignal.STOP:
+                    lestop = false;
+                    restop = false;
                     right_motor = 0.0;
                     left_motor = 0.0;
                     break;
-
+                case DriveSignal.ESTOP:
+                    lestop = true;
+                    restop = true;
+                    right_motor = 0.0;
+                    left_motor = 0.0;
+                    break;
             }
             UpdateDisplay(right_motor, left_motor);
         }
@@ -212,6 +242,19 @@ namespace IGVC_Controller.Code.Modules.SystemInputs.ManualDrive
             Speed_control(DriveSignal.STOP);
         }
 
+        private void estop_MouseDown(object sender, MouseEventArgs e)
+        {
+            if (e.Button == MouseButtons.Left)
+            {
+                Speed_control(DriveSignal.ESTOP);
+            }
+        }
+
+        private void estop_MouseUp(object sender, MouseEventArgs e)
+        {
+            Speed_control(DriveSignal.STOP);
+        }
+
         private void label3_Click(object sender, EventArgs e)
         {
 
@@ -251,6 +294,11 @@ namespace IGVC_Controller.Code.Modules.SystemInputs.ManualDrive
                     Speed_control(DriveSignal.SRIGHT);
                     moving = true;
                 }
+                else if (k.isKeyDown(Keys.ShiftKey))
+                {
+                    Speed_control(DriveSignal.ESTOP);
+                    moving = true;
+                }
                 else if (moving == true)
                 {
                     Speed_control(DriveSignal.STOP);
@@ -272,6 +320,11 @@ namespace IGVC_Controller.Code.Modules.SystemInputs.ManualDrive
                 else if (k.isKeyDown(Keys.E))
                 {
                     Speed_control(DriveSignal.SRIGHT);
+                    moving = true;
+                }
+                else if (k.isKeyDown(Keys.ShiftKey))
+                {
+                    Speed_control(DriveSignal.ESTOP);
                     moving = true;
                 }
                 else if (moving == true)

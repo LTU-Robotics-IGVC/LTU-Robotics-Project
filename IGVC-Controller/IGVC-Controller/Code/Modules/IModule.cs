@@ -120,7 +120,11 @@ namespace IGVC_Controller.Code.Modules
 
             GPS_RELATIVE_VECTOR2,
 
-            IS_AUTONOMOUS
+            IS_AUTONOMOUS,
+
+            ESTOP_RIGHT,
+
+            ESTOP_LEFT
         }
 
         public struct LOG_TYPES

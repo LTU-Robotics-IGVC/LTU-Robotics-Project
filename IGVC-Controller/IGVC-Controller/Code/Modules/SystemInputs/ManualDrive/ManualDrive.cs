@@ -118,6 +118,9 @@ namespace IGVC_Controller.Code.Modules.SystemInputs.ManualDrive
             left_motor_speed = form.LeftSpeed();
             right_motor_speed = form.RightSpeed();
 
+            this.sendDataToRegistry(INTERMODULE_VARIABLE.ESTOP_RIGHT, form.RightEstop());
+            this.sendDataToRegistry(INTERMODULE_VARIABLE.ESTOP_LEFT, form.LeftEstop());
+            
             this.sendDataToRegistry(INTERMODULE_VARIABLE.MOTOR_SPEED_LEFT, left_motor_speed);
             this.sendDataToRegistry(INTERMODULE_VARIABLE.MOTOR_SPEED_RIGHT, right_motor_speed);
 

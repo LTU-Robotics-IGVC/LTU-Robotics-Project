@@ -51,6 +51,7 @@
             this.label9 = new System.Windows.Forms.Label();
             this.RSpeedBox = new System.Windows.Forms.TextBox();
             this.LSpeedBox = new System.Windows.Forms.TextBox();
+            this.estop = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // SLeft
@@ -264,12 +265,24 @@
             this.LSpeedBox.Size = new System.Drawing.Size(61, 26);
             this.LSpeedBox.TabIndex = 26;
             // 
+            // estop
+            // 
+            this.estop.Location = new System.Drawing.Point(68, 368);
+            this.estop.Name = "estop";
+            this.estop.Size = new System.Drawing.Size(333, 45);
+            this.estop.TabIndex = 27;
+            this.estop.Text = "E-Stop";
+            this.estop.UseVisualStyleBackColor = true;
+            this.estop.MouseDown += new System.Windows.Forms.MouseEventHandler(this.estop_MouseDown);
+            this.estop.MouseUp += new System.Windows.Forms.MouseEventHandler(this.estop_MouseUp);
+            // 
             // ManualDriveForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(938, 595);
             this.ControlBox = false;
+            this.Controls.Add(this.estop);
             this.Controls.Add(this.LSpeedBox);
             this.Controls.Add(this.RSpeedBox);
             this.Controls.Add(this.label9);
@@ -322,5 +335,6 @@
         private System.Windows.Forms.Label label9;
         private System.Windows.Forms.TextBox RSpeedBox;
         private System.Windows.Forms.TextBox LSpeedBox;
+        private System.Windows.Forms.Button estop;
     }
 }
