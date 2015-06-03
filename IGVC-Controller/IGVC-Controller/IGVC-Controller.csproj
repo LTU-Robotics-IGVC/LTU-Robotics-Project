@@ -178,6 +178,7 @@
     <Compile Include="Code\Modules\Vision\DualVisionObstacleReprojectionEditor.Designer.cs">
       <DependentUpon>DualVisionObstacleReprojectionEditor.cs</DependentUpon>
     </Compile>
+    <Compile Include="Code\Modules\Vision\CannyObstacleFiltering.cs" />
     <Compile Include="Code\Modules\Vision\StereoVision.cs" />
     <Compile Include="Code\Modules\Vision\WideAngleMonoVision.cs" />
     <Compile Include="Code\Modules\Visualizer\GeneralVisualizer\GeneralVisualizer.cs" />

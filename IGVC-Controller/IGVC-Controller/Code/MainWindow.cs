@@ -102,6 +102,7 @@ namespace IGVC_Controller
             this.setupModule("FakeGPS", new FakeGPS());
             this.setupModule("MapBuilder", new DualVision_LIDAR_ObstacleMapBuilder());
             this.setupModule("SimpleSteering", new SimpleSteering());
+            this.setupModule("CannyFiltering", new CannyObstacleFiltering());
 
             activeModules = config.Read<List<string>>("Active_Modules", new List<string>());
 

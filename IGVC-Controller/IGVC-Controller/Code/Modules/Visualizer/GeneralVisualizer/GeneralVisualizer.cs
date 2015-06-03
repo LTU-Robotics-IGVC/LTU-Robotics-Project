@@ -32,6 +32,8 @@ namespace IGVC_Controller.Code.Modules.Visualizer.GeneralVisualizer
             this.addChannel(INTERMODULE_VARIABLE.NAV_PATH);
             this.addChannel(INTERMODULE_VARIABLE.MOTOR_SPEED_LEFT);
             this.addChannel(INTERMODULE_VARIABLE.MOTOR_SPEED_RIGHT);
+            this.addChannel(INTERMODULE_VARIABLE.OBSTACLE_IMAGE_LEFT);
+            this.addChannel(INTERMODULE_VARIABLE.OBSTACLE_IMAGE_RIGHT);
 
             this.setFormDataDelegate = this.setFormData;
         }

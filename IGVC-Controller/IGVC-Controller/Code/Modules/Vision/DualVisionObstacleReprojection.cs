@@ -24,7 +24,7 @@ namespace IGVC_Controller.Code.Modules.Vision
 
         public DualVisionObstacleReprojection() : base()
         {
-            this.modulePriority = 52;
+            this.modulePriority = 54;
             this.addSubscription(INTERMODULE_VARIABLE.OBSTACLE_IMAGE_LEFT);
             this.addSubscription(INTERMODULE_VARIABLE.OBSTACLE_IMAGE_RIGHT);
 

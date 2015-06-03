@@ -64,6 +64,12 @@ namespace IGVC_Controller.Code.Modules.Visualizer.GeneralVisualizer
                     speed = (double)data;
                     this.label2.Text = "Right Speed:" + speed.ToString("N");
                     break;
+                case IModule.INTERMODULE_VARIABLE.OBSTACLE_IMAGE_LEFT:
+                    this.imageBox5.Image = (Image<Gray, byte>)data;
+                    break;
+                case IModule.INTERMODULE_VARIABLE.OBSTACLE_IMAGE_RIGHT:
+                    this.imageBox6.Image = (Image<Gray, byte>)data;
+                    break;
                 default:
                     break;
             }

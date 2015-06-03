@@ -32,6 +32,11 @@ namespace IGVC_Controller.Code.MathX
             return (float)Math.Atan2(Y, X);
         }
 
+        public bool Within(float minX, float minY, float maxX, float maxY)
+        {
+            return X >= minX && X < maxX && Y >= minY && Y < maxY;
+        }
+
         public static Vector2 operator -(Vector2 vec1, Vector2 vec2)
         {
             return new Vector2(vec1.X - vec2.X, vec1.Y - vec2.Y);

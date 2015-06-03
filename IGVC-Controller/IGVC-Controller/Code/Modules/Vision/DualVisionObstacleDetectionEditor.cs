@@ -35,6 +35,7 @@ namespace IGVC_Controller.Code.Modules.Vision
             minGreen.Value = (int)(module.minGreen / 180.0 * 255.0);
             maxGreen.Value = (int)(module.maxGreen / 180.0 * 255.0);
             minVal.Value = (int)(module.minVal * 255.0);
+            this.PriorityBox.Value = module.modulePriority;
         }
 
         void IModuleEditor.setDataToModule()
@@ -42,6 +43,7 @@ namespace IGVC_Controller.Code.Modules.Vision
             module.minGreen = minGreen.Value / 255.0 * 180.0;
             module.maxGreen = maxGreen.Value / 255.0 * 180.0;
             module.minVal = minVal.Value / 255.0;
+            module.modulePriority = (int)this.PriorityBox.Value;
         }
 
         private void minGreen_Scroll(object sender, ScrollEventArgs e)
@@ -78,8 +80,10 @@ namespace IGVC_Controller.Code.Modules.Vision
         private void OKButton_Click(object sender, EventArgs e)
         {
             if (capture != null)
+            {
                 capture.Stop();
-            capture.Dispose();
+                capture.Dispose();
+            }
             ((IModuleEditor)this).setDataToModule();
             this.Close();
         }

@@ -63,7 +63,9 @@ namespace IGVC_Controller.Code.Modules.Cameras
         public override void shutdown()
         {
             capture1.Stop();
+            capture1.Dispose();
             capture2.Stop();
+            capture2.Dispose();
             base.shutdown();
         }
 

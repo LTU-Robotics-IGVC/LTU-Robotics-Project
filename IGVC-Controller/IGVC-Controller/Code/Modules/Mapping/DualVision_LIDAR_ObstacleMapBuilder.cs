@@ -60,53 +60,71 @@ namespace IGVC_Controller.Code.Modules.Mapping
             LIDAR.shiftObject();
             CollisionImage.shiftObject();
 
-            NavMesh map = imageBasedCalc();
-            NavMesh map2 = new NavMesh(map.Width, map.Height);
-            for(int x = 1; x < map.Width-1; x++)
-                for(int y = 1; y < map.Height-1; y++)
-                {
-                    int count = 0;
-                    if (map.getNode(x + 1, y).isPassable)
-                        count++;
-                    if (map.getNode(x - 1, y).isPassable)
-                        count++;
-                    if (map.getNode(x, y + 1).isPassable)
-                        count++;
-                    if (map.getNode(x, y - 1).isPassable)
-                        count++;
-                    if (count >= 3)
-                        map2.getNode(x, y).traverseCost = 1;
-                    else
-                        map2.getNode(x, y).traverseCost = NavMesh.impassable;
-                }
-            map = map2;
-            map2 = new NavMesh(map.Width, map.Height);
-            int dis = 10;
-            for (int x = 0; x < map.Width; x++)
-                for (int y = 0; y < map.Height; y++)
-                {
-                    bool keepGoing = true;
-                    for(int subX = Math.Max(0, x - dis); subX < Math.Min(map.Width, x + dis) && keepGoing; subX++)
-                        for (int subY = Math.Max(0, y - dis); subY < Math.Min(map.Height, y + dis) && keepGoing; subY++)
-                        {
-                            if (MathXHelper.getPointDis(x, y, subX, subY) < dis)
-                            {
-                                if (!map.getNode(subX, subY).isPassable)
-                                {
-                                    map2.getNode(x, y).traverseCost = NavMesh.impassable;
-                                    keepGoing = false;
-                                }
-                            }
-                        }
-                }
+            Image<Gray, byte> mapImage = imageBasedCalc();
+            mapImage = mapImage.PyrUp().PyrDown();
+            mapImage = mapImage.Dilate(5);
 
-           this.sendDataToRegistry(INTERMODULE_VARIABLE.NAV_MESH, map2);
+            NavMesh mesh = new NavMesh(mapWidth, mapHeight);
+            for (int x = 0; x < mapWidth; x++)
+            {
+                for (int y = 0; y < mapHeight; y++)
+                {
+                    byte val = mapImage.Data[y, x, 0];
+                    if(val > 200)
+                    {
+                        mesh.getNode(x, y).traverseCost = NavMesh.impassable;
+                    }
+                    else if(val > 0)
+                    {
+                        mesh.getNode(x, y).traverseCost = val;
+                    }
+                }
+            }
+            //NavMesh map2 = new NavMesh(map.Width, map.Height);
+            
+            //for(int x = 1; x < map.Width-1; x++)
+            //    for(int y = 1; y < map.Height-1; y++)
+            //    {
+            //        int count = 0;
+            //        if (map.getNode(x + 1, y).isPassable)
+            //            count++;
+            //        if (map.getNode(x - 1, y).isPassable)
+            //            count++;
+            //        if (map.getNode(x, y + 1).isPassable)
+            //            count++;
+            //        if (map.getNode(x, y - 1).isPassable)
+            //            count++;
+            //        if (count >= 3)
+            //            map2.getNode(x, y).traverseCost = 1;
+            //        else
+            //            map2.getNode(x, y).traverseCost = NavMesh.impassable;
+            //    }
+            //map = map2;
+            //map2 = new NavMesh(map.Width, map.Height);
+            //int dis = 10;
+            //for (int x = 0; x < map.Width; x++)
+            //    for (int y = 0; y < map.Height; y++)
+            //    {
+            //        bool keepGoing = true;
+            //        for(int subX = Math.Max(0, x - dis); subX < Math.Min(map.Width, x + dis) && keepGoing; subX++)
+            //            for (int subY = Math.Max(0, y - dis); subY < Math.Min(map.Height, y + dis) && keepGoing; subY++)
+            //            {
+            //                if (MathXHelper.getPointDis(x, y, subX, subY) < dis)
+            //                {
+            //                    if (!map.getNode(subX, subY).isPassable)
+            //                    {
+            //                        map2.getNode(x, y).traverseCost = NavMesh.impassable;
+            //                        keepGoing = false;
+            //                    }
+            //                }
+            //            }
+            //    }
+
+           this.sendDataToRegistry(INTERMODULE_VARIABLE.NAV_MESH, mesh);
         }
 
-        private NavMesh imageBasedCalc()
+        private Image<Gray, byte> imageBasedCalc()
         {
-            NavMesh map = new NavMesh(mapWidth, mapHeight);
-
             Image<Gray, byte> img = ((Image<Gray, byte>)CollisionImage.getObject());
 
             if (img == null)
@@ -119,6 +137,8 @@ namespace IGVC_Controller.Code.Modules.Mapping
             //note that the img is not yet scaled to fit the map size
             //just that it is set so that there is a 1:1 pixel to cell scale setup
 
+            Image<Gray, byte> mapImage = new Image<Gray, byte>(mapWidth, mapHeight);
+
             //get some info
             for(int x = 0; x < mapWidth; x++)
                 for(int y = 0; y < mapHeight; y++)
@@ -128,7 +148,8 @@ namespace IGVC_Controller.Code.Modules.Mapping
 
                     if(scaledImage.Data[(int)yImage, (int)xImage, 0] > 0)
                     {
-                        map.getNode(x, y).traverseCost = NavMesh.impassable;
+                        //map.getNode(x, y).traverseCost = NavMesh.impassable;
+                        mapImage.Data[y, x, 0] = 255;
                     }
                 }
 
@@ -136,18 +157,22 @@ namespace IGVC_Controller.Code.Modules.Mapping
             //Note that processScaledLIDAR puts the data into the cell domain
             //already
             if (LIDAR.getObject() == null)
-                return map;
+                return mapImage;
 
             List<long> distances = (List<long>)LIDAR.getObject();
             List<Vector2> points = processScaledLIDAR(distances);
             foreach(Vector2 point in points)
             {
-                Node node = map.getNode((int)point.X, (int)point.Y);
-                if (node != null)
-                    node.traverseCost = NavMesh.impassable;
+                if(point.Within(0, 0, mapWidth, mapHeight))
+                {
+                    mapImage.Data[(int)point.Y, (int)point.X, 0] = 255;
+                }
+                //Node node = map.getNode((int)point.X, (int)point.Y);
+                //if (node != null)
+                //    node.traverseCost = NavMesh.impassable;
             }
 
-            return map;
+            return mapImage;
         }
 
         //returns data in meters

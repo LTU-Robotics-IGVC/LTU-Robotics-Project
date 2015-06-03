@@ -98,6 +98,7 @@
             this.imageBox5.Location = new System.Drawing.Point(16, 214);
             this.imageBox5.Name = "imageBox5";
             this.imageBox5.Size = new System.Drawing.Size(160, 120);
+            this.imageBox5.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.imageBox5.TabIndex = 6;
             this.imageBox5.TabStop = false;
             // 
@@ -106,6 +107,7 @@
             this.imageBox6.Location = new System.Drawing.Point(182, 214);
             this.imageBox6.Name = "imageBox6";
             this.imageBox6.Size = new System.Drawing.Size(160, 120);
+            this.imageBox6.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.imageBox6.TabIndex = 7;
             this.imageBox6.TabStop = false;
             // 
@@ -114,6 +116,7 @@
             this.imageBox7.Location = new System.Drawing.Point(348, 214);
             this.imageBox7.Name = "imageBox7";
             this.imageBox7.Size = new System.Drawing.Size(160, 120);
+            this.imageBox7.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.imageBox7.TabIndex = 8;
             this.imageBox7.TabStop = false;
             // 
@@ -122,6 +125,7 @@
             this.imageBox8.Location = new System.Drawing.Point(514, 214);
             this.imageBox8.Name = "imageBox8";
             this.imageBox8.Size = new System.Drawing.Size(160, 120);
+            this.imageBox8.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.imageBox8.TabIndex = 9;
             this.imageBox8.TabStop = false;
             // 
