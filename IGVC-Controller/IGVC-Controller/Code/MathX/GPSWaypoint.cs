@@ -7,10 +7,12 @@ using System.Threading.Tasks;
 namespace IGVC_Controller.Code.MathX
 {
     [Serializable]
-    class GPSWaypoint
+    public class GPSWaypoint
     {
         public GPSCoordinate coordinate;
         public float range;//in meters
+
+        public GPSWaypoint() { }
 
         public GPSWaypoint(float latitude, float longitude, float range)
         {

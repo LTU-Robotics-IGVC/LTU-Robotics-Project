@@ -17,7 +17,7 @@ namespace IGVC_Controller.Code.Modules.Vision
         GatedVariable visionleft;
         GatedVariable visionright;
 
-        public int whiteMin = 150;
+        public int whiteMin = 10;
 
         public Rectangle leftVisionRange;
         public Rectangle rightVisionRange;
@@ -61,13 +61,13 @@ namespace IGVC_Controller.Code.Modules.Vision
             if(leftColor != null)
             {
                 Image<Gray, byte> leftGray = leftColor.Convert<Gray, byte>();
-                leftGray = leftGray.ThresholdBinary(new Gray(whiteMin), new Gray(255));
+                //leftGray = leftGray.ThresholdBinary(new Gray(whiteMin), new Gray(255));
                 this.sendDataToRegistry(INTERMODULE_VARIABLE.OBSTACLE_IMAGE_LEFT, leftGray);
             }
             if(rightColor != null)
             {
                 Image<Gray, byte> rightGray = rightColor.Convert<Gray, byte>();
-                rightGray = rightGray.ThresholdBinary(new Gray(whiteMin), new Gray(255));
+                //rightGray = rightGray.ThresholdBinary(new Gray(whiteMin), new Gray(255));
                 this.sendDataToRegistry(INTERMODULE_VARIABLE.OBSTACLE_IMAGE_RIGHT, rightGray);
             }
 

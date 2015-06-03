@@ -7,10 +7,11 @@ using System.Threading.Tasks;
 
 namespace IGVC_Controller.Code.MathX
 {
-    class GPSCoordinate
+    [Serializable]
+    public class GPSCoordinate
     {
-        private float latitude;
-        private float longitude;
+        public float latitude;
+        public float longitude;
         private const double E0 = 500;
         private const double N0 = 0;
         private const double k0 = 0.9996;

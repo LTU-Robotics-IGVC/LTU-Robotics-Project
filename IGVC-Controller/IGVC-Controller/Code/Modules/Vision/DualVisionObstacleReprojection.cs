@@ -137,18 +137,18 @@ namespace IGVC_Controller.Code.Modules.Vision
             obstacleLeft.shiftObject();
             obstacleRight.shiftObject();
 
-            Image<Gray, byte> collisionMap = new Image<Gray, byte>(600, 600);
+            Image<Gray, byte> collisionMap = new Image<Gray, byte>(1000, 1000);
 
             Image<Gray, byte> obstLeft = (Image<Gray, byte>)obstacleLeft.getObject();
             if(obstLeft != null)
             {
-                collisionMap = collisionMap.Add(obstLeft.WarpPerspective(leftHomography, 600, 600, Emgu.CV.CvEnum.INTER.CV_INTER_LINEAR, Emgu.CV.CvEnum.WARP.CV_WARP_DEFAULT, new Gray(0)));
+                collisionMap = collisionMap.Add(obstLeft.WarpPerspective(leftHomography, 1000, 1000, Emgu.CV.CvEnum.INTER.CV_INTER_LINEAR, Emgu.CV.CvEnum.WARP.CV_WARP_DEFAULT, new Gray(0)));
             }
 
             Image<Gray, byte> obstRight = (Image<Gray, byte>)obstacleRight.getObject();
             if(obstRight != null)
             {
-                collisionMap = collisionMap.Add(obstRight.WarpPerspective(rightHomography, 600, 600, Emgu.CV.CvEnum.INTER.CV_INTER_LINEAR, Emgu.CV.CvEnum.WARP.CV_WARP_DEFAULT, new Gray(0)));
+                collisionMap = collisionMap.Add(obstRight.WarpPerspective(rightHomography, 1000, 1000, Emgu.CV.CvEnum.INTER.CV_INTER_LINEAR, Emgu.CV.CvEnum.WARP.CV_WARP_DEFAULT, new Gray(0)));
             }
 
             this.sendDataToRegistry(INTERMODULE_VARIABLE.COLLISION_IMAGE, collisionMap);

@@ -28,6 +28,7 @@ using IGVC_Controller.Code.Modules.Navigation;
 using IGVC_Controller.Code.Modules.IMU;
 using IGVC_Controller.Code.Modules.Motors;
 using IGVC_Controller.Code.Modules.Visualizer.GeneralVisualizer;
+using IGVC_Controller.Code.Modules.Waypoint;
 
 namespace IGVC_Controller
 {
@@ -96,6 +97,8 @@ namespace IGVC_Controller
             this.setupModule("MotorControl", new MotorControl());
             this.setupModule("DualVisionLineDetection", new DualVisionLineDetection());
             this.setupModule("General_Visualizer", new GeneralVisualizer());
+            this.setupModule("WaypointHandler", new WaypointHandler());
+            this.setupModule("FakeGPS", new FakeGPS());
 
             activeModules = config.Read<List<string>>("Active_Modules", new List<string>());
 

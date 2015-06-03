@@ -79,6 +79,7 @@ namespace IGVC_Controller.Code.Modules.Vision
         {
             if (capture != null)
                 capture.Stop();
+            capture.Dispose();
             ((IModuleEditor)this).setDataToModule();
             this.Close();
         }

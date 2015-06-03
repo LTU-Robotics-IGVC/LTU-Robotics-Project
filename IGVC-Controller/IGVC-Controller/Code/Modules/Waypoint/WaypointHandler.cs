@@ -22,13 +22,13 @@ namespace IGVC_Controller.Code.Modules.Waypoint
 
         public override void loadFromConfig(IGVC_Controller.DataIO.SaveFile config)
         {
-            waypoints = config.Read<List<GPSWaypoint>>("waypoints", waypoints);
+            //waypoints = config.Read<List<GPSWaypoint>>("waypoints", waypoints);
             base.loadFromConfig(config);
         }
 
         public override void writeToConfig(IGVC_Controller.DataIO.SaveFile config)
         {
-            config.Write<List<GPSWaypoint>>("waypoints", waypoints);
+            //config.Write<List<GPSWaypoint>>("waypoints", waypoints);
             base.writeToConfig(config);
         }
 
@@ -71,6 +71,11 @@ namespace IGVC_Controller.Code.Modules.Waypoint
             this.sendDataToRegistry(INTERMODULE_VARIABLE.GPS_RELATIVE_VECTOR2, relativePosition);
 
             base.process();
+        }
+
+        public override System.Windows.Forms.Form getEditorForm()
+        {
+            return new WaypointHandlerEditor();
         }
     }
 }

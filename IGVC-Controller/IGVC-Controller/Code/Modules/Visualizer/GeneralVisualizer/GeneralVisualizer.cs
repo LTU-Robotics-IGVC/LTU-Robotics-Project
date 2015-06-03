@@ -22,6 +22,7 @@ namespace IGVC_Controller.Code.Modules.Visualizer.GeneralVisualizer
         public GeneralVisualizer() : base()
         {
             this.modulePriority = 99;
+
             channels = new Dictionary<INTERMODULE_VARIABLE, GatedVariable>();
             this.addChannel(INTERMODULE_VARIABLE.VISION_LEFT);
             this.addChannel(INTERMODULE_VARIABLE.VISION_RIGHT);
@@ -29,6 +30,8 @@ namespace IGVC_Controller.Code.Modules.Visualizer.GeneralVisualizer
             this.addChannel(INTERMODULE_VARIABLE.LIDAR_RAW);
             this.addChannel(INTERMODULE_VARIABLE.NAV_MESH);
             this.addChannel(INTERMODULE_VARIABLE.NAV_PATH);
+
+            this.setFormDataDelegate = this.setFormData;
         }
 
         private void addChannel(INTERMODULE_VARIABLE variable)
@@ -47,10 +50,10 @@ namespace IGVC_Controller.Code.Modules.Visualizer.GeneralVisualizer
         {
             foreach(INTERMODULE_VARIABLE key in channels.Keys)
             {
-                channels[key] = new GatedVariable();
+                channels[key].setObject(null);
             }
 
-            form = new GeneralVisualizerForm();
+                form = new GeneralVisualizerForm();
             form.Show();
             return base.startup();
         }

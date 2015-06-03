@@ -14,6 +14,7 @@ namespace IGVC_Controller.Code.Modules.Navigation
         GatedVariable Nav_Mesh;
         GatedVariable GPSRelativeWaypoint;
         Point startPoint;
+        float meterToPixel = 50;
 
         public PathFinder() : base()
         {
@@ -49,9 +50,12 @@ namespace IGVC_Controller.Code.Modules.Navigation
         {
             NavMesh mesh = (NavMesh)Nav_Mesh.getObject();
             Point end = new Point();
+            Point start = new Point(mesh.Width / 2, mesh.Height);
+            
             if (mesh != null && GPSRelativeWaypoint.getObject() != null)
             {
-                end = (Point)GPSRelativeWaypoint.getObject();
+                Vector2 p = (Vector2)GPSRelativeWaypoint.getObject();
+                end = new Point((int)(p.X * meterToPixel) + start.X, start.Y - (int)(p.Y * meterToPixel));
                 AStarPather pather = new AStarPather(mesh);
                 Path path = pather.getPath(startPoint, end);
                 if(path != null)

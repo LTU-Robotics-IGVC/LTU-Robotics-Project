@@ -95,6 +95,7 @@
     <Compile Include="Code\Modules\Example\ForcedDelay.cs" />
     <Compile Include="Code\Modules\Example\RandomDataListener.cs" />
     <Compile Include="Code\MathX\GPSCoordinate.cs" />
+    <Compile Include="Code\Modules\GPS\FakeGPS.cs" />
     <Compile Include="Code\Modules\GPS\GPS_Interface.cs" />
     <Compile Include="Code\Modules\GPS\GPS_InterfaceEditor.cs">
       <SubType>Form</SubType>

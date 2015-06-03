@@ -55,7 +55,7 @@ namespace IGVC_Controller.Code.Modules.Motors
             motorEnable.setObject(false);
             try
             {
-                robot = RobotPort.getRobotPort("COM12", 9600, 30);
+                robot = RobotPort.getRobotPort("COM4", 9600, 30);
                 robot.open();
             }
             catch(Exception e)
@@ -82,7 +82,8 @@ namespace IGVC_Controller.Code.Modules.Motors
             double leftMotorSpeed = (double)leftMotor.getObject();
             double rightMotorSpeed = (double)rightMotor.getObject();
             bool motorEnabled = (bool)motorEnable.getObject();
-
+            leftMotorSpeed = Math.Max(leftMotorSpeed, 0);
+            rightMotorSpeed = Math.Max(rightMotorSpeed, 0);
             if(motorEnabled)
             {
                 //this.sendDataToRegistry(INTERMODULE_VARIABLE.STATUS, leftMotorSpeed.ToString() + " | " + rightMotorSpeed.ToString());

@@ -15,13 +15,13 @@ namespace IGVC_Controller.Code.Modules.Mapping
     {
         int mapWidth = 200;
         int mapHeight = 200;
-        float cellScale = 0.040f; //How many meters per cell
+        float cellScale = 0.020f; //How many meters per cell
         GatedVariable LIDAR;
         GatedVariable CollisionImage;
         Vector2 LIDARDestinationOrigin;
         Vector2 ImageSourceOrigin;
         Vector2 ImageDestinationOrigin;
-        float imagePixelScale = 0.001f; //How many meters per pixel
+        float imagePixelScale = 0.005f; //How many meters per pixel
 
         public DualVision_LIDAR_ObstacleMapBuilder() : base()
         {
@@ -30,8 +30,8 @@ namespace IGVC_Controller.Code.Modules.Mapping
             this.addSubscription(INTERMODULE_VARIABLE.LIDAR_RAW);
 
             LIDARDestinationOrigin = new Vector2(this.mapWidth / 2, this.mapHeight * 0.9f);
-            ImageDestinationOrigin = new Vector2(this.mapWidth / 2, this.mapHeight * 0.9f);
-            ImageSourceOrigin = new Vector2(500, 500);//Currently a guess point
+            ImageDestinationOrigin = new Vector2(this.mapWidth / 2, this.mapHeight);
+            ImageSourceOrigin = new Vector2(500, 1000);//Currently a guess point
         }
 
         public override void process()
@@ -49,7 +49,10 @@ namespace IGVC_Controller.Code.Modules.Mapping
             NavMesh map = new NavMesh(mapWidth, mapHeight);
 
             Image<Gray, byte> img = ((Image<Gray, byte>)CollisionImage.getObject());
-            
+
+            if (img == null)
+                return null;
+
             //resize img based on scale at the defined origin
 
             Image<Gray, byte> scaledImage = img.Resize(imagePixelScale / cellScale, Emgu.CV.CvEnum.INTER.CV_INTER_LINEAR);
@@ -73,6 +76,8 @@ namespace IGVC_Controller.Code.Modules.Mapping
             //Now map the LIDAR data to the NavMesh
             //Note that processScaledLIDAR puts the data into the cell domain
             //already
+            if (LIDAR.getObject() == null)
+                return map;
 
             List<long> distances = (List<long>)LIDAR.getObject();
             List<Vector2> points = processScaledLIDAR(distances);
