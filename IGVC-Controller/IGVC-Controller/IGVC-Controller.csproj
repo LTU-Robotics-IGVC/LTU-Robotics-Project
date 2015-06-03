@@ -161,6 +161,7 @@
       <DependentUpon>MotorStartForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Code\Modules\UI\RobotControlPanel.cs" />
+    <Compile Include="Code\Modules\Vision\DualVisionLineDetection.cs" />
     <Compile Include="Code\Modules\Vision\DualVisionObstacleDetection.cs" />
     <Compile Include="Code\Modules\Vision\DualVisionObstacleDetectionEditor.cs">
       <SubType>Form</SubType>
