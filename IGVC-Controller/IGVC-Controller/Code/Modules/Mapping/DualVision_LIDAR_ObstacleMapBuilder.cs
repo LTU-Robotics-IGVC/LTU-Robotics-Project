@@ -25,7 +25,7 @@ namespace IGVC_Controller.Code.Modules.Mapping
 
         public DualVision_LIDAR_ObstacleMapBuilder() : base()
         {
-            this.modulePriority = 84;
+            this.modulePriority = 60;
             this.addSubscription(INTERMODULE_VARIABLE.COLLISION_IMAGE);
             this.addSubscription(INTERMODULE_VARIABLE.LIDAR_RAW);
 
