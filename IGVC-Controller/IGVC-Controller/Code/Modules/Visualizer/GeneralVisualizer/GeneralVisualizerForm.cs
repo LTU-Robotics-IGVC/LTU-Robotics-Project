@@ -41,14 +41,37 @@ namespace IGVC_Controller.Code.Modules.Visualizer.GeneralVisualizer
                         {
                             img.Data[y, x, 0] = (byte)Math.Min(255, mesh.getNode(x, y).traverseCost);
                         }
-                    this.imageBox4.Image = img;
+                    this.imageBox4.Image = img.Convert<Bgr, byte>();
                     break;
                 case IModule.INTERMODULE_VARIABLE.NAV_PATH:
                     Path path = (Path)data;
+                    if(this.imageBox4.Image != null)
+                    {
+                        Point[] points = path.getPointArray();
+                        Image<Bgr, byte> img2 = (Image<Bgr, byte>)this.imageBox4.Image;
+                        for(int i = 0; i < points.Length; i++)
+                        {
+                            img2.Data[points[i].Y, points[i].X, 2] = 255;
+                        }
+                        this.imageBox4.Image = img2;
+                    }
+                    break;
+                case IModule.INTERMODULE_VARIABLE.MOTOR_SPEED_LEFT:
+                    double speed = (double)data;
+                    this.label1.Text = "Left Speed:" + speed.ToString("N");
+                    break;
+                case IModule.INTERMODULE_VARIABLE.MOTOR_SPEED_RIGHT:
+                    speed = (double)data;
+                    this.label2.Text = "Right Speed:" + speed.ToString("N");
                     break;
                 default:
                     break;
             }
+        }
+
+        private void GeneralVisualizerForm_Load(object sender, EventArgs e)
+        {
+
         }
     }
 }

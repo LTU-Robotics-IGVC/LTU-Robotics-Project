@@ -30,6 +30,8 @@ namespace IGVC_Controller.Code.Modules.Visualizer.GeneralVisualizer
             this.addChannel(INTERMODULE_VARIABLE.LIDAR_RAW);
             this.addChannel(INTERMODULE_VARIABLE.NAV_MESH);
             this.addChannel(INTERMODULE_VARIABLE.NAV_PATH);
+            this.addChannel(INTERMODULE_VARIABLE.MOTOR_SPEED_LEFT);
+            this.addChannel(INTERMODULE_VARIABLE.MOTOR_SPEED_RIGHT);
 
             this.setFormDataDelegate = this.setFormData;
         }
@@ -82,7 +84,8 @@ namespace IGVC_Controller.Code.Modules.Visualizer.GeneralVisualizer
 
         private void setFormData(INTERMODULE_VARIABLE var, object data)
         {
-            form.setData(var, data);
+            if(data != null)
+                form.setData(var, data);
         }
     }
 }

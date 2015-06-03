@@ -74,6 +74,7 @@
     <Compile Include="Code\MathX\AStarPather.cs" />
     <Compile Include="Code\MathX\GPSWaypoint.cs" />
     <Compile Include="Code\MathX\ImageFiltering.cs" />
+    <Compile Include="Code\MathX\MathXHelper.cs" />
     <Compile Include="Code\MathX\NavMesh.cs" />
     <Compile Include="Code\MathX\Path.cs" />
     <Compile Include="Code\MathX\SortedLinkQueue.cs" />

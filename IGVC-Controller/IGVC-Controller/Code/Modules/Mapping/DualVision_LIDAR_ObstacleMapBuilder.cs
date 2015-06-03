@@ -34,14 +34,73 @@ namespace IGVC_Controller.Code.Modules.Mapping
             ImageSourceOrigin = new Vector2(500, 1000);//Currently a guess point
         }
 
+        public override void recieveDataFromRegistry(IModule.INTERMODULE_VARIABLE tag, object data)
+        {
+            switch(tag)
+            {
+                case INTERMODULE_VARIABLE.COLLISION_IMAGE:
+                    this.CollisionImage.setObject(data);
+                    break;
+                case INTERMODULE_VARIABLE.LIDAR_RAW:
+                    this.LIDAR.setObject(data);
+                    break;
+            }
+            base.recieveDataFromRegistry(tag, data);
+        }
+
+        public override bool startup()
+        {
+            LIDAR = new GatedVariable();
+            CollisionImage = new GatedVariable();
+            return base.startup();
+        }
+
         public override void process()
         {
             LIDAR.shiftObject();
             CollisionImage.shiftObject();
 
             NavMesh map = imageBasedCalc();
+            NavMesh map2 = new NavMesh(map.Width, map.Height);
+            for(int x = 1; x < map.Width-1; x++)
+                for(int y = 1; y < map.Height-1; y++)
+                {
+                    int count = 0;
+                    if (map.getNode(x + 1, y).isPassable)
+                        count++;
+                    if (map.getNode(x - 1, y).isPassable)
+                        count++;
+                    if (map.getNode(x, y + 1).isPassable)
+                        count++;
+                    if (map.getNode(x, y - 1).isPassable)
+                        count++;
+                    if (count >= 3)
+                        map2.getNode(x, y).traverseCost = 1;
+                    else
+                        map2.getNode(x, y).traverseCost = NavMesh.impassable;
+                }
+            map = map2;
+            map2 = new NavMesh(map.Width, map.Height);
+            int dis = 10;
+            for (int x = 0; x < map.Width; x++)
+                for (int y = 0; y < map.Height; y++)
+                {
+                    bool keepGoing = true;
+                    for(int subX = Math.Max(0, x - dis); subX < Math.Min(map.Width, x + dis) && keepGoing; subX++)
+                        for (int subY = Math.Max(0, y - dis); subY < Math.Min(map.Height, y + dis) && keepGoing; subY++)
+                        {
+                            if (MathXHelper.getPointDis(x, y, subX, subY) < dis)
+                            {
+                                if (!map.getNode(subX, subY).isPassable)
+                                {
+                                    map2.getNode(x, y).traverseCost = NavMesh.impassable;
+                                    keepGoing = false;
+                                }
+                            }
+                        }
+                }
 
-            this.sendDataToRegistry(INTERMODULE_VARIABLE.NAV_MESH, map);
+           this.sendDataToRegistry(INTERMODULE_VARIABLE.NAV_MESH, map2);
         }
 
         private NavMesh imageBasedCalc()

@@ -73,22 +73,27 @@ namespace IGVC_Controller.Code.MathX
                 //couple the nodes (2x2connections = 4 connections)
                 node.rightNode = iterNode;
                 node.leftNode = iterNode.leftNode;
+                if(iterNode.leftNode != null)
+                { 
                 iterNode.leftNode.rightNode = node;
                 iterNode.leftNode = node;
+                    }
             }
         }
 
         public T Dequeue()
         {
-            if(count > 0)
-            {
-                count--;
-                LinkNode<T> node = firstNode;
-                firstNode = firstNode.rightNode;
-                if(firstNode != null)
-                    firstNode.leftNode = null;
-                return node.item;
-            }
+                if (count > 0)
+                {
+                    count--;
+                    LinkNode<T> node = firstNode;
+                    firstNode = firstNode.rightNode;
+                    if (firstNode != null)
+                        firstNode.leftNode = null;
+                    if (firstNode == null)
+                        count = 0;
+                    return node.item;
+                }
 
             throw new Exception("List is empty");
         }

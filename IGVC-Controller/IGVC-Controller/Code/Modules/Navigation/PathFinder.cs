@@ -48,16 +48,21 @@ namespace IGVC_Controller.Code.Modules.Navigation
 
         public override void process()
         {
+            Nav_Mesh.shiftObject();
+            GPSRelativeWaypoint.shiftObject();
+
             NavMesh mesh = (NavMesh)Nav_Mesh.getObject();
             Point end = new Point();
-            Point start = new Point(mesh.Width / 2, mesh.Height);
+            Point start = new Point(mesh.Width / 2, mesh.Height - 30);
             
             if (mesh != null && GPSRelativeWaypoint.getObject() != null)
             {
                 Vector2 p = (Vector2)GPSRelativeWaypoint.getObject();
                 end = new Point((int)(p.X * meterToPixel) + start.X, start.Y - (int)(p.Y * meterToPixel));
+                end = new Point(100, 0);
                 AStarPather pather = new AStarPather(mesh);
-                Path path = pather.getPath(startPoint, end);
+                pather.setMustReachTarget(false);
+                Path path = pather.getPath(start, end);
                 if(path != null)
                 {
                     this.sendDataToRegistry(INTERMODULE_VARIABLE.NAV_PATH, path);

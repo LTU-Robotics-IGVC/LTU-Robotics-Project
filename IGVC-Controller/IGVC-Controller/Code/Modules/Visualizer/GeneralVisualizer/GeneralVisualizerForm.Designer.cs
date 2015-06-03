@@ -45,6 +45,8 @@
             this.comboBox6 = new System.Windows.Forms.ComboBox();
             this.comboBox7 = new System.Windows.Forms.ComboBox();
             this.comboBox8 = new System.Windows.Forms.ComboBox();
+            this.label1 = new System.Windows.Forms.Label();
+            this.label2 = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.imageBox1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.imageBox2)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.imageBox3)).BeginInit();
@@ -60,6 +62,7 @@
             this.imageBox1.Location = new System.Drawing.Point(16, 12);
             this.imageBox1.Name = "imageBox1";
             this.imageBox1.Size = new System.Drawing.Size(160, 120);
+            this.imageBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.imageBox1.TabIndex = 2;
             this.imageBox1.TabStop = false;
             // 
@@ -68,6 +71,7 @@
             this.imageBox2.Location = new System.Drawing.Point(182, 12);
             this.imageBox2.Name = "imageBox2";
             this.imageBox2.Size = new System.Drawing.Size(160, 120);
+            this.imageBox2.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.imageBox2.TabIndex = 3;
             this.imageBox2.TabStop = false;
             // 
@@ -76,6 +80,7 @@
             this.imageBox3.Location = new System.Drawing.Point(348, 12);
             this.imageBox3.Name = "imageBox3";
             this.imageBox3.Size = new System.Drawing.Size(160, 120);
+            this.imageBox3.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.imageBox3.TabIndex = 4;
             this.imageBox3.TabStop = false;
             // 
@@ -84,6 +89,7 @@
             this.imageBox4.Location = new System.Drawing.Point(514, 12);
             this.imageBox4.Name = "imageBox4";
             this.imageBox4.Size = new System.Drawing.Size(160, 120);
+            this.imageBox4.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.imageBox4.TabIndex = 5;
             this.imageBox4.TabStop = false;
             // 
@@ -183,11 +189,31 @@
             this.comboBox8.Size = new System.Drawing.Size(160, 24);
             this.comboBox8.TabIndex = 17;
             // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(13, 378);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(46, 17);
+            this.label1.TabIndex = 18;
+            this.label1.Text = "label1";
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(12, 395);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(46, 17);
+            this.label2.TabIndex = 19;
+            this.label2.Text = "label2";
+            // 
             // GeneralVisualizerForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(787, 469);
+            this.Controls.Add(this.label2);
+            this.Controls.Add(this.label1);
             this.Controls.Add(this.comboBox8);
             this.Controls.Add(this.comboBox7);
             this.Controls.Add(this.comboBox6);
@@ -206,6 +232,7 @@
             this.Controls.Add(this.imageBox1);
             this.Name = "GeneralVisualizerForm";
             this.Text = "GeneralVisualizerForm";
+            this.Load += new System.EventHandler(this.GeneralVisualizerForm_Load);
             ((System.ComponentModel.ISupportInitialize)(this.imageBox1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.imageBox2)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.imageBox3)).EndInit();
@@ -215,6 +242,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.imageBox7)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.imageBox8)).EndInit();
             this.ResumeLayout(false);
+            this.PerformLayout();
 
         }
 
@@ -236,5 +264,7 @@
         private System.Windows.Forms.ComboBox comboBox6;
         private System.Windows.Forms.ComboBox comboBox7;
         private System.Windows.Forms.ComboBox comboBox8;
+        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.Label label2;
     }
 }
