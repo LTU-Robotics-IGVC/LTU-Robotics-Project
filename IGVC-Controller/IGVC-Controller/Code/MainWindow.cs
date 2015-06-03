@@ -27,6 +27,7 @@ using IGVC_Controller.Code.Modules.Visualizer.Vision;
 using IGVC_Controller.Code.Modules.Navigation;
 using IGVC_Controller.Code.Modules.IMU;
 using IGVC_Controller.Code.Modules.Motors;
+using IGVC_Controller.Code.Modules.Visualizer.GeneralVisualizer;
 
 namespace IGVC_Controller
 {
@@ -93,6 +94,8 @@ namespace IGVC_Controller
             this.setupModule("MotorStart", new MotorStart());
             this.setupModule("IMUDataCollector", new IMUDataCollector());
             this.setupModule("MotorControl", new MotorControl());
+            this.setupModule("DualVisionLineDetection", new DualVisionLineDetection());
+            this.setupModule("General_Visualizer", new GeneralVisualizer());
 
             activeModules = config.Read<List<string>>("Active_Modules", new List<string>());
 
