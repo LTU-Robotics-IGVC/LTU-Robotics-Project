@@ -14,6 +14,8 @@ namespace IGVC_Controller.Code.Modules.Motors
         GatedVariable rightMotor;
         GatedVariable motorEnable;
         RobotPort robot;
+        double LeftOrg;
+        double RightOrg;
 
         public MotorControl() : base()
         {
@@ -42,6 +44,9 @@ namespace IGVC_Controller.Code.Modules.Motors
 
         public override bool startup()
         {
+            LeftOrg = 0.0;
+            RightOrg = 0.0;
+
             leftMotor = new GatedVariable();
             leftMotor.setObject(0.0);
             rightMotor = new GatedVariable();
@@ -50,7 +55,7 @@ namespace IGVC_Controller.Code.Modules.Motors
             motorEnable.setObject(false);
             try
             {
-                robot = RobotPort.getRobotPort("COM5", 9600, 30);
+                robot = RobotPort.getRobotPort("COM9", 9600, 30);
                 robot.open();
             }
             catch(Exception e)
@@ -82,23 +87,30 @@ namespace IGVC_Controller.Code.Modules.Motors
             {
                 //this.sendDataToRegistry(INTERMODULE_VARIABLE.STATUS, leftMotorSpeed.ToString() + " | " + rightMotorSpeed.ToString());
                 //robot.sendCommand(new object[] { "LEFTMOTOR", "SET SPEED", leftMotorSpeed.ToString("N") });
-
-                if(leftMotorSpeed >= 0 && rightMotorSpeed >= 0)
+                if (LeftOrg != leftMotorSpeed || RightOrg != rightMotorSpeed )//|| true)
                 {
-                    if (leftMotorSpeed >= 1.9 * rightMotorSpeed)
-                        robot.sendCommand(new object[] { "LEFTMOTOR", "RIGHT", leftMotorSpeed.ToString("N") });
-                    else if (rightMotorSpeed >= 1.9 * leftMotorSpeed)
-                        robot.sendCommand(new object[] { "LEFTMOTOR", "LEFT", leftMotorSpeed.ToString("N") });
-                    else if (rightMotorSpeed < 0.0001 && leftMotorSpeed < 0.0001)
-                        robot.sendCommand(new object[] { "LEFTMOTOR", "STOP" });
-                    else
-                        robot.sendCommand(new object[] { "LEFTMOTOR", "FORWARD", leftMotorSpeed.ToString("N") });
-                }
-                else
-                {
-                    robot.sendCommand(new object[] { "LEFTMOTOR", "REVERSE", leftMotorSpeed.ToString("N") });
-                }
+                    //if (leftMotorSpeed >= 0.0 && rightMotorSpeed >= 0.0)
+                    //{
+                    //    if (rightMotorSpeed < 0.0001 && leftMotorSpeed < 0.0001)
+                    //        robot.sendCommandWithResponse(new object[] { "LEFTMOTOR_R", "STOP" });
+                    //    else if (leftMotorSpeed >= 1.9 * rightMotorSpeed)
+                    //        robot.sendCommandWithResponse(new object[] { "LEFTMOTOR_R", "RIGHT", leftMotorSpeed.ToString("N") });
+                    //    else if (rightMotorSpeed >= 1.9 * leftMotorSpeed)
+                    //        robot.sendCommandWithResponse(new object[] { "LEFTMOTOR_R", "LEFT", rightMotorSpeed.ToString("N") });
+                    //    else
+                    //        robot.sendCommandWithResponse(new object[] { "LEFTMOTOR_R", "FORWARD", leftMotorSpeed.ToString("N") });
+                    //}
+                    //else
+                    //{
+                    //    robot.sendCommandWithResponse(new object[] { "LEFTMOTOR_R", "REVERSE", leftMotorSpeed.ToString("N") });
+                    //}
 
+                    LeftOrg = leftMotorSpeed;
+                    RightOrg = rightMotorSpeed;
+
+                robot.sendCommand(new object[] { "LEFTMOTOR_R", "SETM", leftMotorSpeed.ToString("N"), rightMotorSpeed.ToString("N") });
+                this.sendDataToRegistry(INTERMODULE_VARIABLE.STATUS, leftMotorSpeed.ToString("N") + " : " + rightMotorSpeed.ToString("N"));
+                }
                 //robot.sendCommand(new object[] { "RIGHTMOTOR", "SET SPEED", rightMotorSpeed.ToString("N") });
             }
 

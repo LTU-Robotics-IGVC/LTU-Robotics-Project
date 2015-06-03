@@ -13,7 +13,7 @@ namespace IGVC_Controller.Code.Modules.GPS
     {
         SerialPort phoneGPS;
 
-        public string port_name = "COM6";
+        public string port_name = "COM11";
         public int baudrate = 4800;
         public string Lat, Long;
 
@@ -52,6 +52,7 @@ namespace IGVC_Controller.Code.Modules.GPS
                 //phoneGPS.NewLine = "\n\n";
 
                 phoneGPS.Open();
+                phoneGPS.NewLine = "\n";
                 this.sendDataToRegistry(INTERMODULE_VARIABLE.STATUS, "\t\tGPS has successfully connected");
             }
             catch(Exception e)
@@ -112,9 +113,9 @@ namespace IGVC_Controller.Code.Modules.GPS
         private bool Parse(string sentence)
         {
             string[] Words = GetWords(sentence);
-            switch(Words[0])
+            switch (Words[0])
             {
-                case "$GPGGA":
+                case "$GPGLL":                 
                     return ParseGPGLL(Words);
                 default:
                     return false;//Indicate that the sentence was not recognized
@@ -127,8 +128,8 @@ namespace IGVC_Controller.Code.Modules.GPS
             if (Words != null)
             {
                 //comma is used for ease of Split numerica and directional value
-                Lat = Words[2] + "," + Words[3]; //Ex. "2916.26,N"
-                Long = Words[4] + "," + Words[5];//Ex. "2345.45,W"
+                Lat = Words[1] + "," + Words[2]; //Ex. "2916.26,N"
+                Long = Words[3] + "," + Words[4];//Ex. "2345.45,W"
                 return true;
             }
             else { return false; }

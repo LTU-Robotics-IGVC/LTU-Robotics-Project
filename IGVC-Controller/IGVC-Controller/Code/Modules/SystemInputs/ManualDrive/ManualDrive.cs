@@ -25,7 +25,7 @@ namespace IGVC_Controller.Code.Modules.SystemInputs.ManualDrive
         /// <summary>
         /// Default speed for arrow keys movement (in m/s; must be always below 5.00 m/s)
         /// </summary>
-        public double def_speed = 3.00;
+        public double def_speed = 3.0;
 
         /// <summary>
         /// Value (in m/s) to be sent to right motor
