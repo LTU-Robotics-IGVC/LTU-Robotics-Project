@@ -53,13 +53,13 @@ namespace IGVC_Controller.Code.Modules.Navigation
                 }
                 runningX /= count;
                 double steering = (runningX / (path.MapWidth / 2)) - 1;
-                if (steering < -0.3)
+                if (steering < -0.1)
                     hardLeft();
-                else if (steering < -0.1)
+                else if (steering < -0.01)
                     slightLeft();
-                else if (steering < 0.1)
+                else if (steering < 0.01)
                     forward();
-                else if (steering < 0.3)
+                else if (steering < 0.1)
                     slightRight();
                 else
                     hardRight();
