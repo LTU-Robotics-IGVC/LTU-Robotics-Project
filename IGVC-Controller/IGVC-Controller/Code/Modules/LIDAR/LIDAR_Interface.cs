@@ -84,7 +84,7 @@ namespace IGVC_Controller.Code.Modules.LIDAR
         public override void shutdown()
         {
             this.sendDataToRegistry(INTERMODULE_VARIABLE.STATUS, "\tLIDAR is turning off");
-            urg.Write(SCIP_Writer.QT());
+            //urg.Write(SCIP_Writer.QT());
             urg.ReadLine(); //ignore echo
             urg.Close();
 
