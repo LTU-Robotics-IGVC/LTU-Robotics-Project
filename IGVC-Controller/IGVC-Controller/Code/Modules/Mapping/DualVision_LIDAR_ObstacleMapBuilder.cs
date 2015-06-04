@@ -61,7 +61,7 @@ namespace IGVC_Controller.Code.Modules.Mapping
             CollisionImage.shiftObject();
 
             Image<Gray, byte> mapImage = imageBasedCalc();
-            //mapImage = mapImage.PyrUp().PyrDown();
+            mapImage = mapImage.PyrDown().PyrUp();
             mapImage = mapImage.Dilate(5);
 
             NavMesh mesh = new NavMesh(mapWidth, mapHeight);
@@ -149,7 +149,7 @@ namespace IGVC_Controller.Code.Modules.Mapping
                     if(scaledImage.Data[(int)yImage, (int)xImage, 0] > 0)
                     {
                         //map.getNode(x, y).traverseCost = NavMesh.impassable;
-                        mapImage.Data[y, x, 0] = 0;
+                        mapImage.Data[y, x, 0] = 255;
                     }
                 }
 

@@ -69,6 +69,7 @@ namespace IGVC_Controller.Code.Modules.Navigation
                 this.sendDataToRegistry(INTERMODULE_VARIABLE.MOTOR_SPEED_LEFT, 0.0);
                 this.sendDataToRegistry(INTERMODULE_VARIABLE.MOTOR_SPEED_RIGHT, 0.0);
             }
+            this.sendDataToRegistry(INTERMODULE_VARIABLE.IS_AUTONOMOUS, true);
             base.process();
         }
 

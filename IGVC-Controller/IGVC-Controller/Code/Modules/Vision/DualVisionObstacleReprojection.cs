@@ -155,7 +155,7 @@ namespace IGVC_Controller.Code.Modules.Vision
             int h = 40;
             Rectangle roi = collisionMap.ROI;
             collisionMap.ROI = new Rectangle(459, 900+h, 82, h);
-            collisionMap.SetZero();
+            //collisionMap.SetZero();
             collisionMap.ROI = roi;
 
             this.sendDataToRegistry(INTERMODULE_VARIABLE.COLLISION_IMAGE, collisionMap);

@@ -23,7 +23,7 @@ namespace IGVC_Controller.Code.DataIO
             comPort.Parity = Parity.None;
             comPort.DataBits = 8;
             comPort.StopBits = StopBits.One;
-            comPort.DtrEnable = true;
+            //wcomPort.DtrEnable = true;
             comPort.ReceivedBytesThreshold = 1;
             this.messageSize = messageSize;
             currentPorts.Add(portname, this);

@@ -13,6 +13,7 @@ namespace IGVC_Controller.Code.Modules.Motors
         GatedVariable leftMotor;
         GatedVariable rightMotor;
         GatedVariable motorEnable;
+        GatedVariable isAuto;
         RobotPort robot;
         double LeftOrg;
         double RightOrg;
@@ -23,6 +24,7 @@ namespace IGVC_Controller.Code.Modules.Motors
             this.addSubscription(INTERMODULE_VARIABLE.MOTOR_SPEED_LEFT);
             this.addSubscription(INTERMODULE_VARIABLE.MOTOR_SPEED_RIGHT);
             this.addSubscription(INTERMODULE_VARIABLE.DRIVING_ENABLED);
+            this.addSubscription(INTERMODULE_VARIABLE.IS_AUTONOMOUS);
         }
 
         public override void recieveDataFromRegistry(IModule.INTERMODULE_VARIABLE tag, object data)
@@ -37,6 +39,9 @@ namespace IGVC_Controller.Code.Modules.Motors
                     break;
                 case INTERMODULE_VARIABLE.DRIVING_ENABLED:
                     motorEnable.setObject(data);
+                    break;
+                case INTERMODULE_VARIABLE.IS_AUTONOMOUS:
+                    isAuto.setObject(data);
                     break;
             }
             base.recieveDataFromRegistry(tag, data);
@@ -53,9 +58,11 @@ namespace IGVC_Controller.Code.Modules.Motors
             rightMotor.setObject(0.0);
             motorEnable = new GatedVariable();
             motorEnable.setObject(false);
+            isAuto = new GatedVariable();
+            isAuto.setObject(true);
             try
             {
-                robot = RobotPort.getRobotPort("COM4", 9600, 30);
+                robot = RobotPort.getRobotPort("COM17", 9600, 30);
                 robot.open();
             }
             catch(Exception e)
@@ -79,6 +86,7 @@ namespace IGVC_Controller.Code.Modules.Motors
             leftMotor.shiftObject();
             rightMotor.shiftObject();
             motorEnable.shiftObject();
+            isAuto.shiftObject();
             double leftMotorSpeed = (double)leftMotor.getObject();
             double rightMotorSpeed = (double)rightMotor.getObject();
             bool motorEnabled = (bool)motorEnable.getObject();
@@ -88,7 +96,7 @@ namespace IGVC_Controller.Code.Modules.Motors
             {
                 //this.sendDataToRegistry(INTERMODULE_VARIABLE.STATUS, leftMotorSpeed.ToString() + " | " + rightMotorSpeed.ToString());
                 //robot.sendCommand(new object[] { "LEFTMOTOR", "SET SPEED", leftMotorSpeed.ToString("N") });
-                if (LeftOrg != leftMotorSpeed || RightOrg != rightMotorSpeed )//|| true)
+                if (LeftOrg != leftMotorSpeed || RightOrg != rightMotorSpeed || true)
                 {
                     //if (leftMotorSpeed >= 0.0 && rightMotorSpeed >= 0.0)
                     //{
@@ -111,6 +119,15 @@ namespace IGVC_Controller.Code.Modules.Motors
 
                 
                     //robot.sendCommand(new object[] { "LEFTMOTOR_R", "SETM", leftMotorSpeed.ToString("N"), rightMotorSpeed.ToString("N") });
+
+                    if((bool)isAuto.getObject())
+                    {
+                        robot.sendCommand(new object[] { "AUTO MODE" });
+                    }
+                    else
+                    {
+                        robot.sendCommand(new object[] { "MANUAL MODE" });
+                    }
 
                     robot.sendCommand(new object[] { "SETM", leftMotorSpeed.ToString("N"), rightMotorSpeed.ToString("N") });
                     this.sendDataToRegistry(INTERMODULE_VARIABLE.STATUS, leftMotorSpeed.ToString("N") + " : " + rightMotorSpeed.ToString("N"));

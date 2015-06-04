@@ -121,5 +121,17 @@ namespace IGVC_Controller.Code.MathX
 
             return Return;
         }
+
+        public static Image<Bgr, byte> BlackoutInverted(Image<Bgr, byte> image, Rectangle RegionOfInterest)
+        {
+            Image<Bgr, byte> c = new Image<Bgr, byte>(image.Width, image.Height);
+            c.SetValue(new Bgr(Color.White));
+            c = Blackout(c, RegionOfInterest);
+            Image<Gray, byte> cc = c.Convert<Gray, byte>();
+            //cc = cc.ThresholdBinaryInv(new Gray(100), new Gray(255));
+            image.SetValue(new Bgr(Color.Black), cc);
+
+            return image;
+        }
     }
 }
