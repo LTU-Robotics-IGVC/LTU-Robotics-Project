@@ -151,6 +151,13 @@ namespace IGVC_Controller.Code.Modules.Vision
                 collisionMap = collisionMap.Add(obstRight.WarpPerspective(rightHomography, 1000, 1000, Emgu.CV.CvEnum.INTER.CV_INTER_LINEAR, Emgu.CV.CvEnum.WARP.CV_WARP_DEFAULT, new Gray(0)));
             }
 
+            //Block out section of robot that is still seen
+            int h = 40;
+            Rectangle roi = collisionMap.ROI;
+            collisionMap.ROI = new Rectangle(459, 900+h, 82, h);
+            collisionMap.SetZero();
+            collisionMap.ROI = roi;
+
             this.sendDataToRegistry(INTERMODULE_VARIABLE.COLLISION_IMAGE, collisionMap);
         }
 
