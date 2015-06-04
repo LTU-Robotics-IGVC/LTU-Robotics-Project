@@ -29,7 +29,7 @@ namespace IGVC_Controller.Code.Modules.Mapping
             this.addSubscription(INTERMODULE_VARIABLE.COLLISION_IMAGE);
             this.addSubscription(INTERMODULE_VARIABLE.LIDAR_RAW);
 
-            LIDARDestinationOrigin = new Vector2(this.mapWidth / 2, this.mapHeight * 0.9f);
+            LIDARDestinationOrigin = new Vector2(this.mapWidth / 2, this.mapHeight-1);
             ImageDestinationOrigin = new Vector2(this.mapWidth / 2, this.mapHeight);
             ImageSourceOrigin = new Vector2(500, 1000);//Currently a guess point
         }
@@ -61,8 +61,8 @@ namespace IGVC_Controller.Code.Modules.Mapping
             CollisionImage.shiftObject();
 
             Image<Gray, byte> mapImage = imageBasedCalc();
-            mapImage = mapImage.PyrUp().PyrDown();
-            mapImage = mapImage.Dilate(5);
+            //mapImage = mapImage.PyrUp().PyrDown();
+            //mapImage = mapImage.Dilate(5);
 
             NavMesh mesh = new NavMesh(mapWidth, mapHeight);
             for (int x = 0; x < mapWidth; x++)
@@ -149,7 +149,7 @@ namespace IGVC_Controller.Code.Modules.Mapping
                     if(scaledImage.Data[(int)yImage, (int)xImage, 0] > 0)
                     {
                         //map.getNode(x, y).traverseCost = NavMesh.impassable;
-                        mapImage.Data[y, x, 0] = 255;
+                        mapImage.Data[y, x, 0] = 0;
                     }
                 }
 
@@ -200,7 +200,7 @@ namespace IGVC_Controller.Code.Modules.Mapping
                 //x in meters
                 double xMeters = (Math.Sin(angle) * valInMeters);
 
-                points.Add(new Vector2((float)xMeters, (float)yMeters) * cellScale 
+                points.Add(new Vector2((float)xMeters, -(float)yMeters) / cellScale
                     + LIDARDestinationOrigin);
             }
 

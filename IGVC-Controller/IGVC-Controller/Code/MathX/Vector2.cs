@@ -56,5 +56,10 @@ namespace IGVC_Controller.Code.MathX
         {
             return new Vector2(vec1.X * vec2.X, vec1.Y * vec2.Y);
         }
+
+        public static Vector2 operator /(Vector2 vec1, float scale)
+        {
+            return new Vector2(vec1.X / scale, vec1.Y / scale);
+        }
     }
 }
