@@ -61,8 +61,16 @@ namespace IGVC_Controller.Code.Modules.Vision
             {
                 for(int y = 0; y < lines[x].Length; y++)
                 {
-                    color.Draw(lines[x][y], new Bgr(Color.Red), 1);
+                    color.Draw(lines[x][y], new Bgr(Color.Red), 3);
                     LineSegment2D line = lines[x][y];
+                    Point p1 = line.P1;
+                    Point p2 = line.P2;
+                    double L = line.Length;
+                    PointF D = line.Direction;
+                    Point _p1 = new Point(p1.X + (int)((L / 2.0) * D.X), p1.Y + (int)((L / 2.0) * D.Y));
+                    Point _p2 = new Point(p2.X - (int)((L / 2.0) * D.X), p2.Y - (int)((L / 2.0) * D.Y));
+                    LineSegment2D newLine = new LineSegment2D(_p1, _p2);
+                    color.Draw(newLine, new Bgr(Color.Blue), 1);
                 }
             }
 
