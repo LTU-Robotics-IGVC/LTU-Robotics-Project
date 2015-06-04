@@ -119,6 +119,7 @@
     <Compile Include="Code\Modules\Logger\Logger.cs" />
     <Compile Include="Code\Modules\Mapping\DualVision_LIDAR_ObstacleMapBuilder.cs" />
     <Compile Include="Code\Modules\Motors\MotorControl.cs" />
+    <Compile Include="Code\Modules\Navigation\ExtraSteering.cs" />
     <Compile Include="Code\Modules\Navigation\PathFinder.cs" />
     <Compile Include="Code\Modules\Navigation\PathFinderEditor.cs">
       <SubType>Form</SubType>
