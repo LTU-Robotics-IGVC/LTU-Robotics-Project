@@ -41,11 +41,15 @@ namespace IGVC_Controller.Code.Modules.Vision
         void IModuleEditor.loadDataFromModule()
         {
             this.PriorityBox.Value = module.modulePriority;
+            this.cannyThresh.Value = (int)module.cannyThresh;
+            this.cannyThreshLinking.Value = (int)module.cannyThreshLink;
         }
 
         void IModuleEditor.setDataToModule()
         {
             module.modulePriority = (int)this.PriorityBox.Value;
+            module.cannyThresh = (double)this.cannyThresh.Value;
+            module.cannyThreshLink = (double)this.cannyThreshLinking.Value;
         }
 
         void capture_ImageGrabbed(object sender, EventArgs e)
