@@ -107,6 +107,7 @@ namespace IGVC_Controller
             this.setupModule("HoughLinesFiltering", new HoughLinesObstacleFiltering());
             this.setupModule("ExtraSteering", new ExtraSteering());
             this.setupModule("OtherFiltering", new OtherFiltering());
+            this.setupModule("LineLIDAR", new LineLIDAR());
 
             activeModules = config.Read<List<string>>("Active_Modules", new List<string>());
 

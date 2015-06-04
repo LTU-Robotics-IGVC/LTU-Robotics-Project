@@ -164,6 +164,7 @@
       <DependentUpon>MotorStartForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Code\Modules\UI\RobotControlPanel.cs" />
+    <Compile Include="Code\Modules\Vision\LineLIDAR.cs" />
     <Compile Include="Code\Modules\Vision\OtherFiltering.cs" />
     <Compile Include="Code\Modules\Vision\HoughLinesObstacleFiltering.cs" />
     <Compile Include="Code\Modules\Vision\ErodeObstacleFiltering.cs" />
