@@ -109,8 +109,11 @@ namespace IGVC_Controller.Code.Modules.Motors
                     LeftOrg = leftMotorSpeed;
                     RightOrg = rightMotorSpeed;
 
-                robot.sendCommand(new object[] { "LEFTMOTOR_R", "SETM", leftMotorSpeed.ToString("N"), rightMotorSpeed.ToString("N") });
-                this.sendDataToRegistry(INTERMODULE_VARIABLE.STATUS, leftMotorSpeed.ToString("N") + " : " + rightMotorSpeed.ToString("N"));
+                
+                    //robot.sendCommand(new object[] { "LEFTMOTOR_R", "SETM", leftMotorSpeed.ToString("N"), rightMotorSpeed.ToString("N") });
+
+                    robot.sendCommand(new object[] { "SETM", leftMotorSpeed.ToString("N"), rightMotorSpeed.ToString("N") });
+                    this.sendDataToRegistry(INTERMODULE_VARIABLE.STATUS, leftMotorSpeed.ToString("N") + " : " + rightMotorSpeed.ToString("N"));
                 }
                 //robot.sendCommand(new object[] { "RIGHTMOTOR", "SET SPEED", rightMotorSpeed.ToString("N") });
             }
