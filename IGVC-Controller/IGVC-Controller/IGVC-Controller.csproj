@@ -163,6 +163,8 @@
       <DependentUpon>MotorStartForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Code\Modules\UI\RobotControlPanel.cs" />
+    <Compile Include="Code\Modules\Vision\HoughLinesObstacleFiltering.cs" />
+    <Compile Include="Code\Modules\Vision\ErodeObstacleFiltering.cs" />
     <Compile Include="Code\Modules\Vision\DualVisionLineDetection.cs" />
     <Compile Include="Code\Modules\Vision\DualVisionObstacleDetection.cs" />
     <Compile Include="Code\Modules\Vision\DualVisionObstacleDetectionEditor.cs">
@@ -179,6 +181,12 @@
       <DependentUpon>DualVisionObstacleReprojectionEditor.cs</DependentUpon>
     </Compile>
     <Compile Include="Code\Modules\Vision\CannyObstacleFiltering.cs" />
+    <Compile Include="Code\Modules\Vision\HoughLinesObstacleFilteringEditor.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Code\Modules\Vision\HoughLinesObstacleFilteringEditor.Designer.cs">
+      <DependentUpon>HoughLinesObstacleFilteringEditor.cs</DependentUpon>
+    </Compile>
     <Compile Include="Code\Modules\Vision\StereoVision.cs" />
     <Compile Include="Code\Modules\Vision\WideAngleMonoVision.cs" />
     <Compile Include="Code\Modules\Visualizer\GeneralVisualizer\GeneralVisualizer.cs" />
@@ -258,6 +266,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Code\Modules\Vision\DualVisionObstacleReprojectionEditor.resx">
       <DependentUpon>DualVisionObstacleReprojectionEditor.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Code\Modules\Vision\HoughLinesObstacleFilteringEditor.resx">
+      <DependentUpon>HoughLinesObstacleFilteringEditor.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Code\Modules\Visualizer\GeneralVisualizer\GeneralVisualizerForm.resx">
       <DependentUpon>GeneralVisualizerForm.cs</DependentUpon>

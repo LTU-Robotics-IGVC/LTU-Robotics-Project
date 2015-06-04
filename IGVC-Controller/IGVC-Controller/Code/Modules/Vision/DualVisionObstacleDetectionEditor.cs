@@ -97,5 +97,15 @@ namespace IGVC_Controller.Code.Modules.Vision
         {
 
         }
+
+        private void minVal_Scroll(object sender, ScrollEventArgs e)
+        {
+
+        }
+
+        private void imageBox1_Click(object sender, EventArgs e)
+        {
+
+        }
     }
 }

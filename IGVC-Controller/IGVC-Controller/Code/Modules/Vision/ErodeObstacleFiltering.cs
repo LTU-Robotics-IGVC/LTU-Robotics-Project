@@ -9,12 +9,12 @@ using System.Threading.Tasks;
 
 namespace IGVC_Controller.Code.Modules.Vision
 {
-    class CannyObstacleFiltering : IModule
+    class ErodeObstacleFiltering : IModule
     {
         GatedVariable leftImage;
         GatedVariable rightImage;
 
-        public CannyObstacleFiltering() : base()
+        public ErodeObstacleFiltering() : base()
         {
             this.modulePriority = 52;
             this.addSubscription(INTERMODULE_VARIABLE.OBSTACLE_IMAGE_LEFT);
@@ -54,8 +54,8 @@ namespace IGVC_Controller.Code.Modules.Vision
             {
                 //Place filters here
 
-                leftGray = leftGray.Canny(180.0, 120.0);
-                rightGray = rightGray.Canny(180.0, 120.0);
+                leftGray = leftGray.Erode(2);
+                rightGray = rightGray.Erode(2);
             }
 
             this.sendDataToRegistry(INTERMODULE_VARIABLE.OBSTACLE_IMAGE_LEFT, leftGray);

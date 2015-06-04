@@ -62,7 +62,7 @@ namespace IGVC_Controller.Code.Modules.Mapping
 
             Image<Gray, byte> mapImage = imageBasedCalc();
             //mapImage = mapImage.PyrUp().PyrDown();
-            //mapImage = mapImage.Dilate(5);
+            mapImage = mapImage.Dilate(5);
 
             NavMesh mesh = new NavMesh(mapWidth, mapHeight);
             for (int x = 0; x < mapWidth; x++)

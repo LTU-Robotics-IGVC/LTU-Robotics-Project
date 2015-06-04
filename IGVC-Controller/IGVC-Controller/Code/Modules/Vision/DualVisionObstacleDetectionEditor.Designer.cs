@@ -73,6 +73,7 @@
             this.imageBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.imageBox1.TabIndex = 2;
             this.imageBox1.TabStop = false;
+            this.imageBox1.Click += new System.EventHandler(this.imageBox1_Click);
             // 
             // StartCamera
             // 
@@ -121,6 +122,7 @@
             this.minVal.Name = "minVal";
             this.minVal.Size = new System.Drawing.Size(356, 27);
             this.minVal.TabIndex = 15;
+            this.minVal.Scroll += new System.Windows.Forms.ScrollEventHandler(this.minVal_Scroll);
             // 
             // DualVisionObstacleDetectionEditor
             // 

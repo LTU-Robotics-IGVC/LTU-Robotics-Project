@@ -103,6 +103,8 @@ namespace IGVC_Controller
             this.setupModule("MapBuilder", new DualVision_LIDAR_ObstacleMapBuilder());
             this.setupModule("SimpleSteering", new SimpleSteering());
             this.setupModule("CannyFiltering", new CannyObstacleFiltering());
+            this.setupModule("ErodeFiltering", new ErodeObstacleFiltering());
+            this.setupModule("HoughLinesFiltering", new HoughLinesObstacleFiltering());
 
             activeModules = config.Read<List<string>>("Active_Modules", new List<string>());
 

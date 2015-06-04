@@ -9,12 +9,12 @@ using System.Threading.Tasks;
 
 namespace IGVC_Controller.Code.Modules.Vision
 {
-    class CannyObstacleFiltering : IModule
+    class HoughLinesObstacleFiltering : IModule
     {
         GatedVariable leftImage;
         GatedVariable rightImage;
 
-        public CannyObstacleFiltering() : base()
+        public HoughLinesObstacleFiltering() : base()
         {
             this.modulePriority = 52;
             this.addSubscription(INTERMODULE_VARIABLE.OBSTACLE_IMAGE_LEFT);
@@ -53,15 +53,17 @@ namespace IGVC_Controller.Code.Modules.Vision
             if(leftGray != null && rightGray != null)
             {
                 //Place filters here
-
-                leftGray = leftGray.Canny(180.0, 120.0);
-                rightGray = rightGray.Canny(180.0, 120.0);
             }
 
             this.sendDataToRegistry(INTERMODULE_VARIABLE.OBSTACLE_IMAGE_LEFT, leftGray);
             this.sendDataToRegistry(INTERMODULE_VARIABLE.OBSTACLE_IMAGE_RIGHT, rightGray);
 
             base.process();
+        }
+
+        public override System.Windows.Forms.Form getEditorForm()
+        {
+            return new HoughLinesObstacleFilteringEditor();
         }
     }
 }
