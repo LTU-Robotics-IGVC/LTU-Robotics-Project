@@ -12,7 +12,7 @@ namespace IGVC_Controller.Code.Modules.Navigation
     class SimpleSteering : IModule
     {
         GatedVariable NavPath;
-        int evalLength = 25;//process the first 25 points
+        int evalLength = 100;//process the first 25 points
         double baseSpeed = 0.8;
 
         public SimpleSteering() : base()

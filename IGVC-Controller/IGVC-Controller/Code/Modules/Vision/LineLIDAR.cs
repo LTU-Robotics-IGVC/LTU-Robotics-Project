@@ -75,14 +75,14 @@ namespace IGVC_Controller.Code.Modules.Vision
                         int subi;
                         for (subi = i; subi < points.Count && points[subi].X != -1; subi++)
                         {
-                            if (MathXHelper.getPointDis(points[subi], last) < 3.0)
+                            if (MathXHelper.getPointDis(points[subi], last) < 10.0)
                             {
                                 last = points[subi];
                             }
                             else
                                 break;
                         }
-                        if(MathXHelper.getPointDis(s, last) > 5.0)
+                        if(MathXHelper.getPointDis(s, last) > 10.0)
                         {
                             lines.Add(new LineSegment2D(s, last));
                         }
@@ -94,54 +94,24 @@ namespace IGVC_Controller.Code.Modules.Vision
                 Gray white = new Gray(255);
                 for(int i = 0; i < lines.Count; i++)
                 {
-                    collision2.Draw(lines[i], white, 3);
-                    Point closest1 = new Point(3000, 3000);
-                    Point closest2 = new Point(3000, 3000);
-                    double min1 = 1000.0;
-                    double min2 = 1000.0;
-                    double testMin = 0.0;
-                    for(int ii = 0; ii < lines.Count; ii++)
-                    {
-                        if(i == ii)
-                            continue;
-                        if((testMin = MathXHelper.getPointDis(lines[i].P1, lines[ii].P1)) < min1)
-                        {
-                            closest1 = lines[ii].P1;
-                            min1 = testMin;
-                        } 
-                        
-                        if ((testMin = MathXHelper.getPointDis(lines[i].P1, lines[ii].P2)) < min1)
-                        {
-                            closest1 = lines[ii].P2;
-                            min1 = testMin;
-                        }
+                    //line segments are in order
+                    //LineSegment2D rightLine = lines[i - 1];
+                    //LineSegment2D leftLine = lines[i + 1];
 
-                        if ((testMin = MathXHelper.getPointDis(lines[i].P2, lines[ii].P1)) < min2)
-                        {
-                            closest2 = lines[ii].P1;
-                            min2 = testMin;
-                        }
 
-                        if ((testMin = MathXHelper.getPointDis(lines[i].P2, lines[ii].P2)) < min2)
-                        {
-                            closest2 = lines[ii].P2;
-                            min2 = testMin;
-                        }
-                    }
-
-                    if(min1 < 50.0)
-                    {
-                        //connect closest1 to p1
-                        collision2.Draw(new LineSegment2D(lines[i].P1, closest1), white, 3);
-                    }
-
-                    if(min2 < 50.0)
-                    {
-                        collision2.Draw(new LineSegment2D(lines[i].P2, closest2), white, 3);
-                    }
+                    //extend line
+                    LineSegment2D line = lines[i];
+                    Point p1 = line.P1;
+                    Point p2 = line.P2;
+                    double L = line.Length;
+                    PointF D = line.Direction;
+                    Point _p1 = new Point(p1.X + (int)((L) * D.X), p1.Y + (int)((L) * D.Y));
+                    Point _p2 = new Point(p2.X - (int)((L) * D.X), p2.Y - (int)((L) * D.Y));
+                    LineSegment2D newLine = new LineSegment2D(_p1, _p2);
+                    collision2.Draw(newLine, white, 3);
                 }
 
-                this.sendDataToRegistry(INTERMODULE_VARIABLE.OBSTACLE_IMAGE_LEFT, 
+                this.sendDataToRegistry(INTERMODULE_VARIABLE.COLLISION_IMAGE, 
                     collision2.Resize(1000, 1000, Emgu.CV.CvEnum.INTER.CV_INTER_LINEAR));
             }
 
@@ -153,7 +123,7 @@ namespace IGVC_Controller.Code.Modules.Vision
         {
             double dis = 0.0;
             int s = 0;
-            Point p;
+            Point p = new Point();
             while((s = getCellStateForDisAndAngle(angleD / 180.0 * Math.PI, dis, map, ref p)) == 0)
             {
                 dis += 0.5;
@@ -165,7 +135,7 @@ namespace IGVC_Controller.Code.Modules.Vision
         public int getCellStateForDisAndAngle(double angleR, double dis, bool[,] map, ref Point p)
         {
             double x = dis * Math.Cos(angleR) + 150.0;
-            double y = -dis * Math.Sin(angleR) + 300.0;
+            double y = -dis * Math.Sin(angleR) + 299.0;
             int X = (int)x;
             if(x - (double)X > 0.5)
                 X++;

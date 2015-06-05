@@ -15,7 +15,7 @@ namespace IGVC_Controller.Code.Modules.Navigation
 
         public ExtraSteering() : base()
         {
-            this.modulePriority = 58;
+            this.modulePriority = 70;
             this.addSubscription(INTERMODULE_VARIABLE.COLLISION_IMAGE);
         }
 
