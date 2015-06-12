@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using IGVC_Controller.Code.DataIO;
+using IGVC_Controller.Code.MathX;
 
 namespace IGVC_Controller.Code.Modules.GPS
 {
@@ -16,10 +17,12 @@ namespace IGVC_Controller.Code.Modules.GPS
         public string port_name = "COM11";
         public int baudrate = 4800;
         public string Lat, Long;
+        GatedVariable lastGPS;
 
         public GPS_Interface() : base()
         {
             //this.addSubscription(INTERMODULE_VARIABLE.GPS_COORDS);
+            this.addSubscription(INTERMODULE_VARIABLE.GPS_COORDS);
             this.modulePriority = 1;
         }
 
@@ -39,10 +42,23 @@ namespace IGVC_Controller.Code.Modules.GPS
             base.writeToConfig(config);
         }
 
+        public override void recieveDataFromRegistry(IModule.INTERMODULE_VARIABLE tag, object data)
+        {
+            switch(tag)
+            {
+                case INTERMODULE_VARIABLE.GPS_COORDS:
+                    this.lastGPS.setObject(data);
+                    break;
+            }
+            base.recieveDataFromRegistry(tag, data);
+        }
+
         public override bool startup()
         {
             this.sendDataToRegistry(INTERMODULE_VARIABLE.STATUS, "\tOpening GPS on port " + port_name
                 + " with baudrate " + baudrate.ToString());
+
+            lastGPS = new GatedVariable();
 
             try //opening the serail port
             {
@@ -69,6 +85,7 @@ namespace IGVC_Controller.Code.Modules.GPS
         {
             this.sendDataToRegistry(INTERMODULE_VARIABLE.STATUS, "\tGPS is turning off");
             phoneGPS.Close();
+            phoneGPS.Dispose();
 
             base.shutdown();
         }
@@ -79,17 +96,47 @@ namespace IGVC_Controller.Code.Modules.GPS
             {
                 try
                 {
-                    string coord = phoneGPS.ReadLine();//Raw data scan
-
-                    //Note that status information is for somewhat major events (not periodic)
-                    //This is okay when you are specifically testing if it works but make sure
-                    //to remove (or comment out) the "Coordinates were Parsed Successfully" case
-                    if (Parse(coord))//Still need to test logic of this Funciton
+                    while (phoneGPS.BytesToRead > 0)
                     {
-                        this.sendDataToRegistry(INTERMODULE_VARIABLE.GPS_COORDS, Lat + "-" + Long);//'-' is used to distinguish Lat and Long
+                        string coord = phoneGPS.ReadLine();//Raw data scan
+
+                        //Note that status information is for somewhat major events (not periodic)
+                        //This is okay when you are specifically testing if it works but make sure
+                        //to remove (or comment out) the "Coordinates were Parsed Successfully" case
+                        if (Parse(coord))//Still need to test logic of this Funciton
+                        {
+                            //this.sendDataToRegistry(INTERMODULE_VARIABLE.GPS_COORDS, Lat + " - " + Long);//'-' is used to distinguish Lat and Long=
+
+                            //First two numbers are the latitude in degrees while the rest is in minutes
+                            double latDegrees = Convert.ToDouble(Lat.Substring(0, 2));
+                            double latMinutes = Convert.ToDouble(Lat.Substring(2, Lat.Length - 2));
+
+                            double longDegrees = Convert.ToDouble(Long.Substring(0, 3));
+                            double longMinutes = Convert.ToDouble(Long.Substring(3, Long.Length - 3));
+                            ///60 to scale turn them into angles in degrees
+                            ///
+
+                            lastGPS.shiftObject();
+                            GPSCoordinate lastCoord = (GPSCoordinate)lastGPS.getObject();
+
+                            GPSCoordinate currentCoord = new GPSCoordinate((float)(latDegrees + latMinutes / 60.0),
+                                (float)(longDegrees + longMinutes / 60.0));
+                            this.sendDataToRegistry(INTERMODULE_VARIABLE.GPS_COORDS, currentCoord);
+
+                            if (lastCoord != null && (lastCoord.latitude != currentCoord.latitude
+                                || lastCoord.longitude != currentCoord.longitude))
+                            {
+                                Vector2 relativePosition = currentCoord.getLinearConversionCoordinates() - lastCoord.getLinearConversionCoordinates();
+                                double heading = relativePosition.Angle() / Math.PI * 180.0;
+                                if (heading < 0.0)
+                                    heading += 360.0;
+                                //this.sendDataToRegistry(INTERMODULE_VARIABLE.COMPASS, heading);
+                            }
+                            //break;
+                        }
+                        else
+                        { /*this.sendDataToRegistry(INTERMODULE_VARIABLE.STATUS, "NEMA data was not recognized");*/}
                     }
-                    else
-                    { /*this.sendDataToRegistry(INTERMODULE_VARIABLE.STATUS, "NEMA data was not recognized");*/}
                 }
                 catch { /*Program ran to fast to read phoneGPS*/}
 
@@ -115,21 +162,40 @@ namespace IGVC_Controller.Code.Modules.GPS
             string[] Words = GetWords(sentence);
             switch (Words[0])
             {
-                case "$GPGLL":                 
+                case "$GPGGA":           
+                    {
                     return ParseGPGLL(Words);
+                    }
+                case "$GPHDG":
+                    {
+                        return ParseHDG(Words);
+                    }
                 default:
                     return false;//Indicate that the sentence was not recognized
             }
         }
-
+        private bool ParseHDG(string[] Words)
+        {
+            if(Words != null)
+            {
+                double angle = Convert.ToDouble(Words[1]);
+                //angle = 360.0 - angle;
+                this.sendDataToRegistry(INTERMODULE_VARIABLE.COMPASS, angle);
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
         private bool ParseGPGLL(string[] Words)
         {
             //Divide the senetnce into words
             if (Words != null)
             {
                 //comma is used for ease of Split numerica and directional value
-                Lat = Words[1] + "," + Words[2]; //Ex. "2916.26,N"
-                Long = Words[3] + "," + Words[4];//Ex. "2345.45,W"
+                Lat = Words[2];
+                Long = Words[4];
                 return true;
             }
             else { return false; }

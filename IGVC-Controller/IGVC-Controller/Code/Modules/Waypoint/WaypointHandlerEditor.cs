@@ -23,6 +23,7 @@ namespace IGVC_Controller.Code.Modules.Waypoint
         private void button1_Click(object sender, EventArgs e)
         {
             listBox1.Items.Add(textBox1.Text + textBox2.Text);
+            module.waypoints.Add(new GPSWaypoint((float)Convert.ToDouble(textBox1.Text), (float)Convert.ToDouble(textBox2.Text), 1.0f));
         }
 
         void IModuleEditor.setModule(IModule module)
@@ -33,12 +34,12 @@ namespace IGVC_Controller.Code.Modules.Waypoint
 
         void IModuleEditor.loadDataFromModule()
         {
-
+            this.PriorityBox.Value = module.modulePriority;
         }
 
         void IModuleEditor.setDataToModule()
         {
-
+            module.modulePriority = (int)this.PriorityBox.Value;
         }
 
         private void button2_Click(object sender, EventArgs e)

@@ -113,7 +113,7 @@ namespace IGVC_Controller.Code.Registries
                 this.sortModulesByPriority();
                 if(isStarted = this.startupModules())
                     
-                    worker.RunWorkerAsync();
+                     worker.RunWorkerAsync();
             }
 
             return isStarted;

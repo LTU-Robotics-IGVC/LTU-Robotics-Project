@@ -5,6 +5,7 @@ using System.IO.Ports;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Forms;
 
 namespace IGVC_Controller.Code.Modules.Motors
 {
@@ -17,6 +18,11 @@ namespace IGVC_Controller.Code.Modules.Motors
         RobotPort robot;
         double LeftOrg;
         double RightOrg;
+        long lastUpdate = 0;
+        Timer timer;
+        double leftSpeed = 0.0;
+        double rightSpeed = 0.0;
+        bool isEnabled = false;
 
         public MotorControl() : base()
         {
@@ -52,6 +58,7 @@ namespace IGVC_Controller.Code.Modules.Motors
             LeftOrg = 0.0;
             RightOrg = 0.0;
 
+
             leftMotor = new GatedVariable();
             leftMotor.setObject(0.0);
             rightMotor = new GatedVariable();
@@ -59,7 +66,7 @@ namespace IGVC_Controller.Code.Modules.Motors
             motorEnable = new GatedVariable();
             motorEnable.setObject(false);
             isAuto = new GatedVariable();
-            isAuto.setObject(true);
+            isAuto.setObject(false);
             try
             {
                 robot = RobotPort.getRobotPort("COM17", 9600, 30);
@@ -76,7 +83,9 @@ namespace IGVC_Controller.Code.Modules.Motors
 
         public override void shutdown()
         {
+
             robot.close();
+
 
             base.shutdown();
         }
@@ -87,9 +96,11 @@ namespace IGVC_Controller.Code.Modules.Motors
             rightMotor.shiftObject();
             motorEnable.shiftObject();
             isAuto.shiftObject();
+
             double leftMotorSpeed = (double)leftMotor.getObject();
             double rightMotorSpeed = (double)rightMotor.getObject();
             bool motorEnabled = (bool)motorEnable.getObject();
+            isEnabled = motorEnabled;
             leftMotorSpeed = Math.Max(leftMotorSpeed, 0);
             rightMotorSpeed = Math.Max(rightMotorSpeed, 0);
             if(motorEnabled)
@@ -129,7 +140,10 @@ namespace IGVC_Controller.Code.Modules.Motors
                         robot.sendCommand(new object[] { "MANUAL MODE" });
                     }
 
-                    robot.sendCommand(new object[] { "SETM", leftMotorSpeed.ToString("N"), rightMotorSpeed.ToString("N") });
+                    leftSpeed = leftMotorSpeed;
+                    rightSpeed = rightMotorSpeed;
+
+                    robot.sendCommand(new object[] { "SETM", leftSpeed.ToString("N"), rightSpeed.ToString("N") }); 
                     this.sendDataToRegistry(INTERMODULE_VARIABLE.STATUS, leftMotorSpeed.ToString("N") + " : " + rightMotorSpeed.ToString("N"));
                 }
                 //robot.sendCommand(new object[] { "RIGHTMOTOR", "SET SPEED", rightMotorSpeed.ToString("N") });

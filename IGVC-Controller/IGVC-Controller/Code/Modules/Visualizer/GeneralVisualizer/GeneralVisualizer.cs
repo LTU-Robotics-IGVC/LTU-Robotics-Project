@@ -34,6 +34,11 @@ namespace IGVC_Controller.Code.Modules.Visualizer.GeneralVisualizer
             this.addChannel(INTERMODULE_VARIABLE.MOTOR_SPEED_RIGHT);
             this.addChannel(INTERMODULE_VARIABLE.OBSTACLE_IMAGE_LEFT);
             this.addChannel(INTERMODULE_VARIABLE.OBSTACLE_IMAGE_RIGHT);
+            this.addChannel(INTERMODULE_VARIABLE.COMPASS);
+            this.addChannel(INTERMODULE_VARIABLE.CURRENT_WAYPOINT);
+            this.addChannel(INTERMODULE_VARIABLE.GPS_COORDS);
+            this.addChannel(INTERMODULE_VARIABLE.WAYPOINT_DISTANCE);
+            this.addChannel(INTERMODULE_VARIABLE.WAYPOINT_HEADING);
 
             this.setFormDataDelegate = this.setFormData;
         }
@@ -70,6 +75,8 @@ namespace IGVC_Controller.Code.Modules.Visualizer.GeneralVisualizer
                 object obj = channels[key].getObject();
                 form.Invoke(this.setFormDataDelegate, new object[] { key, obj });
             }
+
+            this.sendDataToRegistry(INTERMODULE_VARIABLE.DRIVING_ENABLED, form.motorsEnabled);
         }
 
         public override void shutdown()

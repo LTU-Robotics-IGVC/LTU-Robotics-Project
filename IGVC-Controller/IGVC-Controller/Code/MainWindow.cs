@@ -105,9 +105,13 @@ namespace IGVC_Controller
             this.setupModule("CannyFiltering", new CannyObstacleFiltering());
             this.setupModule("ErodeFiltering", new ErodeObstacleFiltering());
             this.setupModule("HoughLinesFiltering", new HoughLinesObstacleFiltering());
-            this.setupModule("ExtraSteering", new ExtraSteering());
+            this.setupModule("LaneSteering", new LaneSteering());
             this.setupModule("OtherFiltering", new OtherFiltering());
             this.setupModule("LineLIDAR", new LineLIDAR());
+            this.setupModule("HSVandGuassianFilter", new HSVandGuassianFilter());
+            this.setupModule("GPSSteering", new GPSSteering());
+            this.setupModule("RobotBlackoutFiltering", new RobotBlackoutFiltering());
+            this.setupModule("SunnyLineFilter", new SunnyLineFilter());
 
             activeModules = config.Read<List<string>>("Active_Modules", new List<string>());
 

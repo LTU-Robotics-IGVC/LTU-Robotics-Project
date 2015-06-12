@@ -52,6 +52,7 @@
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Windows.Forms.DataVisualization" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -119,7 +120,8 @@
     <Compile Include="Code\Modules\Logger\Logger.cs" />
     <Compile Include="Code\Modules\Mapping\DualVision_LIDAR_ObstacleMapBuilder.cs" />
     <Compile Include="Code\Modules\Motors\MotorControl.cs" />
-    <Compile Include="Code\Modules\Navigation\ExtraSteering.cs" />
+    <Compile Include="Code\Modules\Navigation\LaneSteering.cs" />
+    <Compile Include="Code\Modules\Navigation\GPSSteering.cs" />
     <Compile Include="Code\Modules\Navigation\PathFinder.cs" />
     <Compile Include="Code\Modules\Navigation\PathFinderEditor.cs">
       <SubType>Form</SubType>
@@ -164,6 +166,9 @@
       <DependentUpon>MotorStartForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Code\Modules\UI\RobotControlPanel.cs" />
+    <Compile Include="Code\Modules\Vision\SunnyLineFilter.cs" />
+    <Compile Include="Code\Modules\Vision\RobotBlackoutFiltering.cs" />
+    <Compile Include="Code\Modules\Vision\HSVandGuassianFilter.cs" />
     <Compile Include="Code\Modules\Vision\LineLIDAR.cs" />
     <Compile Include="Code\Modules\Vision\OtherFiltering.cs" />
     <Compile Include="Code\Modules\Vision\HoughLinesObstacleFiltering.cs" />

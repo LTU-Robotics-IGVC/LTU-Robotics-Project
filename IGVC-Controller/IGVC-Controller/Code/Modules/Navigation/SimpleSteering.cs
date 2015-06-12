@@ -13,7 +13,7 @@ namespace IGVC_Controller.Code.Modules.Navigation
     {
         GatedVariable NavPath;
         int evalLength = 100;//process the first 25 points
-        double baseSpeed = 0.8;
+        double baseSpeed = 1.0;
 
         public SimpleSteering() : base()
         {
@@ -52,7 +52,7 @@ namespace IGVC_Controller.Code.Modules.Navigation
                     runningX += points[i].X;
                 }
                 runningX /= count;
-                double steering = (runningX / (path.MapWidth / 2)) - 1;
+                double steering = (runningX / ((double)path.MapWidth / 2.0)) - 1.0;
                 if (steering < -0.1)
                     hardLeft();
                 else if (steering < -0.01)

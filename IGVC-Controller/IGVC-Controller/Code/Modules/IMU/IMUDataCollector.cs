@@ -10,6 +10,7 @@ namespace IGVC_Controller.Code.Modules.IMU
     class IMUDataCollector : IModule
     {
         RobotPort robot;
+        int c = 0;
 
         public IMUDataCollector() : base()
         {
@@ -20,7 +21,7 @@ namespace IGVC_Controller.Code.Modules.IMU
         {
             try
             {
-                robot = RobotPort.getRobotPort("COM3", 9600, 30);
+                robot = RobotPort.getRobotPort("COM27", 9600, 30);
                 robot.open();
                 return base.startup();
             }
@@ -39,16 +40,21 @@ namespace IGVC_Controller.Code.Modules.IMU
 
         public override void process()
         {
-            robot.sendCommand(new object[] { "LEFTMOTOR", "LED OFF" });
-            List<string> response = robot.sendCommandWithResponse(new object[] { "MASTER", "COMPASS" });
-            if(response.Count == 2)
+            c++;
+            if (c > 5)
             {
-                this.sendDataToRegistry(INTERMODULE_VARIABLE.STATUS, "COMPASS = " + response[1]);
-            }
-            else
-            {
-                this.sendDataToRegistry(INTERMODULE_VARIABLE.STATUS, "Incorrect data format recieved from robot");
-                this.sendDataToRegistry(INTERMODULE_VARIABLE.STATUS, response.ToString());
+                c = 0;
+                List<string> response = robot.sendCommandWithResponse(new object[] { "COMPASS" });
+                if (response.Count == 2)
+                {
+                    //this.sendDataToRegistry(INTERMODULE_VARIABLE.STATUS, "COMPASS = " + response[1]);
+                    this.sendDataToRegistry(INTERMODULE_VARIABLE.COMPASS, Convert.ToDouble(response[1]));
+                }
+                else
+                {
+                    this.sendDataToRegistry(INTERMODULE_VARIABLE.STATUS, "Incorrect data format recieved from robot");
+                    this.sendDataToRegistry(INTERMODULE_VARIABLE.STATUS, response.ToString());
+                }
             }
         }
     }

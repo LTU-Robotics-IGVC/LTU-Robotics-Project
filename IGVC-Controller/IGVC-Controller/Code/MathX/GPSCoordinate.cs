@@ -52,6 +52,12 @@ namespace IGVC_Controller.Code.MathX
             this.longitude = longitude;
         }
 
+        public GPSCoordinate(float latDegrees, float latMinutes, float latSeconds, float longDegrees, float longMinutes, float longSeconds)
+        {
+            this.latitude = latDegrees + (latMinutes / 60.0f) + (latSeconds / 3600.0f);
+            this.longitude = longDegrees + (longMinutes / 60.0f) + (longSeconds / 3600.0f);
+        }
+
         public Vector2 getUTMCoordinates()
         {
             //Standard formula in km
@@ -83,6 +89,11 @@ namespace IGVC_Controller.Code.MathX
         public Vector2 getLinearConversionCoordinates()
         {
             return new Vector2(longitude * LinearConversion_X_LONG, latitude * LinearConversion_Y_LAT);
+        }
+
+        public override string ToString()
+        {
+            return longitude.ToString("N6") + " || " + latitude.ToString("N6");
         }
     }
 }

@@ -33,5 +33,10 @@ namespace IGVC_Controller.Code.MathX
             float dis = (thisCoord - otherCoord).Magnitude();
             return dis < range;
         }
+
+        public override string ToString()
+        {
+            return this.coordinate.ToString() + " [" + range.ToString("N") + "meters]";
+        }
     }
 }

@@ -57,6 +57,7 @@ namespace IGVC_Controller.Code.Modules.Cameras
             capture1 = new Capture(cap1Index);
             capture1.Start();
             capture2 = new Capture(cap2Index);
+            capture2.Start();
             return base.startup();
         }
 

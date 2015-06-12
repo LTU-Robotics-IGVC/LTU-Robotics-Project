@@ -18,8 +18,63 @@ namespace IGVC_Controller.Code.Modules.Waypoint
         {
             this.modulePriority = 26;
             this.addSubscription(INTERMODULE_VARIABLE.GPS_COORDS);
+
+            //set for test
+            //loadTestCoord();
+            //loadQualificationCoords();
+            loadBasicCoords(true);
         }
 
+        private void loadTestCoord()
+        {
+            //P1
+            this.waypoints.Add(new GPSWaypoint(new GPSCoordinate(42f, 40f, 41.54420f, 83f, 11f, 42.08071f), 1.0f));
+
+            //P2
+            this.waypoints.Add(new GPSWaypoint(new GPSCoordinate(42f, 40f, 41.97258f, 83f, 11f, 42.08261f), 1.0f));
+
+            //P3
+            this.waypoints.Add(new GPSWaypoint(new GPSCoordinate(42f, 40f, 41.89970f, 83f, 11f, 41.48335f), 1.0f));
+
+            //P4
+            this.waypoints.Add(new GPSWaypoint(new GPSCoordinate(42f, 40f, 41.61944f, 83f, 11f, 41.51440f), 1.0f));
+        }
+
+        private void loadQualificationCoords()
+        {
+            this.waypoints.Add(new GPSWaypoint(new GPSCoordinate(42f, 40f, 40.68822f, 83f, 11f, 43.31415f), 2.0f));
+
+            this.waypoints.Add(new GPSWaypoint(new GPSCoordinate(42f, 40f, 41.56625f, 83f, 11f, 43.66609f), 2.0f));
+
+            this.waypoints.Add(new GPSWaypoint(new GPSCoordinate(42f, 40f, 41.61944f, 83f, 11f, 41.51440f), 1.0f));
+        }
+
+        private void loadBasicCoords(bool startNorth)
+        {
+            if(startNorth)
+            {
+                this.waypoints.Add(new GPSWaypoint(new GPSCoordinate(42f, 40f, 44.35053f, 83f, 11f, 41.88869f), 1.0f));
+
+                //Sudo Waypoint
+                this.waypoints.Add(new GPSWaypoint(new GPSCoordinate(42f, 40f, 44.35053f, 83f, 11f, 42.3f), 1.0f));
+
+                this.waypoints.Add(new GPSWaypoint(new GPSCoordinate(42f, 40f, 43.83808f, 83f, 11f, 41.87927f), 1.0f));
+
+                this.waypoints.Add(new GPSWaypoint(new GPSCoordinate(42f, 40f, 41.61944f, 83f, 11f, 41.51440f), 1.0f));
+            }
+            else
+            {
+                this.waypoints.Add(new GPSWaypoint(new GPSCoordinate(42f, 40f, 43.83808f, 83f, 11f, 41.87927f), 1.0f));
+
+                //Sudo Waypoint
+                this.waypoints.Add(new GPSWaypoint(new GPSCoordinate(42f, 40f, 44.35053f, 83f, 11f, 42.3f), 1.0f));
+
+                this.waypoints.Add(new GPSWaypoint(new GPSCoordinate(42f, 40f, 44.35053f, 83f, 11f, 41.88869f), 1.0f));
+
+                this.waypoints.Add(new GPSWaypoint(new GPSCoordinate(42f, 40f, 41.61944f, 83f, 11f, 41.51440f), 1.0f));
+            }
+        }
+        
         public override void loadFromConfig(IGVC_Controller.DataIO.SaveFile config)
         {
             //waypoints = config.Read<List<GPSWaypoint>>("waypoints", waypoints);
@@ -58,17 +113,29 @@ namespace IGVC_Controller.Code.Modules.Waypoint
         {
             currentCoords.shiftObject();
             GPSCoordinate coord = (GPSCoordinate)currentCoords.getObject();
+            if (coord == null)
+                return;
             GPSWaypoint waypoint = waypointQueue.Peek();
             if(waypoint.inRange(coord))
             {
                 waypointQueue.Dequeue();
             }
             Vector2 relativePosition = waypoint.coordinate.getLinearConversionCoordinates() - coord.getLinearConversionCoordinates();
+            relativePosition = relativePosition + new Vector2(0.0f, -3.0f);
 
             //Todo
             //Orientation Correction
 
             this.sendDataToRegistry(INTERMODULE_VARIABLE.GPS_RELATIVE_VECTOR2, relativePosition);
+            this.sendDataToRegistry(INTERMODULE_VARIABLE.WAYPOINT_DISTANCE, (double)relativePosition.Magnitude());
+            //long++ North
+            //lat++ West
+            double heading = relativePosition.Angle() / Math.PI * 180.0;
+            heading -= 90.0;
+            if (heading < 0.0)
+                heading += 360.0;
+            this.sendDataToRegistry(INTERMODULE_VARIABLE.WAYPOINT_HEADING, heading);
+            this.sendDataToRegistry(INTERMODULE_VARIABLE.CURRENT_WAYPOINT, waypoint);
 
             base.process();
         }

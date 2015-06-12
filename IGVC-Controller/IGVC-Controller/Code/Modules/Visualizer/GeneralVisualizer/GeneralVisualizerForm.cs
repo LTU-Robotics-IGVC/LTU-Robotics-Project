@@ -15,6 +15,7 @@ namespace IGVC_Controller.Code.Modules.Visualizer.GeneralVisualizer
 {
     public partial class GeneralVisualizerForm : Form
     {
+        public bool motorsEnabled = false;
         public GeneralVisualizerForm()
         {
             InitializeComponent();
@@ -57,18 +58,40 @@ namespace IGVC_Controller.Code.Modules.Visualizer.GeneralVisualizer
                     }
                     break;
                 case IModule.INTERMODULE_VARIABLE.MOTOR_SPEED_LEFT:
-                    double speed = (double)data;
-                    this.label1.Text = "Left Speed:" + speed.ToString("N");
+                    double speed = Math.Abs((double)data);
+                    this.label1.Text = "L:" + speed.ToString("N");
+                    this.vScrollBar1.Value = (int)(speed * 100.0);
                     break;
                 case IModule.INTERMODULE_VARIABLE.MOTOR_SPEED_RIGHT:
-                    speed = (double)data;
-                    this.label2.Text = "Right Speed:" + speed.ToString("N");
+                    speed = Math.Abs((double)data);
+                    this.label2.Text = "R:" + speed.ToString("N");
+                    this.vScrollBar2.Value = (int)(speed * 100.0);
                     break;
                 case IModule.INTERMODULE_VARIABLE.OBSTACLE_IMAGE_LEFT:
                     this.imageBox5.Image = (Image<Gray, byte>)data;
                     break;
                 case IModule.INTERMODULE_VARIABLE.OBSTACLE_IMAGE_RIGHT:
                     this.imageBox6.Image = (Image<Gray, byte>)data;
+                    break;
+                case IModule.INTERMODULE_VARIABLE.COMPASS:
+                    double angle = (double)data;
+                    this.label3.Text = "Compass: " + angle.ToString("N");
+                    break;
+                case IModule.INTERMODULE_VARIABLE.GPS_COORDS:
+                    GPSCoordinate coord = (GPSCoordinate)data;
+                    this.GPSLabel.Text = "GPS: " + coord.ToString();
+                    break;
+                case IModule.INTERMODULE_VARIABLE.CURRENT_WAYPOINT:
+                    GPSWaypoint waypoint = (GPSWaypoint)data;
+                    this.WaypointLabel.Text = "Waypoint: " + waypoint.ToString();
+                    break;
+                case IModule.INTERMODULE_VARIABLE.WAYPOINT_DISTANCE:
+                    double distance = (double)data;
+                    this.WaypointDistanceLabel.Text = "Distance: " + distance.ToString("N") + "meters";
+                    break;
+                case IModule.INTERMODULE_VARIABLE.WAYPOINT_HEADING:
+                    double heading = (double)data;
+                    this.WaypointHeadingLabel.Text = "Heading: " + heading.ToString("N");
                     break;
                 default:
                     break;
@@ -78,6 +101,27 @@ namespace IGVC_Controller.Code.Modules.Visualizer.GeneralVisualizer
         private void GeneralVisualizerForm_Load(object sender, EventArgs e)
         {
 
+        }
+
+        private void imageBox6_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void MotorEnableButton_Click(object sender, EventArgs e)
+        {
+            if(!motorsEnabled)
+            {
+                MotorEnableButton.Text = "Disable Motors";
+                MotorEnableButton.BackColor = Color.Red;
+                motorsEnabled = true;
+            }
+            else
+            {
+                MotorEnableButton.Text = "EnableMotors";
+                MotorEnableButton.BackColor = Color.LimeGreen;
+                motorsEnabled = false;
+            }
         }
     }
 }

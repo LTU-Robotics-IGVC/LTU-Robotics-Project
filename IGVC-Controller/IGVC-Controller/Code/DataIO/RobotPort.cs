@@ -18,12 +18,26 @@ namespace IGVC_Controller.Code.DataIO
         private RobotPort(string portname, int baudrate, int messageSize)
         {
             comPort = new SerialPort(portname, baudrate);
-            //comPort.ReadTimeout = 1000;
+            comPort.ReadTimeout = 1000;
             comPort.DataReceived += comPort_DataReceived;
             comPort.Parity = Parity.None;
             comPort.DataBits = 8;
             comPort.StopBits = StopBits.One;
-            //wcomPort.DtrEnable = true;
+            //comPort.DtrEnable = true;
+            comPort.ReceivedBytesThreshold = 1;
+            this.messageSize = messageSize;
+            currentPorts.Add(portname, this);
+        }
+
+        private RobotPort(string portname, int baudrate, int messageSize, bool DtrEnable)
+        {
+            comPort = new SerialPort(portname, baudrate);
+            comPort.ReadTimeout = 1000;
+            comPort.DataReceived += comPort_DataReceived;
+            comPort.Parity = Parity.None;
+            comPort.DataBits = 8;
+            comPort.StopBits = StopBits.One;
+            comPort.DtrEnable = DtrEnable;
             comPort.ReceivedBytesThreshold = 1;
             this.messageSize = messageSize;
             currentPorts.Add(portname, this);
@@ -58,6 +72,26 @@ namespace IGVC_Controller.Code.DataIO
             }
 
             port = new RobotPort(portname, baudrate, messageSize);
+            return port;
+        }
+
+        public static RobotPort getRobotPort(string portname, int baudrate, int messageSize, bool DtrEnable)
+        {
+            RobotPort port;
+            if (currentPorts.ContainsKey(portname))
+            {
+                port = currentPorts[portname];
+                if (port.comPort.BaudRate == baudrate && port.messageSize == messageSize && port.comPort.DtrEnable == DtrEnable)
+                {
+                    return port;
+                }
+                else
+                {
+                    throw new Exception("portname is already in use with differnt buadrate or messageSize");
+                }
+            }
+
+            port = new RobotPort(portname, baudrate, messageSize, DtrEnable);
             return port;
         }
 
@@ -121,7 +155,7 @@ namespace IGVC_Controller.Code.DataIO
 
             if (comPort.IsOpen)
             {
-                comPort.Write(message);
+                comPort.WriteLine("*" + message);
             }
             else
                 throw new Exception("RobotPort has not been opened");
@@ -135,13 +169,14 @@ namespace IGVC_Controller.Code.DataIO
             //Wait for response to be ready
 
             //Collect response
-            char[] buffer = new char[messageSize];
-            int count = comPort.Read(buffer, 0, 1);
-            while(count < messageSize)
-            {
-                count += comPort.Read(buffer, count, 1);
-            }
-            string response = new string(buffer);
+            //char[] buffer = new char[messageSize];
+            //int count = comPort.Read(buffer, 0, 1);
+            //while(count < messageSize)
+            //{
+            //    count += comPort.Read(buffer, count, 1);
+            //}
+            //string response = new string(buffer);
+            string response = comPort.ReadLine();
 
             //Parse response
             //Note the structure example COMPASS:130.0:                <---Ends with 30 characters

@@ -124,7 +124,21 @@ namespace IGVC_Controller.Code.Modules
 
             ESTOP_RIGHT,
 
-            ESTOP_LEFT
+            ESTOP_LEFT,
+
+            COMPASS,
+
+            CURRENT_WAYPOINT,
+
+            WAYPOINT_DISTANCE,
+
+            WAYPOINT_HEADING,
+
+            GPS_IS_STEERING,
+
+            LANE_FOLLOWING,
+
+            NO_MANS_LAND
         }
 
         public struct LOG_TYPES
